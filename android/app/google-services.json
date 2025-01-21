@@ -1,0 +1,55 @@
+{
+  "project_info": {
+    "project_number": "11937405797",
+    "project_id": "badboys-282df",
+    "storage_bucket": "badboys-282df.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:11937405797:android:44a06c4c559dd9cf39df8c",
+        "android_client_info": {
+          "package_name": "com.badboys"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "11937405797-4ngjf76c483lcb8l5dstijr0kj2ak4ts.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.badboys",
+            "certificate_hash": "ce4832294fe6b37f678d7936997839ce963baa30"
+          }
+        },
+        {
+          "client_id": "11937405797-m7v1r0jsi6838ok79qius96ma431fe70.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.badboys",
+            "certificate_hash": "82f05e1f15bcf3607926e7e47703721c22fc6f0b"
+          }
+        },
+        {
+          "client_id": "11937405797-c4sijgq9ca3lqn31cecdl3tfnk3j9k4u.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBZNj2981XUi3ITILTy5j3-IkerVKjZKtU"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "11937405797-c4sijgq9ca3lqn31cecdl3tfnk3j9k4u.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
