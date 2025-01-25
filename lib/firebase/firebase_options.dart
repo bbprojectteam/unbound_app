@@ -1,9 +1,11 @@
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 
-final DefaultFirebaseOptions = const FirebaseOptions(
-  apiKey: 'AIzaSyBZNj2981XUi3ITILTy5j3-IkerVKjZKtU',
-  appId: '1:11937405797:android:44a06c4c559dd9cf39df8c',
-  messagingSenderId: '11937405797',
-  projectId: 'badboys-282df',
-  storageBucket: 'badboys-282df.firebasestorage.app',
+final DefaultFirebaseOptions =  FirebaseOptions(
+  apiKey: dotenv.get("API_KEY"),  // dotenv에서 값 가져오기
+  appId: dotenv.get("APP_ID"),
+  messagingSenderId: dotenv.get("MESSAGING_SENDER_ID"),
+  projectId: dotenv.get("PROJECT_ID"),
+  storageBucket: dotenv.get("STORAGE_BUCKET"),
 );
+

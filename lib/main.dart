@@ -1,24 +1,28 @@
 import 'package:badboys/firebase/firebase_options.dart';
+import 'package:badboys/prov/auth_prov.dart';
+import 'package:badboys/prov/member_prov.dart';
 import 'package:badboys/router/app_router.dart';
-import 'package:badboys/screen/chat/chat_list_screen.dart';
-import 'package:badboys/screen/comn/custom_bottom_nav_screen.dart';
-import 'package:badboys/screen/gameStart/count_down_screen.dart';
-import 'package:badboys/screen/gameStart/playing_screen.dart';
-import 'package:badboys/screen/home/home_screen.dart';
-import 'package:badboys/screen/info/mercenary_info_screen.dart';
-import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
-import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:firebase_core/firebase_core.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "env/config.env");
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions,  // FirebaseOptions 설정
   );
-
-  runApp(MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (context) => AuthProv()),
+        ChangeNotifierProvider(create: (context) => MemberProv()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 // _navScreen = <Widget>[

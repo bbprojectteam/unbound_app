@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" jdk="Android API 29 Platform" jdk_type="Android SDK">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<levels>
+		<level name="Flutter for Android" value="project"/>
+		<level name="KotlinJavaRuntime" value="project"/>
+	</levels>
+</component>

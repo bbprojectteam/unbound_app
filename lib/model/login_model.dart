@@ -1,0 +1,8 @@
+
+class LoginModel {
+
+
+  String? uid;
+
+
+}

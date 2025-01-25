@@ -1,5 +1,11 @@
+import 'dart:async';
+
+import 'package:badboys/prov/auth_prov.dart';
+import 'package:badboys/prov/member_prov.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -11,57 +17,62 @@ class SplashScreen extends StatefulWidget {
 
 class _SplashScreenState extends State<SplashScreen> {
 
-  bool _isNavigating = false;
 
   @override
   void initState() {
     super.initState();
-    _navigate();
+    _checkUser();
   }
 
-  Future<void> _navigate() async {
-    // UserProv userProv = Provider.of<UserProv>(context, listen: false);
-    // MemberModel model = userProv.model;
+  void _checkUser() {
+    User? user = FirebaseAuth.instance.currentUser; // 현재 사용자 정보 가져오기
 
-    /// 저장 되어있는 인증정보 가져오기
-    // await userProv.loadMemberData();
+    Timer(const Duration(seconds: 3), () async {
+      if (user == null) {
+        // 유저가 로그인 안 되어 있으면 Login 화면으로 이동
+        GoRouter.of(context).push('/login');
+        return;
+      }
 
-    await Future.delayed(Duration(seconds: 3));
+      AuthProv authProv = Provider.of<AuthProv>(context, listen: false);
+      MemberProv memberProv = Provider.of<MemberProv>(context, listen: false);
 
-    GoRouter.of(context).push('/login');
+
+      Future<void> _tryRefreshToken(User user) async {
+        try {
+          await user.getIdToken(true); // 강제로 토큰 갱신
+          bool isAuth = await authProv.fnAuthing(user);
+          if (isAuth) {
+            // 인증 성공
+            await memberProv.getMemberInfo(user.email!);
+            GoRouter.of(context).pushReplacement('/');
+          } else {
+            // 인증 실패
+            GoRouter.of(context).pushReplacement('/login');
+          }
+        } catch (e) {
+          print("토큰 강제 갱신 실패");
+          GoRouter.of(context).pushReplacement('/login');
+        }
+      }
 
 
-    // if (_isNavigating)
-    //   return; // 이미 탐색 중이면 종료
-    //
-    // setState(() {
-    //   _isNavigating = true; // 탐색 중임을 표시
-    // });
-    //
-    // if (model.memberAuthToken != null) {
-    //   print('2');
-    //   /// authtoken 유효성 검사 필요
-    //   if (await userProv.checkAuthToken()) {
-    //     print('3');
-    //     await userProv.getMemberInfo();
-    //
-    //   } else {
-    //     print('refresh토큰 생성');
-    //     /// 리프레쉬 토큰을 전달해 새 authtoken 발행
-    //     await userProv.fnSetAuthToken();
-    //   }
-    //   GoRouter.of(context).push('/');
-    // } else {
-    //   print('로그인창');
-    //   GoRouter.of(context).push('/login');
-    // }
+      Future<void> _handleAuth(User user) async {
+        bool isAuth = await authProv.fnAuthing(user);
+        if (isAuth) {
+          // 인증이 되었을 때
+          await memberProv.getMemberInfo(user.email!);
+          GoRouter.of(context).pushReplacement('/');
+        } else {
+          // 인증 실패
+          await _tryRefreshToken(user);
+        }
+      }
 
-  }
 
-  @override
-  void dispose() {
-    // 필요시 정리 작업 수행
-    super.dispose();
+      // 첫 번째 인증 시도
+      await _handleAuth(user);
+    });
   }
 
   @override
