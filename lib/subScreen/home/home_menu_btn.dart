@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class HomeMenuBtn extends StatelessWidget {
@@ -8,7 +10,8 @@ class HomeMenuBtn extends StatelessWidget {
     required this.imagePath,
     required this.title,
     required this.iconWSize,
-    required this.iconHSize
+    required this.iconHSize,
+    required this.uri
   });
 
   final IconData? icon;
@@ -16,33 +19,39 @@ class HomeMenuBtn extends StatelessWidget {
   final String title;
   final double iconWSize;
   final double iconHSize;
+  final String? uri;
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return GestureDetector(
+      onTap: ()=>{
+        Get.toNamed(uri!)
+      },
+      child: Column(
+        children: [
 
-        if(icon != null)
-          Icon(icon,),
+          if(icon != null)
+            Icon(icon,),
 
 
-        if(imagePath != null)
-          Image.asset(
-            imagePath!,
-            width: iconWSize,
-            height: iconHSize,
-            color: Colors.white,
-            fit: BoxFit.cover,
-          ),
-        SizedBox(height: 10,),
-        Text(
-          title,
-          style: TextStyle(
+          if(imagePath != null)
+            Image.asset(
+              imagePath!,
+              width: iconWSize,
+              height: iconHSize,
               color: Colors.white,
-              fontWeight: FontWeight.w700
+              fit: BoxFit.cover,
+            ),
+          SizedBox(height: 10,),
+          Text(
+            title,
+            style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w700
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

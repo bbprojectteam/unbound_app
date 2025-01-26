@@ -1,6 +1,10 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/splash_screen.dart';
+import 'package:badboys/screen/gameStart/count_down_screen.dart';
+import 'package:badboys/screen/gameStart/playing_screen.dart';
 import 'package:badboys/screen/home/home_screen.dart';
+import 'package:badboys/screen/info/mercenary_info_screen.dart';
+import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:badboys/screen/register/login.dart';
 import 'package:badboys/subScreen/comn/custom_bottom_navigatoion_bar.dart';
@@ -39,25 +43,25 @@ final router = GoRouter(
     GoRoute(
       path: '/mercenaryInfoScreen',
       builder: (context, state) {
-        return AppScreen(child: RankScreen());
+        return AppScreen(child: MercenaryInfoScreen());
       },
     ),
     GoRoute(
       path: '/lockerRoomScreen',
       builder: (context, state) {
-        return AppScreen(child: RankScreen());
+        return AppScreen(child: LockerRoomScreen());
       },
     ),
     GoRoute(
       path: '/playingScreen',
       builder: (context, state) {
-        return AppScreen(child: RankScreen());
+        return AppScreen(child: PlayingScreen());
       },
     ),
     GoRoute(
       path: '/countDownScreen',
       builder: (context, state) {
-        return AppScreen(child: RankScreen());
+        return AppScreen(child: CountDownScreen());
       },
     ),
 

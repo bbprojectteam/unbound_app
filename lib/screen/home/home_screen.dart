@@ -5,6 +5,9 @@ import 'package:badboys/screen/info/mercenary_info_screen.dart';
 import 'package:badboys/subScreen/home/home_menu_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -422,7 +425,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       }
                                     else if (matchIndex == 1)
                                       {
-                                        /*4*/
+                                        Get.toNamed('/mercenaryInfoScreen')
                                       }
                                   },
                                   child: Container(
@@ -444,20 +447,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,),
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/rank.png', title: "동네랭킹" ,iconWSize: 6.6.w, iconHSize: 3.h ,),
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/play_record.png', title: "경기기록" ,iconWSize: 6.6.w, iconHSize: 3.h ,),
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/notice.png', title: "공지" ,iconWSize: 10.6.w, iconHSize: 3.h ,),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri: '/',),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/rank.png', title: "동네랭킹" ,iconWSize: 6.6.w, iconHSize: 3.h ,uri: '/rank',),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/play_record.png', title: "경기기록" ,iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/notice.png', title: "공지" ,iconWSize: 10.6.w, iconHSize: 3.h ,uri:'/'),
                             ],
                           ),
                           SizedBox(height: 10,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,),
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,),
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,),
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "친구목록",iconWSize: 6.6.w, iconHSize: 3.h ,),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "친구목록",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
                             ],
                           ),
                         ],

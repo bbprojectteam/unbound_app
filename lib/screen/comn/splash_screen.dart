@@ -1,9 +1,11 @@
 import 'dart:async';
 
-import 'package:badboys/prov/auth_prov.dart';
-import 'package:badboys/prov/member_prov.dart';
+import 'package:badboys/controller/auth_controller.dart';
+import 'package:badboys/controller/member_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -30,39 +32,39 @@ class _SplashScreenState extends State<SplashScreen> {
     Timer(const Duration(seconds: 3), () async {
       if (user == null) {
         // 유저가 로그인 안 되어 있으면 Login 화면으로 이동
-        GoRouter.of(context).push('/login');
+        Get.toNamed('/login');
         return;
       }
 
-      AuthProv authProv = Provider.of<AuthProv>(context, listen: false);
-      MemberProv memberProv = Provider.of<MemberProv>(context, listen: false);
+      final AuthController authController = Get.find<AuthController>();
+      final MemberController memberController = Get.find<MemberController>();
 
 
       Future<void> _tryRefreshToken(User user) async {
         try {
           await user.getIdToken(true); // 강제로 토큰 갱신
-          bool isAuth = await authProv.fnAuthing(user);
+          bool isAuth = await authController.fnAuthing(user);
           if (isAuth) {
             // 인증 성공
-            await memberProv.getMemberInfo(user.email!);
-            GoRouter.of(context).pushReplacement('/');
+            await memberController.getMemberInfo(user.email!);
+            Get.toNamed('/');
           } else {
             // 인증 실패
-            GoRouter.of(context).pushReplacement('/login');
+            Get.toNamed('/login');
           }
         } catch (e) {
           print("토큰 강제 갱신 실패");
-          GoRouter.of(context).pushReplacement('/login');
+          Get.toNamed('/login');
         }
       }
 
 
       Future<void> _handleAuth(User user) async {
-        bool isAuth = await authProv.fnAuthing(user);
+        bool isAuth = await authController.fnAuthing(user);
         if (isAuth) {
           // 인증이 되었을 때
-          await memberProv.getMemberInfo(user.email!);
-          GoRouter.of(context).pushReplacement('/');
+          await memberController.getMemberInfo(user.email!);
+          Get.toNamed('/');
         } else {
           // 인증 실패
           await _tryRefreshToken(user);

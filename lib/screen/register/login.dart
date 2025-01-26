@@ -1,8 +1,9 @@
+import 'package:badboys/controller/auth_controller.dart';
+import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/firebase/auth_service.dart';
-import 'package:badboys/prov/auth_prov.dart';
-import 'package:badboys/prov/member_prov.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -21,8 +22,8 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-    AuthProv authProv = Provider.of<AuthProv>(context);
-    MemberProv memberProv = Provider.of<MemberProv>(context);
+    final AuthController authController = Get.find<AuthController>();
+    final MemberController memberController = Get.find<MemberController>();
 
     return
       Scaffold(
@@ -76,9 +77,8 @@ class _LoginScreenState extends State<LoginScreen> {
                         onPressed: () async {
                           User? user = await _authService.signInWithGoogle();
                           if (user != null) {
-                            await memberProv.getMemberInfo(user.email!);
-                            GoRouter.of(context).push('/');
-
+                            await memberController.getMemberInfo(user.email!);
+                            Get.toNamed('/');
                           } else {
                             print('로그인 실패');
                           }

@@ -3,10 +3,8 @@ import 'package:flutter/material.dart';
 class CountDownScreen extends StatefulWidget {
   const CountDownScreen({
     super.key,
-    required this.fnRouter,
   });
 
-  final Function fnRouter;
 
   @override
   State<CountDownScreen> createState() => _CountDownScreenState();
@@ -18,7 +16,7 @@ class _CountDownScreenState extends State<CountDownScreen> {
     super.initState();
     // Delay the navigation by 5 seconds
     Future.delayed(Duration(seconds: 5), () {
-      widget.fnRouter(5); // Call the fnRouter with the argument 5
+      // widget.fnRouter(5); // Call the fnRouter with the argument 5
     });
   }
 
