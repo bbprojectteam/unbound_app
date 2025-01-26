@@ -24,7 +24,7 @@ class Helpers {
         File? file, // 파일 첨부 (optional)
       }) async {
     try {
-      print('공통 API 호출');
+      print('공통 API 호출 : $url');
       var uri = Uri.parse("http://172.20.10.4:8080/"+ url);
       var request;
 

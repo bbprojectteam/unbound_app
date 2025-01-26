@@ -2,6 +2,7 @@ import 'package:badboys/screen/modalPop/team_chng_modal_pop.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomAppbarScreen extends StatefulWidget {
   const CustomAppbarScreen({
@@ -24,88 +25,60 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
 
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10),
-      color: Colors.white,
+      color: Colors.black,
+      width: 100.w,
       height: 80,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
-          GestureDetector(
-            onTap : () {
-              print('123123');
-            },
-            child: Icon(
-              Icons.account_circle_sharp,
-              color: Colors.black,
-              size: 30,
-            ),
-          ),
-          Text('언바운드',
+
+          Text(
+            'Unbound',
             style: TextStyle(
-              color: Colors.black,
+              color: Colors.white,
               fontWeight: FontWeight.w900,
               fontSize: 20,
               fontStyle: FontStyle.italic
             ),
           ),
 
-          Row(
-            children: [
-              GestureDetector(
-                onTap: ()=>{
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => RankScreen()),
-                  ),
-                },
-                child: Container(
-                  padding: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: SvgPicture.asset(
-                    'assets/images/chart.svg',
-                    width: 27,
-                    height: 27,
-                    color: Colors.black,
-                  ),
-                ),
-              ),
-              SizedBox(width: 9),
+          // Row(
+          //   children: [
+          //     if(widget.isNotification)
+          //       Container(
+          //         padding: EdgeInsets.all(3),
+          //         decoration: BoxDecoration(
+          //           color: Colors.black,
+          //           borderRadius: BorderRadius.circular(100),
+          //         ),
+          //         child: Icon(
+          //           Icons.notifications_none,
+          //           color: Colors.white,
+          //           size: 25,
+          //         ),
+          //       ),
+          //
+          //     if(widget.isListMenu)
+          //       GestureDetector(
+          //         onTap: ()=>{
+          //         _showDropdownMenu(context),
+          //         },
+          //         child: Container(
+          //           padding: EdgeInsets.all(3),
+          //           decoration: BoxDecoration(
+          //             color: Colors.white,
+          //             borderRadius: BorderRadius.circular(100),
+          //           ),
+          //           child: Icon(
+          //             Icons.menu_outlined,
+          //             color: Colors.black,
+          //             size: 25,
+          //           ),
+          //         ),
+          //       ),
+          //   ],
+          // ),
 
-              if(widget.isNotification)
-                Container(
-                  padding: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: Colors.white,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Icon(
-                    Icons.notifications_none,
-                    size: 25,
-                  ),
-                ),
-
-              if(widget.isListMenu)
-                GestureDetector(
-                  onTap: ()=>{
-                  _showDropdownMenu(context),
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Icon(
-                      Icons.menu_outlined,
-                      color: Colors.black,
-                      size: 25,
-                    ),
-                  ),
-                ),
-            ],
-          ),
         ],
       ),
     );
