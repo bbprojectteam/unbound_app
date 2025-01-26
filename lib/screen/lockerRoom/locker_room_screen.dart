@@ -1,6 +1,6 @@
 import 'package:badboys/screen/chat/chat_item.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
-import 'package:badboys/screen/home/match_list_item.dart';
+import 'package:badboys/subScreen/home/match_list_item.dart';
 import 'package:flutter/material.dart';
 
 class LockerRoomScreen extends StatefulWidget {

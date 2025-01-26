@@ -1,6 +1,6 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/court/court_screen.dart';
-import 'package:badboys/screen/home/match_list_item.dart';
+import 'package:badboys/subScreen/home/match_list_item.dart';
 import 'package:badboys/screen/info/mercenary_info_screen.dart';
 import 'package:badboys/subScreen/home/home_menu_btn.dart';
 import 'package:flutter/material.dart';
@@ -189,9 +189,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 5, bottom: 5),
                         decoration: BoxDecoration(
+                          color: Color(0xff333333),
                           borderRadius: BorderRadius.circular(50),
                           border:
-                              Border.all(color: Colors.white, width: 2.5),
+                              Border.all(color: Color(0xff333333), width: 2.5),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -219,9 +220,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 5, bottom: 5),
                         decoration: BoxDecoration(
+                          color: Color(0xff333333),
                           borderRadius: BorderRadius.circular(50),
                           border:
-                              Border.all(color: Colors.white, width: 2.5),
+                              Border.all(color: Color(0xff333333), width: 2.5),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -248,9 +250,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 5, bottom: 5),
                         decoration: BoxDecoration(
+                          color: Color(0xff333333),
                           borderRadius: BorderRadius.circular(50),
                           border:
-                              Border.all(color: Colors.white, width: 2.5),
+                              Border.all(color: Color(0xff333333), width: 2.5),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -273,8 +276,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             left: 10, right: 10, top: 5, bottom: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
+                          color: Color(0xff333333),
                           border:
-                              Border.all(color: Colors.white, width: 2.5),
+                              Border.all(color: Color(0xff333333), width: 2.5),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -301,9 +305,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         padding: EdgeInsets.only(
                             left: 10, right: 10, top: 5, bottom: 5),
                         decoration: BoxDecoration(
+                          color : Color(0xff333333),
                           borderRadius: BorderRadius.circular(50),
                           border:
-                              Border.all(color: Colors.white, width: 2.5),
+                              Border.all(color: Color(0xff333333), width: 2.5),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -331,8 +336,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             left: 10, right: 10, top: 5, bottom: 5),
                         decoration: BoxDecoration(
                           borderRadius: BorderRadius.circular(50),
+                          color: Color(0xff333333),
                           border:
-                              Border.all(color: Colors.white, width: 2.5),
+                              Border.all(color: Color(0xff333333), width: 2.5),
                         ),
                         child: Row(
                           mainAxisSize: MainAxisSize.min,
@@ -377,7 +383,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             height: 18.h,
                             decoration: BoxDecoration(
                               border: Border.all(
-                                  color: Colors.white, width: 5),
+                                  color: Colors.white, width: 3),
                               // 테두리 색상과 두께 설정
                               borderRadius:
                                   BorderRadius.circular(50), // 동그란 모서리 설정
@@ -388,6 +394,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 Row(
                                   mainAxisAlignment: MainAxisAlignment.center,
                                   children: [
+
                                     Text(
                                       "25-01-23",
                                       style: TextStyle(
@@ -395,6 +402,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                           fontSize: 18,
                                           fontWeight: FontWeight.w800),
                                     ),
+
                                   ],
                                 ),
                                 SizedBox(
@@ -425,7 +433,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                       }
                                     else if (matchIndex == 1)
                                       {
-                                        Get.toNamed('/mercenaryInfoScreen')
+                                        Get.toNamed('/lockerRoomScreen')
                                       }
                                   },
                                   child: Container(
@@ -460,7 +468,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
                               HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
                               HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "친구목록",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "신고하기",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/'),
                             ],
                           ),
                         ],
@@ -506,7 +514,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               tabs: [
                                 Tab(
                                   child: Text(
-                                    '테스트',
+                                    '경기 정보',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -515,7 +523,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ),
                                 Tab(
                                   child: Text(
-                                    '매치 찾기',
+                                    '이벤트',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -539,7 +547,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         Padding(
                                           padding: const EdgeInsets.all(15.0),
                                           child: Text(
-                                            '최근 진행된 매치',
+                                            '최근 진행된 경기',
                                             style: TextStyle(
                                                 fontWeight: FontWeight.w700,
                                                 fontSize: 17,
@@ -559,7 +567,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                 Container(
                                                   decoration: BoxDecoration(
                                                     borderRadius: BorderRadius.circular(10),
-                                                    border: Border.all(width: 4, color: Colors.white.withOpacity(0.5)),
+                                                    border: Border.all(width: 3, color: Colors.white),
                                                   ),
                                                   child: Row(
                                                     mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -679,110 +687,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         ),
 
                                         SizedBox(
-                                          height: 10,
+                                          height: 20,
                                         ),
 
-                                        SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              for (int i = 0; i < 5; i++)
-                                                Container(
-                                                  padding: EdgeInsets.all(15),
-                                                  child: Column(
-                                                    crossAxisAlignment:
-                                                        CrossAxisAlignment
-                                                            .center,
-                                                    children: [
-                                                      Stack(
-                                                        children: [
-                                                          ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        5),
-                                                            child: Image.asset(
-                                                              'assets/images/intro.png',
-                                                              width: maxWidth *
-                                                                  0.3,
-                                                              height:
-                                                                  maxHeight *
-                                                                      0.1,
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
-                                                          Positioned(
-                                                            left: 0,
-                                                            bottom: 0,
-                                                            child: Column(
-                                                              crossAxisAlignment:
-                                                                  CrossAxisAlignment
-                                                                      .start,
-                                                              children: [],
-                                                            ),
-                                                          )
-                                                        ],
-                                                      ),
-                                                    ],
-                                                  ),
-                                                ),
-                                            ],
-                                          ),
-                                        ),
-                                        Container(
-                                          width: maxWidth * 0.9,
-                                          decoration: BoxDecoration(
-                                            border: Border(
-                                              bottom: BorderSide(
-                                                color: Colors.grey,
-                                                width: 1,
-                                              ),
-                                            ),
-                                          ),
-                                        ),
-                                        SingleChildScrollView(
-                                          scrollDirection: Axis.horizontal,
-                                          child: Row(
-                                            mainAxisAlignment:
-                                                MainAxisAlignment.center,
-                                            children: [
-                                              Container(
-                                                padding: EdgeInsets.all(15),
-                                                child: Column(
-                                                  crossAxisAlignment:
-                                                      CrossAxisAlignment.start,
-                                                  children: [
-                                                    ClipRRect(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              10),
-                                                      child: Image.asset(
-                                                        'assets/images/testCourt.png',
-                                                        width: maxWidth * 0.95,
-                                                        height:
-                                                            maxHeight * 0.15,
-                                                        fit: BoxFit.cover,
-                                                      ),
-                                                    ),
-                                                    SizedBox(
-                                                      height: 3,
-                                                    ),
-                                                    Text(
-                                                      '대전 서구 계룡로 실외 농구장',
-                                                      style: TextStyle(
-                                                          color: Colors.black,
-                                                          fontSize: 15,
-                                                          fontWeight:
-                                                              FontWeight.w800),
-                                                    ),
-                                                  ],
-                                                ),
-                                              ),
-                                            ],
-                                          ),
-                                        ),
+                                        for (int i = 0; i < 5; i++)
+                                          MatchListItem()
+
                                       ],
                                     ),
                                   ),
@@ -792,7 +702,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     child: Column(
                                       children: [
                                         for (int i = 0; i < 5; i++)
-                                          MatchListItem()
+                                          Text('123123'),
                                       ],
                                     ),
                                   ),
