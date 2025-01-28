@@ -1,7 +1,11 @@
-import 'package:badboys/screen/modalPop/team_chng_modal_pop.dart';
+
 import 'package:badboys/screen/rank/rank_screen.dart';
+import 'package:badboys/subScreen/lockerRoom/modalPop/team_chng_modal_pop.dart';
+import 'package:badboys/subScreen/lockerRoom/modalPop/team_player_list_modal_pop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomAppbarScreen extends StatefulWidget {
@@ -27,9 +31,9 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
       padding: EdgeInsets.only(left: 10, right: 10),
       color: Colors.black,
       width: 100.w,
-      height: 80,
+      height: 40,
       child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
 
           Text(
@@ -42,42 +46,42 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
             ),
           ),
 
-          // Row(
-          //   children: [
-          //     if(widget.isNotification)
-          //       Container(
-          //         padding: EdgeInsets.all(3),
-          //         decoration: BoxDecoration(
-          //           color: Colors.black,
-          //           borderRadius: BorderRadius.circular(100),
-          //         ),
-          //         child: Icon(
-          //           Icons.notifications_none,
-          //           color: Colors.white,
-          //           size: 25,
-          //         ),
-          //       ),
-          //
-          //     if(widget.isListMenu)
-          //       GestureDetector(
-          //         onTap: ()=>{
-          //         _showDropdownMenu(context),
-          //         },
-          //         child: Container(
-          //           padding: EdgeInsets.all(3),
-          //           decoration: BoxDecoration(
-          //             color: Colors.white,
-          //             borderRadius: BorderRadius.circular(100),
-          //           ),
-          //           child: Icon(
-          //             Icons.menu_outlined,
-          //             color: Colors.black,
-          //             size: 25,
-          //           ),
-          //         ),
-          //       ),
-          //   ],
-          // ),
+          Row(
+            children: [
+              if(widget.isNotification)
+                Container(
+                  padding: EdgeInsets.all(3),
+                  decoration: BoxDecoration(
+                    color: Colors.black,
+                    borderRadius: BorderRadius.circular(100),
+                  ),
+                  child: Icon(
+                    Icons.notifications_none,
+                    color: Colors.white,
+                    size: 25,
+                  ),
+                ),
+
+              if(widget.isListMenu)
+                GestureDetector(
+                  onTap: ()=>{
+                  _showDropdownMenu(context),
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: Colors.white,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Icon(
+                      Icons.menu_outlined,
+                      color: Colors.black,
+                      size: 25,
+                    ),
+                  ),
+                ),
+            ],
+          ),
 
         ],
       ),
@@ -88,11 +92,11 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
 
     await showMenu(
       context: context,
-      position: RelativeRect.fromLTRB(50, 70, 0, 0), // 드롭다운 위치
+      position: RelativeRect.fromLTRB(70, 80, 0, 0), // 드롭다운 위치
       items: [
         PopupMenuItem<int>(
-          value: 1,
-          child: Text('투표하기'),
+          value: 100,
+          child: Text('참여자 확인'),
         ),
         PopupMenuItem<int>(
           value: 200,
@@ -102,12 +106,26 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
           value: 300,
           child: Text('경기시작'),
         ),
+        PopupMenuItem<int>(
+          value: 1,
+          child: Text('대기실 나가기'),
+        ),
       ],
       elevation: 8.0,
     ).then((value) {
       if (value != null) {
 
-        if (value == 200) {
+        if(value == 100) {
+          showDialog<void>(
+            context: context,
+            barrierDismissible: true,
+            builder: (BuildContext context) {
+              return Dialog(
+                child: TeamPlayerListModalPop(),
+              );
+            },
+          );
+        } else if (value == 200) {
           showDialog<void>(
             context: context,
             barrierDismissible: true,
@@ -119,7 +137,7 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
           );
         } else if(value == 300){
 
-          // widget.fnRouter(6);
+          Get.toNamed('/countDownScreen');
 
         }
 

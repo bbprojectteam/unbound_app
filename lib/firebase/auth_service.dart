@@ -21,6 +21,15 @@ class AuthService {
 
     UserCredential userCredential = await _auth.signInWithCredential(credential);
 
+    final response = await Helpers.apiCall(
+        'auth/login',
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : userCredential.user!.getIdToken().toString()
+        },
+    );
+
     return userCredential.user;
   }
 

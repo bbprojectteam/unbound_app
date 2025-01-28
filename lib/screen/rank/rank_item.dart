@@ -16,17 +16,16 @@ class _RankItemState extends State<RankItem> {
   @override
   Widget build(BuildContext context) {
 
-    double maxWidth = MediaQuery.of(context).size.width;
-    double maxHeight = MediaQuery.of(context).size.height;
-
 
     return Container(
       padding: EdgeInsets.only(top:5,bottom :5,left: 8,right: 8),
       decoration: BoxDecoration(
-        border: Border(
+        border: widget.testRankIdx == 4
+            ? Border.all(color: Colors.red,width: 2)
+            : Border(
           bottom: BorderSide(
             color: Colors.grey.withOpacity(0.5), // Set the border color
-            width: 1, // Set the border width
+            width: 2, // Set the border width
           ),
         ),
       ),
@@ -80,12 +79,12 @@ class _RankItemState extends State<RankItem> {
                 height: 30,
                 decoration: BoxDecoration(
                   borderRadius: BorderRadius.circular(100),
-                  border: Border.all(width: 2,color: Colors.deepPurple)
+                  border: Border.all(width: 2,color: Colors.grey)
                 ),
                 child: Center(
                   child: Text(
                     (widget.testRankIdx! + 1).toString(),
-                    style: TextStyle(fontSize: 17, fontWeight: FontWeight.w700),
+                    style: TextStyle(color: Colors.white,fontSize: 17, fontWeight: FontWeight.w700),
                   ),
                 ),
               ),
@@ -118,12 +117,12 @@ class _RankItemState extends State<RankItem> {
                       Text(
                         "오민규",
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700),
+                            fontSize: 15, fontWeight: FontWeight.w700,color: Colors.white),
                       ),
                       Text(
-                        "MMR 2042",
+                        "pts 2042",
                         style: TextStyle(
-                            fontSize: 15, fontWeight: FontWeight.w700),
+                            fontSize: 15, fontWeight: FontWeight.w700,color: Colors.grey),
                       ),
                     ],
                   ),
@@ -141,7 +140,7 @@ class _RankItemState extends State<RankItem> {
                   '15',
                   style: TextStyle(
                     fontSize: 15,
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.white.withOpacity(0.5),
                     fontWeight: FontWeight.w700,
                   ),
                 ),
@@ -157,7 +156,7 @@ class _RankItemState extends State<RankItem> {
                   '65%',
                   style: TextStyle(
                     fontSize: 15,
-                    color: Colors.black.withOpacity(0.5),
+                    color: Colors.white.withOpacity(0.5),
                     fontWeight: FontWeight.w700,
                   ),
                 ),

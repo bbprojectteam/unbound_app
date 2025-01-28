@@ -1,4 +1,4 @@
-import 'package:badboys/screen/chat/chat_item.dart';
+import 'package:badboys/subScreen/lockerRoom/chat_item.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:flutter/material.dart';
 

@@ -28,7 +28,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _checkUser() {
     User? user = FirebaseAuth.instance.currentUser; // 현재 사용자 정보 가져오기
-
     Timer(const Duration(seconds: 3), () async {
       if (user == null) {
         // 유저가 로그인 안 되어 있으면 Login 화면으로 이동

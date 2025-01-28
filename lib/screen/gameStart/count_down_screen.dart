@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 
 class CountDownScreen extends StatefulWidget {
   const CountDownScreen({
@@ -16,7 +18,7 @@ class _CountDownScreenState extends State<CountDownScreen> {
     super.initState();
     // Delay the navigation by 5 seconds
     Future.delayed(Duration(seconds: 5), () {
-      // widget.fnRouter(5); // Call the fnRouter with the argument 5
+      Get.toNamed('/playingScreen');
     });
   }
 

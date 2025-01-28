@@ -25,7 +25,7 @@ class Helpers {
       }) async {
     try {
       print('공통 API 호출 : $url');
-      var uri = Uri.parse("http://172.20.10.4:8080/"+ url);
+      var uri = Uri.parse("http://3.34.212.4:8080/"+ url);
       var request;
 
       if (method == 'POST') {
@@ -50,6 +50,8 @@ class Helpers {
             ..headers.addAll(headers ?? {})
             ..body = json.encode(body);
         }
+
+
         // POST 요청 보내기
         var response = await request.send();
         var httpResponse = await http.Response.fromStream(response);
