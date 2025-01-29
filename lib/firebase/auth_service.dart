@@ -30,6 +30,8 @@ class AuthService {
         },
     );
 
+    print(response);
+
     return userCredential.user;
   }
 

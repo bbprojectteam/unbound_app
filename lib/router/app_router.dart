@@ -1,9 +1,9 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/splash_screen.dart';
-import 'package:badboys/screen/gameStart/count_down_screen.dart';
-import 'package:badboys/screen/gameStart/playing_screen.dart';
+import 'package:badboys/screen/game/count_down_screen.dart';
+import 'package:badboys/screen/game/playing_screen.dart';
 import 'package:badboys/screen/home/home_screen.dart';
-import 'package:badboys/screen/info/mercenary_info_screen.dart';
+import 'package:badboys/screen/info/member_page_screen.dart';
 import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:badboys/screen/register/login.dart';
@@ -58,8 +58,12 @@ class _AppScreenState extends State<AppScreen> {
 
   @override
   Widget build(BuildContext context) {
-    bool showBottomNav =
-    !(widget.child is SplashScreen || widget.child is LoginScreen);
+    bool showBottomNav = !(
+        widget.child is SplashScreen ||
+        widget.child is LoginScreen ||
+        widget.child is CountDownScreen ||
+        widget.child is PlayingScreen
+    );
 
     return Scaffold(
       body: Stack(

@@ -11,7 +11,8 @@ class HomeMenuBtn extends StatelessWidget {
     required this.title,
     required this.iconWSize,
     required this.iconHSize,
-    required this.uri
+    required this.uri,
+    required this.arguments,
   });
 
   final IconData? icon;
@@ -20,12 +21,15 @@ class HomeMenuBtn extends StatelessWidget {
   final double iconWSize;
   final double iconHSize;
   final String? uri;
+  final Map<String,dynamic> arguments;
 
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: ()=>{
-        Get.toNamed(uri!)
+        Get.toNamed(uri!,
+          arguments: arguments,
+        )
       },
       child: Column(
         children: [

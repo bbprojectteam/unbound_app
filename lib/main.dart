@@ -4,13 +4,15 @@ import 'package:badboys/firebase/firebase_options.dart';
 import 'package:badboys/router/app_router.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/splash_screen.dart';
-import 'package:badboys/screen/gameStart/count_down_screen.dart';
-import 'package:badboys/screen/gameStart/playing_screen.dart';
+import 'package:badboys/screen/game/count_down_screen.dart';
+import 'package:badboys/screen/game/play_info_screen.dart';
+import 'package:badboys/screen/game/playing_screen.dart';
 import 'package:badboys/screen/home/home_screen.dart';
-import 'package:badboys/screen/info/mercenary_info_screen.dart';
+import 'package:badboys/screen/info/member_page_screen.dart';
 import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:badboys/screen/register/login.dart';
+import 'package:badboys/screen/report/report_screen.dart';
 import 'package:badboys/subScreen/comn/custom_bottom_navigatoion_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
@@ -48,14 +50,18 @@ class MyApp extends StatelessWidget {
                   page: () => AppScreen(child: LoginScreen())),
               GetPage(name: '/rank',
                   page: () => AppScreen(child: RankScreen())),
-              GetPage(name: '/mercenaryInfoScreen',
-                  page: () => AppScreen(child: MercenaryInfoScreen())),
+              GetPage(name: '/memberPageScreen',
+                  page: () => AppScreen(child: MemberPageScreen())),
               GetPage(name: '/lockerRoomScreen',
                   page: () => AppScreen(child: LockerRoomScreen())),
               GetPage(name: '/playingScreen',
                   page: () => AppScreen(child: PlayingScreen())),
               GetPage(name: '/countDownScreen',
                   page: () => AppScreen(child: CountDownScreen())),
+              GetPage(name: '/playInfo',
+                  page: () => AppScreen(child: PlayInfoScreen())),
+              GetPage(name: '/report',
+                  page: () => AppScreen(child: ReportScreen())),
             ],
           );
         }
