@@ -157,15 +157,10 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                           child: Column(
                             children: [
                               MemberPlayRecordItem(isWin: true,),
-                              SizedBox(height: 10,),
                               MemberPlayRecordItem(isWin: false,),
-                              SizedBox(height: 10,),
                               MemberPlayRecordItem(isWin: true,),
-                              SizedBox(height: 10,),
                               MemberPlayRecordItem(isWin: false,),
-                              SizedBox(height: 10,),
                               MemberPlayRecordItem(isWin: true,),
-                              SizedBox(height: 10,),
                             ],
                           ),
                         ),

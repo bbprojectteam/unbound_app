@@ -623,13 +623,26 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                                     ),
                                                   ),
                                                   // 'vs' Text
-                                                  Text(
-                                                    'vs',
-                                                    style: TextStyle(
-                                                        fontSize: 20,
-                                                        fontWeight: FontWeight.bold,
-                                                        color: Colors.white
-                                                    ),
+                                                  Column(
+                                                    mainAxisAlignment: MainAxisAlignment.center,
+                                                    children: [
+
+                                                      Text('10 : 3',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight.w700
+                                                        ),
+                                                      ),
+
+                                                      Text('00:46분',
+                                                        style: TextStyle(
+                                                            color: Colors.white,
+                                                            fontSize: 16,
+                                                            fontWeight: FontWeight.w700
+                                                        ),
+                                                      ),
+                                                    ],
                                                   ),
                                                   // Second Team Column
                                                   Padding(

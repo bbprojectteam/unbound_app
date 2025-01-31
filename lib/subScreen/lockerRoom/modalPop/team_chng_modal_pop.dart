@@ -57,8 +57,6 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
     double maxHeight = MediaQuery.of(context).size.height;
 
 
-
-
     return Container(
       width: maxWidth,
       height: maxHeight * 0.47,
