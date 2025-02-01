@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MemberPageScreen extends StatefulWidget {
   const MemberPageScreen({super.key});
@@ -31,16 +32,17 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
   @override
   Widget build(BuildContext context) {
 
-    double maxWidth = MediaQuery.of(context).size.width;
-    double maxHeight = MediaQuery.of(context).size.height;
-    var args = Get.arguments;
+    dynamic args = Get.arguments ?? {};
+    if (args == null || args['tab'] == null){
+      args['tab'] = 0;
+    }
     _tabController.index  = args['tab'];
 
     return Scaffold(
       body: Container(
         color: Colors.black,
-        width: maxWidth,
-        height: maxHeight,
+        width: 100.w,
+        height: 100.h,
         child: SingleChildScrollView(
           child: Column(
             children: [
@@ -111,12 +113,12 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
 
               // Tab view content
               Container(
-                height: maxHeight * 0.5,
+                height: 50.h,
                 child: TabBarView(
                   controller: _tabController,
                   children: [
                     Container(
-                      width : maxWidth,
+                      width : 100.w,
                       height: 100,
                       padding: EdgeInsets.all(15),
                       child: Column(

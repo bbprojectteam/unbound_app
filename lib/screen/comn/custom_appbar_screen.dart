@@ -1,7 +1,7 @@
 
+import 'package:badboys/modal/team_player_list_modal_pop.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
-import 'package:badboys/subScreen/lockerRoom/modalPop/team_chng_modal_pop.dart';
-import 'package:badboys/subScreen/lockerRoom/modalPop/team_player_list_modal_pop.dart';
+import 'package:badboys/modal/team_chng_modal_pop.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -49,16 +49,21 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
           Row(
             children: [
               if(widget.isNotification)
-                Container(
-                  padding: EdgeInsets.all(3),
-                  decoration: BoxDecoration(
-                    color: Colors.black,
-                    borderRadius: BorderRadius.circular(100),
-                  ),
-                  child: Icon(
-                    Icons.notifications_none,
-                    color: Colors.white,
-                    size: 25,
+                GestureDetector(
+                  onTap: (){
+                    Get.toNamed("/notification");
+                  },
+                  child: Container(
+                    padding: EdgeInsets.all(3),
+                    decoration: BoxDecoration(
+                      color: Colors.black,
+                      borderRadius: BorderRadius.circular(100),
+                    ),
+                    child: Icon(
+                      Icons.notifications_none,
+                      color: Colors.white,
+                      size: 25,
+                    ),
                   ),
                 ),
 

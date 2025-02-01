@@ -5,11 +5,12 @@ import 'package:badboys/router/app_router.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/splash_screen.dart';
 import 'package:badboys/screen/game/count_down_screen.dart';
-import 'package:badboys/screen/game/play_info_screen.dart';
+import 'package:badboys/screen/playHistory/play_history_screen.dart';
 import 'package:badboys/screen/game/playing_screen.dart';
 import 'package:badboys/screen/home/home_screen.dart';
 import 'package:badboys/screen/info/member_page_screen.dart';
 import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
+import 'package:badboys/screen/notification/notification_screen.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:badboys/screen/register/login.dart';
 import 'package:badboys/screen/report/report_screen.dart';
@@ -62,6 +63,11 @@ class MyApp extends StatelessWidget {
                   page: () => AppScreen(child: PlayInfoScreen())),
               GetPage(name: '/report',
                   page: () => AppScreen(child: ReportScreen())),
+              GetPage(name: '/notification',
+                  page: () => AppScreen(child: NotificationScreen())),
+
+
+
             ],
           );
         }

@@ -1,5 +1,5 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
-import 'package:badboys/subScreen/lockerRoom/modalPop/team_player_list_item.dart';
+import 'package:badboys/modal/team_player_list_item.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 

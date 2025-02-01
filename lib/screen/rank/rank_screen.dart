@@ -1,5 +1,5 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
-import 'package:badboys/screen/rank/rank_item.dart';
+import 'package:badboys/subScreen/rank/rank_item.dart';
 import 'package:flutter/material.dart';
 
 class RankScreen extends StatefulWidget {

@@ -1,9 +1,10 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
-import 'package:badboys/screen/court/court_screen.dart';
+import 'package:badboys/screen/comn/custom_select_bottom_modal_screen.dart';
 import 'package:badboys/subScreen/home/event_list_item.dart';
 import 'package:badboys/subScreen/home/match_list_item.dart';
 import 'package:badboys/screen/info/member_page_screen.dart';
 import 'package:badboys/subScreen/home/home_menu_btn.dart';
+import 'package:badboys/subScreen/playHistory/play_history_result_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -188,32 +189,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   child: Row(
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     children: [
-                      Container(
-                        padding: EdgeInsets.only(
-                            left: 10, right: 10, top: 5, bottom: 5),
-                        decoration: BoxDecoration(
-                          color: Color(0xff333333),
-                          borderRadius: BorderRadius.circular(50),
-                          border:
-                          Border.all(color: Color(0xff333333), width: 2.5),
-                        ),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            Text(
-                              '지역',
-                              style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 13,
+                      GestureDetector(
+                        onTap:(){
+                          showModalBottomSheet(
+                            context: context,
+                            builder: (BuildContext context) {
+                              return CustomSelectBottomModalScreen();
+                            },
+                          );
+                        },
+                        child: Container(
+                          padding: EdgeInsets.only(
+                              left: 10, right: 10, top: 5, bottom: 5),
+                          decoration: BoxDecoration(
+                            color: Color(0xff333333),
+                            borderRadius: BorderRadius.circular(50),
+                            border:
+                            Border.all(color: Color(0xff333333), width: 2.5),
+                          ),
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                            mainAxisSize: MainAxisSize.min,
+                            children: [
+                              Text(
+                                '지역',
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13,
+                                ),
                               ),
-                            ),
-                            Icon(
-                              Icons.arrow_drop_down_sharp,
-                              color: Colors.white,
-                              size: 15,
-                            ),
-                          ],
+                              Icon(
+                                Icons.arrow_drop_down_sharp,
+                                color: Colors.white,
+                                size: 15,
+                              ),
+                            ],
+                          ),
                         ),
                       ),
                       SizedBox(
@@ -550,160 +561,13 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         ),
                                       ),
                                     ),
+
                                     Container(
-                                      width: maxWidth,
-                                      height: maxHeight * 0.23,
-                                      child: PageView(
-                                        controller: _pageController,
-                                        // Use the PageController
-                                        scrollDirection: Axis.horizontal,
-                                        children: [
-                                          for (int i = 0; i < 3; i++) ...[
-                                            Container(
-                                              decoration: BoxDecoration(
-                                                borderRadius: BorderRadius.circular(10),
-                                                border: Border.all(width: 3, color: Colors.white),
-                                              ),
-                                              child: Row(
-                                                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                children: [
-                                                  // First Team Column
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                      children: [
-                                                        Text(
-                                                          'WIN',
-                                                          style: TextStyle(color: Colors.white,
-                                                            fontWeight: FontWeight.w800,
-                                                          ),
-                                                        ),
-                                                        for (int i = 0; i < 3; i++) ...[
-                                                          Row(
-                                                            children: [
-                                                              ClipOval(
-                                                                child: Image.asset(
-                                                                  'assets/images/intro.png',
-                                                                  width: 35,
-                                                                  height: 35,
-                                                                  fit: BoxFit.fill,
-                                                                ),
-                                                              ),
-                                                              SizedBox(width: 10,),
-                                                              Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  Text(
-                                                                    '오민규',
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight
-                                                                            .w700,
-                                                                        fontSize:
-                                                                        16,
-                                                                        color: Colors.white
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    '2121점',
-                                                                    style: TextStyle(
-                                                                      color: Colors
-                                                                          .grey,
-                                                                      fontWeight: FontWeight
-                                                                          .w700,
-                                                                      fontSize:
-                                                                      15,),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ],
-                                                    ),
-                                                  ),
-                                                  // 'vs' Text
-                                                  Column(
-                                                    mainAxisAlignment: MainAxisAlignment.center,
-                                                    children: [
-
-                                                      Text('10 : 3',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16,
-                                                            fontWeight: FontWeight.w700
-                                                        ),
-                                                      ),
-
-                                                      Text('00:46분',
-                                                        style: TextStyle(
-                                                            color: Colors.white,
-                                                            fontSize: 16,
-                                                            fontWeight: FontWeight.w700
-                                                        ),
-                                                      ),
-                                                    ],
-                                                  ),
-                                                  // Second Team Column
-                                                  Padding(
-                                                    padding: const EdgeInsets.only(top: 10,bottom: 10),
-                                                    child: Column(
-                                                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                                                      children: [
-                                                        Text(
-                                                          'LOSE',
-                                                          style: TextStyle(color: Colors.white,
-                                                            fontWeight: FontWeight.w800,
-                                                          ),
-                                                        ),
-                                                        for (int i = 0; i < 3; i++) ...[
-                                                          Row(
-                                                            children: [
-                                                              ClipOval(
-                                                                child: Image.asset(
-                                                                  'assets/images/intro.png',
-                                                                  width: 35,
-                                                                  height: 35,
-                                                                  fit: BoxFit.fill,
-                                                                ),
-                                                              ),
-                                                              SizedBox(width: 10,),
-                                                              Column(
-                                                                crossAxisAlignment: CrossAxisAlignment.start,
-                                                                children: [
-                                                                  Text(
-                                                                    '오민규',
-                                                                    style: TextStyle(
-                                                                        fontWeight: FontWeight
-                                                                            .w700,
-                                                                        fontSize:
-                                                                        16,
-                                                                        color: Colors.white
-                                                                    ),
-                                                                  ),
-                                                                  Text(
-                                                                    '2321점',
-                                                                    style: TextStyle(
-                                                                      color: Colors.grey,
-                                                                      fontWeight: FontWeight.w700,
-                                                                      fontSize:
-                                                                      15,),
-                                                                  ),
-                                                                ],
-                                                              ),
-                                                            ],
-                                                          ),
-                                                        ],
-                                                      ],
-                                                    ),
-                                                  ),
-                                                ],
-                                              ),
-                                            ),
-                                          ]
-                                          // Add more pages as needed
-                                        ],
+                                      decoration: BoxDecoration(
+                                        borderRadius : BorderRadius.circular(10),
+                                        border:  Border.all(width: 3,color: Colors.white)
                                       ),
+                                        child: PlayHistoryResultItem(pageCnt: 3,),
                                     ),
 
                                     SizedBox(

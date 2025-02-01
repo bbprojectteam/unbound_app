@@ -1,5 +1,5 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
-import 'package:badboys/screen/modal/playing_result_modal.dart';
+import 'package:badboys/modal/playing_result_modal.dart';
 import 'package:flutter/material.dart';
 import 'dart:async'; // 타이머를 사용하기 위한 패키지
 
@@ -183,7 +183,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                 children: [
                   Text(
                     'Play Ball!',
-                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700),
+                    style: TextStyle(color: Colors.white,fontSize: 19, fontWeight: FontWeight.w700),
                   ),
                   Text(
                     _formatTime(_minutes, _seconds, _milliseconds), // 분:초:밀리세컨드 표시
