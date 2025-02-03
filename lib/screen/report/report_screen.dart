@@ -11,8 +11,8 @@ class ReportScreen extends StatefulWidget {
 }
 
 class _ReportScreenState extends State<ReportScreen> {
-  late String? _selectedReason; // 선택한 신고 사유를 저장할 변수
-  late String? _selectedMember; // 선택한 신고 멤버를 저장할 변수
+  late String? _selectedReason = null; // 선택한 신고 사유를 저장할 변수
+  late String? _selectedMember = null; // 선택한 신고 멤버를 저장할 변수
   TextEditingController _reportController = TextEditingController(); // 신고 사유를 적는 텍스트 필드 컨트롤러
 
   late final List<String> _reportReasons = [

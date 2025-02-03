@@ -5,6 +5,7 @@ import 'package:badboys/router/app_router.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/splash_screen.dart';
 import 'package:badboys/screen/game/count_down_screen.dart';
+import 'package:badboys/screen/inquiry/inquiry_screen.dart';
 import 'package:badboys/screen/playHistory/play_history_screen.dart';
 import 'package:badboys/screen/game/playing_screen.dart';
 import 'package:badboys/screen/home/home_screen.dart';
@@ -65,7 +66,8 @@ class MyApp extends StatelessWidget {
                   page: () => AppScreen(child: ReportScreen())),
               GetPage(name: '/notification',
                   page: () => AppScreen(child: NotificationScreen())),
-
+              GetPage(name: '/inquiry',
+                  page: () => AppScreen(child: InquiryScreen())),
 
 
             ],
