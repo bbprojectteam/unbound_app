@@ -1,7 +1,10 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/modal/playing_result_modal.dart';
 import 'package:flutter/material.dart';
-import 'dart:async'; // 타이머를 사용하기 위한 패키지
+import 'package:flutter_svg/flutter_svg.dart';
+import 'dart:async';
+
+import 'package:responsive_sizer/responsive_sizer.dart'; // 타이머를 사용하기 위한 패키지
 
 class PlayingScreen extends StatefulWidget {
   const PlayingScreen({
@@ -109,153 +112,243 @@ class _PlayingScreenState extends State<PlayingScreen> {
           // 경기 이름 텍스트
 
           SizedBox(height: 5),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceAround,
-            children: [
 
-              Column(
+
+          Column(
+            children: [
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text('A팀',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: Colors.white),),
-                  Row(
-                    children: [
-                      for (int i = 0; i < 3; i++)
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.account_circle_sharp,
-                              size: 60,
-                                color: Colors.white
-                            ),
-                            Text(
-                              '오민규',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700,color: Colors.white),
-                            ),
-                          ],
-                        ),
-                    ],
+                  for (int i = 0; i < 3; i++)
+                    ClipOval(
+                      child: Image.asset(
+                        'assets/images/intro.png',
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
+                ],
+              ),
+              Padding(
+                padding: const EdgeInsets.all(8.0),
+                child: Text(
+                  'vs',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w600
                   ),
+                ),
+              ),
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  for (int i = 0; i < 3; i++)
+                    ClipOval(
+                      child: Image.asset(
+                        'assets/images/intro.png',
+                        width: 40,
+                        height: 40,
+                        fit: BoxFit.fill,
+                      ),
+                    ),
                 ],
               ),
 
+            ],
+          ),
 
-              Column(
+
+
+          // _minutes, _seconds, _milliseconds
+
+
+
+          SizedBox(height: 25),
+          // 타이머 화면
+          Container(
+            width: maxWidth,
+            child: Center(
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 children: [
-                  Text('B팀',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w700,color: Colors.white),),
-                  Row(
+
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
                     children: [
-                      for (int i = 0; i < 3; i++)
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.start,
-                          children: [
-                            Icon(
-                              Icons.account_circle_sharp,
-                              size: 60,
-                                color: Colors.white
-                            ),
-                            Text(
-                              '오민규',
-                              style: TextStyle(
-                                  fontSize: 16, fontWeight: FontWeight.w700,color: Colors.white),
-                            ),
-                          ],
+                      Container(
+                        width : maxWidth * 0.28,
+                        height: maxHeight * 0.065,
+                        decoration: BoxDecoration(
+                          color: Color(0xff333333),
+                          borderRadius: BorderRadius.circular(10),
                         ),
+                        child: Center(
+                          child: Text('00',
+                            style: TextStyle(
+                              color: Colors.white,
+                              fontSize: 27,
+                              fontWeight: FontWeight.w700
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Text('시',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500
+                        ),
+                      ),
+
                     ],
                   ),
+
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width : maxWidth * 0.28,
+                        height: maxHeight * 0.065,
+                        decoration: BoxDecoration(
+                          color: Color(0xff333333),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text(
+                            '$_minutes',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 27,
+                                fontWeight: FontWeight.w700
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Text('분',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ],
+                  ),
+                  Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Container(
+                        width : maxWidth * 0.28,
+                        height: maxHeight * 0.065,
+                        decoration: BoxDecoration(
+                          color: Color(0xff333333),
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        child: Center(
+                          child: Text('$_seconds',
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontSize: 27,
+                                fontWeight: FontWeight.w700
+                            ),
+                          ),
+                        ),
+                      ),
+                      SizedBox(height: 10,),
+                      Text('초',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontSize: 15,
+                            fontWeight: FontWeight.w500
+                        ),
+                      ),
+                    ],
+                  ),
+
+
+
                 ],
+              ),
+            ),
+          ),
+          SizedBox(height: 15),
+          Column(
+            children: [
+              Text(
+                '대전 탄방동 스꺼러 경기장',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.white),
+              ),
+              Text(
+                '25-01-01 14:30',
+                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500,color: Colors.white),
               ),
             ],
           ),
 
-          SizedBox(height: 15),
-          // 타이머 화면
           Container(
-            width: maxWidth * 0.6,
-            height: maxHeight * 0.27,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(500),
-              border: Border.all(color: Colors.white, width: 3),
-            ),
-            child: Center(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  Text(
-                    'Play Ball!',
-                    style: TextStyle(color: Colors.white,fontSize: 19, fontWeight: FontWeight.w700),
-                  ),
-                  Text(
-                    _formatTime(_minutes, _seconds, _milliseconds), // 분:초:밀리세컨드 표시
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 40,
-                      fontWeight: FontWeight.w800,
-                    ),
-                  ),
-
-                  Text(
-                    '대전 탄방동 KAIST 농구장',
-                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700,color: Colors.white),
-                  ),
-                  Text(
-                    '25-01-01 14:30',
-                    style: TextStyle(fontSize: 19, fontWeight: FontWeight.w700,color: Colors.white),
-                  ),
-                ],
-              ),
-            ),
-          ),
-
-          SizedBox(height: 15),
-
-          Container(
+            width: maxWidth,
+            height: maxHeight * 0.39,
             padding: EdgeInsets.all(15),
-            child: Container(
-              width: maxWidth,
-              height: maxHeight * 0.29,
-              padding: EdgeInsets.all(15),
-              decoration: BoxDecoration(
-                  borderRadius: BorderRadius.circular(10),
-                  border: Border.all(width: 3, color: Colors.white)),
-              child: SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.start,
-                  children: [
-                    for (int i = 0; i < 5; i++)
-                      Padding(
-                        padding: EdgeInsets.only(top: 5),
-                        child: Column(
-                          children: [
-                            Text(
-                              '01:14:00',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 16,color: Colors.white),
+            child: SingleChildScrollView(
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  for (int i = 0; i < 5; i++)
+                    Padding(
+                      padding: EdgeInsets.only(top: 15),
+                      child: Row(
+                        children: [
+                          Container(
+                            width: 12.w,
+                            height: 5.h,
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Color(0xff333333)
                             ),
-                            SizedBox(
-                              width: 10,
-                            ),
-                            Text(
-                              '경기가 중지되었습니다',
-                              style: TextStyle(
-                                  fontWeight: FontWeight.w700, fontSize: 14,color: Colors.white),
-                            ),
-                            Container(
-                              margin: EdgeInsets.only(top: 5, bottom: 3),
-                              width: maxWidth,
-                              height: 2,
-                              color: Colors.white.withOpacity(0.8),
-                            ),
-                          ],
-                        ),
+                              child: Center(
+                                child: SvgPicture.asset(
+                                  'assets/images/stop.svg',
+                                  color: Colors.white70,
+                                ),
+                              ),
+                          ),
+                          SizedBox(width: 15,),
+
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(
+                                '01:14:00',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 16,color: Colors.white),
+                              ),
+                              SizedBox(
+                                width: 10,
+                              ),
+                              Text(
+                                '경기가 중지되었습니다',
+                                style: TextStyle(
+                                    fontWeight: FontWeight.w600, fontSize: 14,color: Colors.grey),
+                              ),
+
+                            ],
+                          ),
+                        ],
                       ),
-                  ],
-                ),
+                    ),
+                ],
               ),
             ),
           ),
 
           SizedBox(height: 30),
+
+
+
+
 
           // 버튼들
           Row(
@@ -271,10 +364,10 @@ class _PlayingScreenState extends State<PlayingScreen> {
                   }
                 },
                 child: Container(
-                  width: maxWidth * 0.45,
-                  padding: EdgeInsets.all(15),
+                  width: maxWidth * 0.55,
+                  padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(50),
                       border: Border.all(width: 1, color: Colors.white),
                       color: Colors.white),
                   child: Center(
@@ -307,10 +400,10 @@ class _PlayingScreenState extends State<PlayingScreen> {
 
                 },
                 child: Container(
-                  width: maxWidth * 0.45,
-                  padding: EdgeInsets.all(15),
+                  width: maxWidth * 0.35,
+                  padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(10),
+                      borderRadius: BorderRadius.circular(50),
                       border: Border.all(width: 1, color: Colors.white),
                       color: Colors.white),
                   child: Center(

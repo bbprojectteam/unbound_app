@@ -84,15 +84,18 @@ class _InquirtListItemState extends State<InquirtListItem> {
                       ),
                     ],
                   ),
-                  Text(
-                    widget.isInquiryCd == 1 ? '답변완료' : '확인중',
-                    style: TextStyle(
-                      color: widget.isInquiryCd == 1 ? Colors.grey : Colors.white,
-                      fontWeight: FontWeight.w700,
-                      fontSize: 15,
-                      overflow: TextOverflow.ellipsis,
+                  if(widget.isInquiryCd != null)...[
+                    Text(
+                      widget.isInquiryCd == 1 ? '답변완료' : '확인중',
+                      style: TextStyle(
+                        color: widget.isInquiryCd == 1 ? Colors.grey : Colors.white,
+                        fontWeight: FontWeight.w700,
+                        fontSize: 15,
+                        overflow: TextOverflow.ellipsis,
+                      ),
                     ),
-                  ),
+                  ],
+
                   Icon(
                     _isExpanded
                         ? Icons.keyboard_arrow_up

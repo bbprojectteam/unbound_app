@@ -73,17 +73,17 @@ class _InquiryScreenState extends State<InquiryScreen> with TickerProviderStateM
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: 0,),
-                        InquirtListItem(inquiryTitle: "사용 밥법을 모르겠어요",inquiryDetails: "디에틸내용",isInquiryCd: 1,),
-                        InquirtListItem(inquiryTitle: "게임을 이겼는데 점수가 안올랐어요",inquiryDetails: "디에틸내용",isInquiryCd: 0,),
-                        InquirtListItem(inquiryTitle: "오류가 있어요",inquiryDetails: "디에틸내용",isInquiryCd: 1,),
-                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: 0,),
+                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "사용 밥법을 모르겠어요",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "게임을 이겼는데 점수가 안올랐어요",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "오류가 있어요",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: null,),
 
-                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: 0,),
-                        InquirtListItem(inquiryTitle: "사용 밥법을 모르겠어요",inquiryDetails: "디에틸내용",isInquiryCd: 1,),
-                        InquirtListItem(inquiryTitle: "게임을 이겼는데 점수가 안올랐어요",inquiryDetails: "디에틸내용",isInquiryCd: 0,),
-                        InquirtListItem(inquiryTitle: "오류가 있어요",inquiryDetails: "디에틸내용",isInquiryCd: 1,),
-                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: 0,),
+                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "사용 밥법을 모르겠어요",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "게임을 이겼는데 점수가 안올랐어요",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "오류가 있어요",inquiryDetails: "디에틸내용",isInquiryCd: null,),
+                        InquirtListItem(inquiryTitle: "매칭이 잘 안되는 거 같아요.",inquiryDetails: "디에틸내용",isInquiryCd: null,),
 
 
 

@@ -376,7 +376,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 ),
               ),
-              SizedBox(height: 10,),
+              SizedBox(height: 20,),
               Container(
                 // height: 100.h,
                 child: Column(
@@ -403,27 +403,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             child: Column(
                               mainAxisAlignment: MainAxisAlignment.center,
                               children: [
-                                Row(
-                                  mainAxisAlignment: MainAxisAlignment.center,
-                                  children: [
 
-                                    Text(
-                                      "25-01-23",
-                                      style: TextStyle(
-                                          color: Colors.white,
-                                          fontSize: 18,
-                                          fontWeight: FontWeight.w800),
-                                    ),
-
-                                  ],
-                                ),
-                                SizedBox(
-                                  height: 10,
-                                ),
-
-                                SizedBox(
-                                  height: 10,
-                                ),
                                 ElevatedButton(
                                   style: ButtonStyle(
                                     backgroundColor: WidgetStateProperty.all(
@@ -463,7 +443,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               ],
                             ),
                           ),
-                          SizedBox(height: 7,),
+                          SizedBox(height: 20,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
