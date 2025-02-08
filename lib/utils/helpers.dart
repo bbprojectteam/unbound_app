@@ -29,6 +29,15 @@ class Helpers {
       print('공통 API 호출 : $uri');
       var request;
 
+      final storage = FlutterSecureStorage();
+      String? jwtToken = await storage.read(key: "jwt_token");
+      // 기본 헤더에 accessToken 추가
+      if (jwtToken != null) {
+        headers ??= {};  // headers가 null인 경우 빈 맵으로 초기화
+        if(!url.startsWith("/auth/")){
+          headers['Authorization'] = jwtToken;  // 액세스 토큰을 Authorization 헤더에 추가
+        }
+      }
 
       if (method == 'POST') {
         // POST 요청 처리
@@ -52,6 +61,7 @@ class Helpers {
             ..body = json.encode(body);
         }
 
+        print(headers);
 
         // POST 요청 보내기
         var response = await request.send();
@@ -64,6 +74,8 @@ class Helpers {
 
       } else if (method == 'GET') {
         // GET 요청 처리
+
+        print(headers);
         var response = await http.get(uri, headers: headers);
         return await _processResponse(response);
 
@@ -72,7 +84,7 @@ class Helpers {
       }
     } catch (error) {
       // 오류 처리
-      print('Error: $error');
+      print('Comn ApiCall Error: $error');
       return null;
     }
   }
@@ -86,6 +98,8 @@ class Helpers {
 
     if(response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 204) {
       //회원가입 요청으로 이동
+      return response;
+    } else if (response.statusCode == 401) {
       return response;
     } else {
       // 오류 처리

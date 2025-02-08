@@ -51,7 +51,7 @@ class MyApp extends StatelessWidget {
                   page: () => AppScreen(child: SplashScreen())),
               GetPage(name: '/login',
                   page: () => AppScreen(child: LoginScreen())),
-              GetPage(name: '/register',
+              GetPage(name: '/profileSettingScreen',
                   page: () => AppScreen(child: ProfileSettingScreen())),
               GetPage(name: '/rank',
                   page: () => AppScreen(child: RankScreen())),

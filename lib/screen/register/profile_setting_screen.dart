@@ -16,6 +16,7 @@ class ProfileSettingScreen extends StatefulWidget {
 
 class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   final TextEditingController nickNmTextEdController = TextEditingController();
+
   @override
   Widget build(BuildContext context) {
 
@@ -75,6 +76,11 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
 
                                   print('회우너가입ㄱ ㅕㄹ과');
+
+                                  bool isUpdate = await memberController.fnSetMemberInfo();
+                                  if(isUpdate) {
+                                    Get.toNamed('/');
+                                  }
 
 
                                   // if (user != null) {

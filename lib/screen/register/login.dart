@@ -75,9 +75,8 @@ class _LoginScreenState extends State<LoginScreen> {
                           )),
                         ),
                         onPressed: () async {
-                          User? user = await _authService.signInWithGoogle();
-                          if (user != null) {
-                            await memberController.getMemberInfo(user.email!);
+                          bool? isLogin = await _authService.signInWithGoogle();
+                          if (isLogin!) {
                             Get.toNamed('/');
                           } else {
                             print('로그인 실패');

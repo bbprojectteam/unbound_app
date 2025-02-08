@@ -7,17 +7,23 @@ part of 'member_model.dart';
 // **************************************************************************
 
 MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel()
-  ..memberId = (json['memberId'] as num?)?.toInt()
-  ..memberEmail = json['memberEmail'] as String?
-  ..memberNickName = json['memberNickName'] as String?
-  ..memberImagePath = json['memberImagePath'] as String?
-  ..memberDeviceToken = json['memberDeviceToken'] as String?;
+  ..id = (json['id'] as num?)?.toInt()
+  ..birth = json['birth'] as String?
+  ..gender = json['gender'] as String?
+  ..mmr = (json['mmr'] as num?)?.toInt()
+  ..profileImage = json['profileImage'] as String?
+  ..uid = json['uid'] as String?
+  ..userName = json['userName'] as String?
+  ..regionId = (json['regionId'] as num?)?.toInt();
 
 Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
     <String, dynamic>{
-      'memberId': instance.memberId,
-      'memberEmail': instance.memberEmail,
-      'memberNickName': instance.memberNickName,
-      'memberImagePath': instance.memberImagePath,
-      'memberDeviceToken': instance.memberDeviceToken,
+      'id': instance.id,
+      'birth': instance.birth,
+      'gender': instance.gender,
+      'mmr': instance.mmr,
+      'profileImage': instance.profileImage,
+      'uid': instance.uid,
+      'userName': instance.userName,
+      'regionId': instance.regionId,
     };

@@ -18,7 +18,7 @@ class AuthService {
   );
 
 
-  Future<User?> signInWithGoogle() async {
+  Future<bool?> signInWithGoogle() async {
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
@@ -58,20 +58,23 @@ class AuthService {
 
       if(response.statusCode == 201) {
 
+        print("jwt토큰 저장" + response.statusCode.toString());
         const storage = FlutterSecureStorage();
         await storage.write(key: "jwt_token", value: response.headers['authorization']);  // JWT_token 저장
         await storage.write(key: "refresh_token", value: response.headers['refresh-token']);  // refresh_token 저장
 
-        return userCredential.user;
+        return true;
       }
 
     } else if (response.statusCode == 200 && userCredential.user != null) {
-      print('201반환');
+      print("jwt토큰 저장" + response.statusCode.toString());
       const storage = FlutterSecureStorage();
       await storage.write(key: "jwt_token", value: response.headers['authorization']);  // JWT_token 저장
       await storage.write(key: "refresh_token", value: response.headers['refresh-token']);  // refresh_token 저장
 
-      return userCredential.user;
+      return true;
+    } else {
+      return false;
     }
   }
 

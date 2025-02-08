@@ -42,8 +42,8 @@ class _SplashScreenState extends State<SplashScreen> {
       }
 
       AuthService _authService = AuthService();
-      final AuthController authController = Get.find<AuthController>();
-      final MemberController memberController = Get.find<MemberController>();
+      final AuthController authController = Get.put(AuthController());
+      final MemberController memberController = Get.put(MemberController());
 
       Get.toNamed('/login');
 
@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
           bool isAuth = await authController.fnAuthing(user);
           if (isAuth) {
             // 인증 성공
-            await memberController.getMemberInfo(user.email!);
+            // await memberController.getMemberInfo(user.email!);
             Get.toNamed('/');
           } else {
             // 인증 실패
@@ -70,7 +70,7 @@ class _SplashScreenState extends State<SplashScreen> {
         bool isAuth = await authController.fnAuthing(user);
         if (isAuth) {
           // 인증이 되었을 때
-          await memberController.getMemberInfo(user.email!);
+          // await memberController.getMemberInfo(user.email!);
           Get.toNamed('/');
         } else {
           // 인증 실패
