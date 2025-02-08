@@ -56,6 +56,7 @@ class AuthService {
       );
 
 
+      print(response);
       if(response.statusCode == 201) {
 
         print("jwt토큰 저장" + response.statusCode.toString());

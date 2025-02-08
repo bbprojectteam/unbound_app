@@ -74,14 +74,14 @@ class MemberController extends GetxController {
         print(response);
 
         return true;
-      }  else{
+      } else {
         // 오류 처리
-        throw Exception('Failed');
+        throw Exception('fnSetMemberInfo Failed');
       }
 
     } catch (error) {
       // 오류 처리
-      print('Error: $error');
+      print('fnSetMemberInfo Error: $error');
       return false;
     } finally {
       isLoading.value = false;
