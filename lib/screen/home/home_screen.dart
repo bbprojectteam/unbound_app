@@ -457,7 +457,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Row(
                             mainAxisAlignment: MainAxisAlignment.spaceBetween,
                             children: [
-                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/',arguments:{}),
+                              HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "방 만들기",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/',arguments:{}),
                               HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "내 정보",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/',arguments:{}),
                               HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "문의하기",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/inquiry',arguments:{}),
                               HomeMenuBtn(icon: null, imagePath:  'assets/images/admin.png', title: "신고하기",iconWSize: 6.6.w, iconHSize: 3.h ,uri:'/report',arguments:{}),

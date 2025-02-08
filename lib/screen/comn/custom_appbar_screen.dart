@@ -1,4 +1,6 @@
 
+import 'package:badboys/controller/auth_controller.dart';
+import 'package:badboys/firebase/auth_service.dart';
 import 'package:badboys/modal/team_player_list_modal_pop.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:badboys/modal/team_chng_modal_pop.dart';
@@ -26,6 +28,8 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
   @override
   Widget build(BuildContext context) {
 
+    AuthService _authService = AuthService();
+
 
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10),
@@ -36,13 +40,19 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
 
-          Text(
-            'Unbound',
-            style: TextStyle(
-              color: Colors.white,
-              fontWeight: FontWeight.w900,
-              fontSize: 20,
-              fontStyle: FontStyle.italic
+          GestureDetector(
+            onTap: () async{
+              await _authService.signOut();
+              Get.toNamed('/splash');
+            },
+            child: Text(
+              '임시로그아웃버튼',
+              style: TextStyle(
+                color: Colors.white,
+                fontWeight: FontWeight.w900,
+                fontSize: 20,
+                fontStyle: FontStyle.italic
+              ),
             ),
           ),
 

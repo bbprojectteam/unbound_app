@@ -7,6 +7,7 @@ import 'package:badboys/screen/info/member_page_screen.dart';
 import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:badboys/screen/register/login.dart';
+import 'package:badboys/screen/register/profile_setting_screen.dart';
 import 'package:badboys/subScreen/comn/custom_bottom_navigatoion_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -61,6 +62,7 @@ class _AppScreenState extends State<AppScreen> {
     bool showBottomNav = !(
         widget.child is SplashScreen ||
         widget.child is LoginScreen ||
+        widget.child is ProfileSettingScreen ||
         widget.child is CountDownScreen ||
         widget.child is PlayingScreen
     );

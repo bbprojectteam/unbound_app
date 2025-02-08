@@ -12,7 +12,6 @@ class AuthController with ChangeNotifier{
 
   Future<bool> fnAuthing(User user) async {
 
-
     try {
 
       // await Helpers.apiCall(
@@ -53,9 +52,8 @@ class AuthController with ChangeNotifier{
 
     return false;
 
-
-
   }
+
 
 
 

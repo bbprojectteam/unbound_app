@@ -3,6 +3,7 @@
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:http/http.dart' as http;
 
 class Helpers {
@@ -24,12 +25,12 @@ class Helpers {
         File? file, // 파일 첨부 (optional)
       }) async {
     try {
-      print('공통 API 호출 : $url');
-      var uri = Uri.parse("http://3.34.212.4:8080/"+ url);
+      var uri = Uri.parse(dotenv.get("API_URL") + url);
+      print('공통 API 호출 : $uri');
       var request;
 
-      if (method == 'POST') {
 
+      if (method == 'POST') {
         // POST 요청 처리
         if (file != null) {
           // 파일이 있는 경우 Multipart 요청 사용
@@ -55,10 +56,10 @@ class Helpers {
         // POST 요청 보내기
         var response = await request.send();
         var httpResponse = await http.Response.fromStream(response);
-        if (httpResponse.body.isEmpty) {
-          print('response 데이터 없음');
-          return null; // 빈 본문 처리
-        }
+        // if (httpResponse.body.isEmpty) {
+        //   print('response 데이터 없음');
+        //   return null; // 빈 본문 처리
+        // }
         return await _processResponse(httpResponse);
 
       } else if (method == 'GET') {
@@ -78,15 +79,22 @@ class Helpers {
 
   // 응답 처리 (공통 처리)
   static Future<dynamic> _processResponse(http.Response response) async {
-    if (response.statusCode == 200) {
-      // 성공적인 응답 처리
-      final decodedBody = utf8.decode(response.bodyBytes);
-      return json.decode(decodedBody);
+
+    print(response.headers);
+    print(response.body);
+    print(response.statusCode);
+
+    if(response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 204) {
+      //회원가입 요청으로 이동
+      return response;
     } else {
       // 오류 처리
       print('Failed request with status: ${response.statusCode}');
       return null;
     }
+
+
+
   }
 
 

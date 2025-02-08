@@ -1,7 +1,15 @@
+import 'dart:convert';
+
 import 'package:badboys/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:get/get.dart';
+import 'package:get/get_connect/http/src/response/response.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:http/http.dart' as http;
 
 class AuthService {
   final FirebaseAuth _auth = FirebaseAuth.instance;
@@ -21,21 +29,82 @@ class AuthService {
 
     UserCredential userCredential = await _auth.signInWithCredential(credential);
 
-    final response = await Helpers.apiCall(
-        'auth/login',
+    User user = userCredential.user!;
+    String? idToken = await user.getIdToken();
+
+    // print(idToken!.substring(0,1000) + idToken!.substring(1000,idToken.length));
+
+    http.Response response = await Helpers.apiCall(
+        '/auth/login',
         method: "POST",
         headers: {
           'Content-Type': 'application/json',
-          'Authorization' : userCredential.user!.getIdToken().toString()
+          'Authorization' : 'Bearer ${idToken}'
         },
     );
 
+    if(response.statusCode == 204) {
+      print('회원가입 화면으로 이동');
+
+      final response = await Helpers.apiCall(
+        '/auth/register',
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization' : 'Bearer ${idToken}'
+        },
+      );
+
+
+      if(response.statusCode == 201) {
+
+        const storage = FlutterSecureStorage();
+        await storage.write(key: "jwt_token", value: response.headers['authorization']);  // JWT_token 저장
+        await storage.write(key: "refresh_token", value: response.headers['refresh-token']);  // refresh_token 저장
+
+        return userCredential.user;
+      }
+
+    } else if (response.statusCode == 200 && userCredential.user != null) {
+      print('201반환');
+      const storage = FlutterSecureStorage();
+      await storage.write(key: "jwt_token", value: response.headers['authorization']);  // JWT_token 저장
+      await storage.write(key: "refresh_token", value: response.headers['refresh-token']);  // refresh_token 저장
+
+      return userCredential.user;
+    }
+  }
+
+
+
+
+  Future<void> fnRegister() async {
+    User? user = FirebaseAuth.instance.currentUser; // 현재 사용자 정보 가져오기
+
+    final response = await Helpers.apiCall(
+      '/auth/register',
+      method: "POST",
+      headers: {
+        'Content-Type': 'application/json',
+        'Authorization' : 'Bearer ${await user!.getIdToken()}'
+      },
+    );
+
+    print('회원가입시도 결과');
     print(response);
 
-    return userCredential.user;
   }
 
   Future<void> signOut() async {
+    final storage = FlutterSecureStorage();
+
+    // 저장된 JWT 토큰 삭제
+    await storage.delete(key: "jwt_token");
+    await storage.delete(key: "refresh_token");
+
+    // Firebase Authentication 로그아웃
+    await FirebaseAuth.instance.signOut();
+
     await googleSignIn.signOut();
     await _auth.signOut();
   }

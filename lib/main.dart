@@ -14,6 +14,7 @@ import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
 import 'package:badboys/screen/notification/notification_screen.dart';
 import 'package:badboys/screen/rank/rank_screen.dart';
 import 'package:badboys/screen/register/login.dart';
+import 'package:badboys/screen/register/profile_setting_screen.dart';
 import 'package:badboys/screen/report/report_screen.dart';
 import 'package:badboys/subScreen/comn/custom_bottom_navigatoion_bar.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -50,6 +51,8 @@ class MyApp extends StatelessWidget {
                   page: () => AppScreen(child: SplashScreen())),
               GetPage(name: '/login',
                   page: () => AppScreen(child: LoginScreen())),
+              GetPage(name: '/register',
+                  page: () => AppScreen(child: ProfileSettingScreen())),
               GetPage(name: '/rank',
                   page: () => AppScreen(child: RankScreen())),
               GetPage(name: '/memberPageScreen',
