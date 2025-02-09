@@ -33,16 +33,15 @@ class Helpers {
       var request;
       const storage = FlutterSecureStorage();
 
-      String? refreshToken = await storage.read(key: "refresh_token");
-      String? jwtToken = await storage.read(key: "jwt_token");
-      print("꺼내온값 : " + refreshToken.toString());
-      print("꺼내온값 : " + jwtToken.toString());
+
       if(isGetRefreshToken){
+        String? refreshToken = await storage.read(key: "refresh_token");
         if (refreshToken != null){
             headers ??= {};  // headers가 null인 경우 빈 맵으로 초기화
             headers['Refresh-Token'] = refreshToken;  // 액세스 토큰을 Authorization 헤더에 추가
         }
       } else {
+        String? jwtToken = await storage.read(key: "jwt_token");
         if (jwtToken != null){
           headers ??= {};  // headers가 null인 경우 빈 맵으로 초기화
           if(!url.startsWith("/auth/")){
@@ -74,7 +73,7 @@ class Helpers {
             ..body = json.encode(body);
         }
 
-        print(headers);
+
 
         // POST 요청 보내기
         var response = await request.send();
@@ -87,7 +86,7 @@ class Helpers {
       } else if (method == 'GET') {
         // GET 요청 처리
 
-        print(headers);
+
         var response = await http.get(uri, headers: headers);
         return await _processResponse(response, url, method, headers, body, file);
 
@@ -108,9 +107,7 @@ class Helpers {
       Map<String, String>? headers,
       Map<String, dynamic>? body,
       File? file) async {
-    print(response.headers);
-    print(response.body);
-    print(response.statusCode);
+
 
     if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 204) {
       return response;
@@ -121,14 +118,12 @@ class Helpers {
         Get.toNamed('/splash'); // 인증 실패 시 스플래시 화면으로 이동
         return null;
       }
-      print('리프레쉬 결가ㅗ');
-      print(refreshResponse);
-      const storage = FlutterSecureStorage();
-      await storage.write(key: "jwt_token", value: refreshResponse.headers['authorization']);  // JWT 토큰 저장
-      await storage.write(key: "refresh_token", value: refreshResponse.headers['refresh-token']);  // refresh 토큰 저장
 
+      const storage = FlutterSecureStorage();
+      await storage.write(key: "jwt_token", value: "Bearer " + refreshResponse.body);  // JWT 토큰 저장
       // 새로운 토큰을 사용하여 원래의 API 호출을 재시도
-      return await apiCall(url, method: method, headers: headers, body: body, file: file);
+      return await apiCall(url, method: method, headers: headers, body: body, file: file,isGetRefreshToken: false);
+
     } else {
       print('Failed request with status: ${response.statusCode}');
       return null;
@@ -146,8 +141,6 @@ class Helpers {
       },
       isGetRefreshToken: true
     );
-    print('리프레쉬 토큰 갱신 결과');
-    print(response);
 
     return response;
 
