@@ -46,7 +46,7 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
               Get.toNamed('/splash');
             },
             child: Text(
-              '임시로그아웃버튼',
+              'Unbound',
               style: TextStyle(
                 color: Colors.white,
                 fontWeight: FontWeight.w900,

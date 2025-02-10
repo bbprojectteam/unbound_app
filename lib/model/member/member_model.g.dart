@@ -7,23 +7,25 @@ part of 'member_model.dart';
 // **************************************************************************
 
 MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel()
-  ..id = (json['id'] as num?)?.toInt()
+  ..userId = (json['userId'] as num?)?.toInt()
   ..birth = json['birth'] as String?
   ..gender = json['gender'] as String?
   ..mmr = (json['mmr'] as num?)?.toInt()
   ..profileImage = json['profileImage'] as String?
   ..uid = json['uid'] as String?
-  ..userName = json['userName'] as String?
+  ..username = json['username'] as String?
+  ..regionNm = json['regionNm'] as String?
   ..regionId = (json['regionId'] as num?)?.toInt();
 
 Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
+      'id': instance.userId,
       'birth': instance.birth,
       'gender': instance.gender,
       'mmr': instance.mmr,
       'profileImage': instance.profileImage,
       'uid': instance.uid,
-      'userName': instance.userName,
+      'userName': instance.username,
+      'regionNm': instance.regionNm,
       'regionId': instance.regionId,
     };

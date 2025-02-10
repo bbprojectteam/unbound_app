@@ -33,7 +33,6 @@ class Helpers {
       var request;
       const storage = FlutterSecureStorage();
 
-
       if(isGetRefreshToken){
         String? refreshToken = await storage.read(key: "refresh_token");
         if (refreshToken != null){
@@ -126,7 +125,7 @@ class Helpers {
 
     } else {
       print('Failed request with status: ${response.statusCode}');
-      return null;
+      return response;
     }
   }
 

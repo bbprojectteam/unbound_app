@@ -40,47 +40,48 @@ class _SplashScreenState extends State<SplashScreen> {
         Get.toNamed('/login');
         return;
       }
+      Get.toNamed('/');
 
-      AuthService _authService = AuthService();
-      final AuthController authController = Get.put(AuthController());
-      final MemberController memberController = Get.put(MemberController());
-
-      Get.toNamed('/login');
-
-      Future<void> _tryRefreshToken(User user) async {
-        try {
-          await user.getIdToken(true); // 강제로 토큰 갱신
-          bool isAuth = await authController.fnAuthing(user);
-          if (isAuth) {
-            // 인증 성공
-            // await memberController.getMemberInfo(user.email!);
-            Get.toNamed('/');
-          } else {
-            // 인증 실패
-            Get.toNamed('/login');
-          }
-        } catch (e) {
-          print("토큰 강제 갱신 실패");
-          Get.toNamed('/login');
-        }
-      }
-
-
-      Future<void> _handleAuth(User user) async {
-        bool isAuth = await authController.fnAuthing(user);
-        if (isAuth) {
-          // 인증이 되었을 때
-          // await memberController.getMemberInfo(user.email!);
-          Get.toNamed('/');
-        } else {
-          // 인증 실패
-          await _tryRefreshToken(user);
-        }
-      }
-
-
-      // 첫 번째 인증 시도
-      await _handleAuth(user);
+      // AuthService _authService = AuthService();
+      // final AuthController authController = Get.put(AuthController());
+      // final MemberController memberController = Get.put(MemberController());
+      //
+      // Get.toNamed('/login');
+      //
+      // Future<void> _tryRefreshToken(User user) async {
+      //   try {
+      //     await user.getIdToken(true); // 강제로 토큰 갱신
+      //     bool isAuth = await authController.fnAuthing(user);
+      //     if (isAuth) {
+      //       // 인증 성공
+      //       // await memberController.getMemberInfo(user.email!);
+      //       Get.toNamed('/');
+      //     } else {
+      //       // 인증 실패
+      //       Get.toNamed('/login');
+      //     }
+      //   } catch (e) {
+      //     print("토큰 강제 갱신 실패");
+      //     Get.toNamed('/login');
+      //   }
+      // }
+      //
+      //
+      // Future<void> _handleAuth(User user) async {
+      //   bool isAuth = await authController.fnAuthing(user);
+      //   if (isAuth) {
+      //     // 인증이 되었을 때
+      //     // await memberController.getMemberInfo(user.email!);
+      //     Get.toNamed('/');
+      //   } else {
+      //     // 인증 실패
+      //     await _tryRefreshToken(user);
+      //   }
+      // }
+      //
+      //
+      // // 첫 번째 인증 시도
+      // await _handleAuth(user);
     });
   }
 

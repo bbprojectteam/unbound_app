@@ -7,14 +7,15 @@ part 'member_model.g.dart'; // 생성될 파일
 class MemberModel {
 
 
-  int? id;
+  int? userId;
   String? birth;
   String? gender;
   int? mmr;
   String? profileImage;
   String? uid;
-  String? userName;
+  String? username;
   int? regionId;
+  String? regionNm;
 
 
   MemberModel();

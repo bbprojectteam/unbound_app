@@ -1,4 +1,6 @@
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/custom_select_bottom_modal_screen.dart';
 import 'package:badboys/subScreen/home/event_list_item.dart';
@@ -28,13 +30,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   late TabController _tabController;
   late PageController _pageController;
   late MemberController memberController;
+  late MatchController matchController;
 
   @override
   void initState() {
     super.initState();
     memberController = Get.put(MemberController());
-    memberController.fnGetMemberInfo();
+    matchController = Get.put(MatchController());
 
+    memberController.fnGetMemberInfo();
     // TabController 초기화 (탭의 개수는 2로 설정)
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
@@ -59,10 +63,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: SingleChildScrollView(
           child: Obx(() {
 
+
+
             if (memberController.isLoading.value) {
               return CircularProgressIndicator();
             }
-            var model = memberController.model;
+            var model = memberController.model.value;
 
             return Column(
 
@@ -144,14 +150,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
-                              Text('오민규',
+                              Text(model.username ?? "null",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 17,
                                   fontWeight: FontWeight.w700,
                                 ),
                               ),
-                              Text('대전 탄방동',
+                              Text(model.regionNm ?? "null",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 13,
@@ -177,7 +183,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           Column(
                               mainAxisAlignment: MainAxisAlignment.start,
                               children: [
-                                Text('2142 pts',
+                                Text( (model.mmr ?? '0').toString() + ' pts',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontSize: 18,
@@ -429,16 +435,14 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         ),
                                       ),
                                     ),
-                                    onPressed: () =>
+                                    onPressed: () async =>
                                     {
-                                      if (matchIndex == 0)
+                                      if (!matchController.isMatch.value)
                                         {
-                                          setState(() {
-                                            matchIndex = 1;
-                                          })
+                                          await matchController.fnMatchStart(model.regionId),
                                         }
                                       else
-                                        if (matchIndex == 1)
+                                        if (matchController.isMatch.value)
                                           {
                                             Get.toNamed('/lockerRoomScreen')
                                           }
@@ -446,7 +450,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     child: Container(
                                       padding: EdgeInsets.all(10),
                                       child: Text(
-                                        matchIndex == 0 ? '매칭하기' : '라커룸 이동',
+                                        !matchController.isMatch.value ? '매칭하기' : '라커룸 이동',
                                         style: TextStyle(
                                             color: Colors.black,
                                             fontSize: 20,

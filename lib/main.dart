@@ -1,4 +1,5 @@
 import 'package:badboys/controller/auth_controller.dart';
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/firebase/firebase_options.dart';
 import 'package:badboys/router/app_router.dart';
@@ -42,6 +43,7 @@ class MyApp extends StatelessWidget {
             initialRoute: '/splash', // 초기 경로
             initialBinding: BindingsBuilder(() {
               Get.put(MemberController());  // Put the controller globally
+              Get.put(MatchController());  // Put the controller globally
               Get.put(AuthController());  // Put the controller globally
             }),
             getPages: [
