@@ -8,6 +8,7 @@ import 'package:badboys/subScreen/home/match_list_item.dart';
 import 'package:badboys/screen/info/member_page_screen.dart';
 import 'package:badboys/subScreen/home/home_menu_btn.dart';
 import 'package:badboys/subScreen/playHistory/play_history_result_item.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:get/get.dart';
@@ -138,13 +139,27 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                       Row(
                         mainAxisAlignment: MainAxisAlignment.start,
                         children: [
-                          ClipOval(
-                            child: Image.asset(
-                              'assets/images/intro.png',
-                              width: 10.w,
-                              height: 5.h,
-                              fit: BoxFit.cover,
-                            ),
+                          CachedNetworkImage(
+                            imageUrl: model.profileImage!,
+                            // 이미지 URL
+                            placeholder: (context, url) {
+                              return CircularProgressIndicator(); // 로딩 중에 표시할 위젯
+                            },
+                            errorWidget: (context, url, error) {
+                              print('이미지 로딩 실패: $error');
+                              return Icon(Icons.error); // 로딩 실패 시 표시할 위젯
+                            },
+                            fadeInDuration: Duration(milliseconds: 500),
+                            // 이미지가 로드될 때 페이드 인 효과
+                            fadeOutDuration: Duration(milliseconds: 500),
+                            // 이미지가 사라질 때 페이드 아웃 효과
+                            width: 10.w,
+                            // height: 4.h,
+                            fit: BoxFit.cover,
+                            // 이미지가 위젯 크기에 맞게 자르거나 확대하는 방식
+                            imageBuilder: (context, imageProvider) {
+                              return ClipOval(child: Image(image: imageProvider)); // 이미지가 로드되면 표시
+                            },
                           ),
                           SizedBox(width: 5,),
                           Column(

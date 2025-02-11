@@ -2,7 +2,10 @@ import 'package:badboys/controller/auth_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/subScreen/register/profile_setting_text_field.dart';
+import 'package:badboys/utils/helpers.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -19,12 +22,33 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   final TextEditingController nickNmTextEdController = TextEditingController();
   final TextEditingController birthTextEdController = TextEditingController();
   late int? selectedGender = 0;
+  Uint8List? _imageBytes = null;
 
   @override
   Widget build(BuildContext context) {
 
-
     final MemberController memberController = Get.find<MemberController>();
+
+    Future<void> _pickImage() async {
+      print('123123');
+      FilePickerResult? result = await FilePicker.platform.pickFiles(
+        type: FileType.image, // 이미지 파일만 선택
+      );
+
+      if (result != null && result.files.isNotEmpty) {
+        _imageBytes = result.files.first.bytes;
+
+        FilePickerResult filePickerResult = await Helpers.convertUint8ListToFilePickerResult(
+            _imageBytes!, result.files.first.size
+        );
+
+        print(filePickerResult);
+
+         await  memberController.fnSetMemberProfileImg(filePickerResult);
+
+      }
+    }
+
 
     return
       Scaffold(
@@ -73,9 +97,15 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                     Container(
                       width: 100.w,
                       // height: 30.h,
-                      child: Icon(Icons.account_circle_sharp,
-                        color: Colors.white,
-                        size: 30.w,
+                      child: GestureDetector(
+                        onTap: (){
+                          _pickImage();
+                        },
+                        child: Icon(
+                          Icons.account_circle_sharp,
+                          color: Colors.white,
+                          size: 30.w,
+                        ),
                       ),
                     ),
 

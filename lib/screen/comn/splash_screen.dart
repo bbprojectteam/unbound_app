@@ -32,8 +32,6 @@ class _SplashScreenState extends State<SplashScreen> {
     User? user = FirebaseAuth.instance.currentUser; // 현재 사용자 정보 가져오기
 
 
-
-
     Timer(const Duration(seconds: 3), () async {
       if (user == null) {
         // 유저가 로그인 안 되어 있으면 Login 화면으로 이동
@@ -41,47 +39,6 @@ class _SplashScreenState extends State<SplashScreen> {
         return;
       }
       Get.toNamed('/');
-
-      // AuthService _authService = AuthService();
-      // final AuthController authController = Get.put(AuthController());
-      // final MemberController memberController = Get.put(MemberController());
-      //
-      // Get.toNamed('/login');
-      //
-      // Future<void> _tryRefreshToken(User user) async {
-      //   try {
-      //     await user.getIdToken(true); // 강제로 토큰 갱신
-      //     bool isAuth = await authController.fnAuthing(user);
-      //     if (isAuth) {
-      //       // 인증 성공
-      //       // await memberController.getMemberInfo(user.email!);
-      //       Get.toNamed('/');
-      //     } else {
-      //       // 인증 실패
-      //       Get.toNamed('/login');
-      //     }
-      //   } catch (e) {
-      //     print("토큰 강제 갱신 실패");
-      //     Get.toNamed('/login');
-      //   }
-      // }
-      //
-      //
-      // Future<void> _handleAuth(User user) async {
-      //   bool isAuth = await authController.fnAuthing(user);
-      //   if (isAuth) {
-      //     // 인증이 되었을 때
-      //     // await memberController.getMemberInfo(user.email!);
-      //     Get.toNamed('/');
-      //   } else {
-      //     // 인증 실패
-      //     await _tryRefreshToken(user);
-      //   }
-      // }
-      //
-      //
-      // // 첫 번째 인증 시도
-      // await _handleAuth(user);
     });
   }
 

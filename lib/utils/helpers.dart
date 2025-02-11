@@ -2,21 +2,37 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:badboys/firebase/auth_service.dart';
+import 'package:file_picker/file_picker.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 
+
 class Helpers {
 
 
-  // static Future<String> getMemberId() async {
-  //   SharedPreferences prefs = await SharedPreferences.getInstance();
-  //
-  //   return prefs.getString("memberId") ?? '';
-  //
-  // }
+  static Future<FilePickerResult> convertUint8ListToFilePickerResult(Uint8List imageBytes, int size) async {
+    final tempFile = await _writeToTempFile(imageBytes);
+
+    return FilePickerResult([PlatformFile(path: tempFile.path, name: 'image.jpg_${size}', size: size)]);
+  }
+
+  static Future<File> _writeToTempFile(Uint8List bytes) async {
+
+    final tempDir = Directory.systemTemp;
+    final tempFile = File('${tempDir.path}/image_${DateTime.now().millisecondsSinceEpoch}.jpg');
+
+    await tempFile.writeAsBytes(bytes);
+
+    return tempFile;
+  }
+
+
+
 
 
   static Future<dynamic> apiCall(
@@ -108,12 +124,21 @@ class Helpers {
       File? file) async {
 
 
+
+    if(url.startsWith("/auth/refresh")) {
+      return response;
+    }
+
     if (response.statusCode == 200 || response.statusCode == 201 || response.statusCode == 204) {
       return response;
     } else if (response.statusCode == 401) {
+
       // Refresh 토큰을 사용하여 새로운 JWT 토큰을 얻어오는 로직
       http.Response refreshResponse = await _getRefreshToken();
+
       if (refreshResponse.statusCode == 401) {
+        AuthService authService = AuthService();
+        await authService.signOut();
         Get.toNamed('/splash'); // 인증 실패 시 스플래시 화면으로 이동
         return null;
       }
@@ -140,6 +165,7 @@ class Helpers {
       },
       isGetRefreshToken: true
     );
+
 
     return response;
 
