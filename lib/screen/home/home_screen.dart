@@ -64,8 +64,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         child: SingleChildScrollView(
           child: Obx(() {
 
-
-
             if (memberController.isLoading.value) {
               return CircularProgressIndicator();
             }

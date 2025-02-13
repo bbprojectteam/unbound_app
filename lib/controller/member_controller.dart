@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
@@ -62,8 +63,10 @@ class MemberController extends GetxController {
   }
 
 
-  Future<bool> fnSetMemberProfileImg(FilePickerResult profileImageFile) async {
+  Future<bool> fnSetMemberProfileImg(FilePickerResult profileImageFile, Uint8List _imageBytes) async {
 
+
+    print('123123');
     var request = http.MultipartRequest(
       'POST',
       Uri.parse(dotenv.get('API_URL') + '/service/user/update/profileImage'),
@@ -73,8 +76,7 @@ class MemberController extends GetxController {
       // 이미지 파일 추가
       if (profileImageFile != null) {
 
-        File file = File(profileImageFile.files.first.toString());
-        List<int> fileBytes = await file.readAsBytes();
+        List<int> fileBytes = _imageBytes;
 
         // 바이트 배열을 멀티파트 파일로 추가
         request.files.add(
@@ -82,18 +84,21 @@ class MemberController extends GetxController {
             'profileImageFile', // 서버에서 받을 필드 이름
             fileBytes, // 선택한 파일의 바이트
             filename: profileImageFile.files.first.name, // 파일 이름
-            contentType: MediaType('image', 'jpeg'), // MIME 타입 (필요에 따라 수정)
+            contentType: MediaType('image', 'jpg'), // MIME 타입 (필요에 따라 수정)
           ),
         );
 
         // 요청 보내기
         var response = await request.send();
+
         if (response.statusCode == 200) {
           var responseBody = await http.Response.fromStream(response);
           var jsonResponse = jsonDecode(responseBody.body);
           if (jsonResponse['status'] == "200") {
             return true;
           }
+        }else {
+          print(response);
         }
       }
       return false;
@@ -111,7 +116,7 @@ class MemberController extends GetxController {
     try {
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
-        '/service/user/update',
+        '/service/user/update/info',
         method: "POST",
         headers: {
           'Content-Type': 'application/json', // JSON 형식

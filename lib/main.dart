@@ -1,6 +1,7 @@
 import 'package:badboys/controller/auth_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/fcm/fcm_notifications.dart';
 import 'package:badboys/firebase/firebase_options.dart';
 import 'package:badboys/router/app_router.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
@@ -30,6 +31,7 @@ void main() async {
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions,  // FirebaseOptions 설정
   );
+  FcmNotifications.initializeNotification();
   runApp(MyApp());
 }
 

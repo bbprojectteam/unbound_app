@@ -10,6 +10,7 @@ import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
+import 'package:image_cropper/image_cropper.dart';
 
 
 class Helpers {
@@ -33,6 +34,18 @@ class Helpers {
 
 
 
+  static Future<Uint8List?> cropImage(String imagePath) async {
+    CroppedFile? croppedFile = await ImageCropper().cropImage(
+      sourcePath: imagePath,
+      aspectRatio: CropAspectRatio(ratioX: 1.0, ratioY: 1.0),
+    );
+
+    if (croppedFile != null) {
+      return await File(croppedFile.path).readAsBytes();
+    } else {
+      return null; // croppedFile이 null인 경우 null 반환
+    }
+  }
 
 
   static Future<dynamic> apiCall(
@@ -136,7 +149,7 @@ class Helpers {
       // Refresh 토큰을 사용하여 새로운 JWT 토큰을 얻어오는 로직
       http.Response refreshResponse = await _getRefreshToken();
 
-      if (refreshResponse.statusCode == 401) {
+      if (refreshResponse.statusCode != 200) {
         AuthService authService = AuthService();
         await authService.signOut();
         Get.toNamed('/splash'); // 인증 실패 시 스플래시 화면으로 이동

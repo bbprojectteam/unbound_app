@@ -1,5 +1,6 @@
 import 'dart:convert';
 
+import 'package:badboys/fcm/fcm_notifications.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
@@ -32,8 +33,8 @@ class AuthService {
     User user = userCredential.user!;
     String? idToken = await user.getIdToken();
 
-    // print(idToken!.substring(0,1000) + idToken!.substring(1000,idToken.length));
-
+    print(idToken!.substring(0,1000) + idToken!.substring(1000,idToken.length));
+    final String? deviceToken = await FcmNotifications.getMyDeviceToken();
     http.Response response = await Helpers.apiCall(
         '/auth/login',
         method: "POST",
@@ -41,6 +42,10 @@ class AuthService {
           'Content-Type': 'application/json',
           'Authorization' : 'Bearer ${idToken}'
         },
+      body: {
+          'appId' : '1234',
+          'fcmToken' : deviceToken
+      }
     );
 
     if(response.statusCode == 204) {

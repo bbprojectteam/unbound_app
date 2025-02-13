@@ -30,21 +30,20 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
     final MemberController memberController = Get.find<MemberController>();
 
     Future<void> _pickImage() async {
-      print('123123');
+
       FilePickerResult? result = await FilePicker.platform.pickFiles(
         type: FileType.image, // 이미지 파일만 선택
       );
 
       if (result != null && result.files.isNotEmpty) {
-        _imageBytes = result.files.first.bytes;
+        _imageBytes = await Helpers.cropImage(result.files.first.path!);
 
         FilePickerResult filePickerResult = await Helpers.convertUint8ListToFilePickerResult(
             _imageBytes!, result.files.first.size
         );
 
-        print(filePickerResult);
-
-         await  memberController.fnSetMemberProfileImg(filePickerResult);
+        await memberController.fnSetMemberProfileImg(filePickerResult,_imageBytes!);
+        setState(() {});
 
       }
     }
@@ -95,13 +94,20 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
 
 
                     Container(
-                      width: 100.w,
+                      width: 30.w,
                       // height: 30.h,
                       child: GestureDetector(
                         onTap: (){
                           _pickImage();
                         },
-                        child: Icon(
+                        child: _imageBytes != null // 선택된 이미지가 있을 경우
+                            ? ClipOval(
+                              child: Image.memory(
+                                _imageBytes!, // 선택된 이미지 표시
+                                width: 30.w,
+                                height: 15.h,
+                              ),
+                            ): Icon(
                           Icons.account_circle_sharp,
                           color: Colors.white,
                           size: 30.w,
