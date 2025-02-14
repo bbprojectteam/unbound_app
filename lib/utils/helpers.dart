@@ -1,5 +1,6 @@
 
 
+import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:badboys/firebase/auth_service.dart';
@@ -53,10 +54,17 @@ class Helpers {
         String method = 'GET',  // 기본값 'GET'
         Map<String, String>? headers,  // 요청 헤더 (optional)
         Map<String, dynamic>? body,    // 요청 바디 (optional)
-        File? file, // 파일 첨부 (optional)
+        http.MultipartFile? file, // 파일 첨부 (optional)
         bool isGetRefreshToken = false,
       }) async {
+
+    /**
+     * 개발용
+     */
+    await Future.delayed(Duration(seconds: 1)); 
+
     try {
+
       var uri = Uri.parse(dotenv.get("API_URL") + url);
       print('공통 API 호출 : $uri');
       var request;
@@ -76,7 +84,6 @@ class Helpers {
             headers['Authorization'] = jwtToken;  // 액세스 토큰을 Authorization 헤더에 추가
           }
         }
-
       }
 
       if (method == 'POST') {
@@ -85,7 +92,7 @@ class Helpers {
           // 파일이 있는 경우 Multipart 요청 사용
           request = http.MultipartRequest('POST', uri)
             ..headers.addAll(headers ?? {})
-            ..files.add(await http.MultipartFile.fromPath('file', file.path));
+            ..files.add(file);
 
           // 바디 추가
           if (body != null) {
@@ -93,15 +100,12 @@ class Helpers {
               request.fields[key] = value;
             });
           }
-
         } else {
           // 바디가 있는 일반 POST 요청 처리
           request = http.Request('POST', uri)
             ..headers.addAll(headers ?? {})
             ..body = json.encode(body);
         }
-
-
 
         // POST 요청 보내기
         var response = await request.send();
@@ -134,7 +138,7 @@ class Helpers {
       String method,
       Map<String, String>? headers,
       Map<String, dynamic>? body,
-      File? file) async {
+      http.MultipartFile? file) async {
 
 
 

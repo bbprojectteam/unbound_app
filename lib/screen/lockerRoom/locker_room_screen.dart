@@ -1,9 +1,12 @@
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/subScreen/lockerRoom/chat/chat_item.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/subScreen/home/match_list_item.dart';
 import 'package:badboys/subScreen/lockerRoom/chat/chat_list.dart';
 import 'package:badboys/subScreen/lockerRoom/locker_room_info.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LockerRoomScreen extends StatefulWidget {
@@ -20,12 +23,14 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
   late TabController _tabController;
   late PageController _pageController;
-
+  late MatchController matchController;
 
   @override
   void initState() {
     super.initState();
     // TabController 초기화 (탭의 개수는 2로 설정)
+    matchController = Get.put(MatchController());
+    matchController.fnMatchInfo(2);
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
   }
@@ -43,6 +48,9 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
   Widget build(BuildContext context) {
     double maxWidth = MediaQuery.of(context).size.width;
     double maxHeight = MediaQuery.of(context).size.height;
+
+
+
 
 
     return Container(

@@ -8,6 +8,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
@@ -65,42 +66,24 @@ class MemberController extends GetxController {
 
   Future<bool> fnSetMemberProfileImg(FilePickerResult profileImageFile, Uint8List _imageBytes) async {
 
-
-    print('123123');
-    var request = http.MultipartRequest(
-      'POST',
-      Uri.parse(dotenv.get('API_URL') + '/service/user/update/profileImage'),
-    );
-
     try {
-      // 이미지 파일 추가
-      if (profileImageFile != null) {
-
-        List<int> fileBytes = _imageBytes;
-
-        // 바이트 배열을 멀티파트 파일로 추가
-        request.files.add(
-          http.MultipartFile.fromBytes(
+      http.Response response = await Helpers.apiCall(
+         '/service/user/update/profileImage',
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json', // JSON 형식
+          },
+          file: http.MultipartFile.fromBytes(
             'profileImageFile', // 서버에서 받을 필드 이름
-            fileBytes, // 선택한 파일의 바이트
+            _imageBytes, // 선택한 파일의 바이트
             filename: profileImageFile.files.first.name, // 파일 이름
             contentType: MediaType('image', 'jpg'), // MIME 타입 (필요에 따라 수정)
-          ),
-        );
+          )
+      );
 
-        // 요청 보내기
-        var response = await request.send();
-
-        if (response.statusCode == 200) {
-          var responseBody = await http.Response.fromStream(response);
-          var jsonResponse = jsonDecode(responseBody.body);
-          if (jsonResponse['status'] == "200") {
-            return true;
-          }
-        }else {
-          print(response);
-        }
-      }
+    if (response.statusCode == 200) {
+      return true;
+    }
       return false;
     } catch (error) {
       // 오류 처리
@@ -108,7 +91,6 @@ class MemberController extends GetxController {
       return false;
     }
 
-    return true;
   }
 
 

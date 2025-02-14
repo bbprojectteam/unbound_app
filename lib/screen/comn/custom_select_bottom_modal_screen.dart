@@ -13,14 +13,14 @@ class _CustomSelectBottomModalScreenState extends State<CustomSelectBottomModalS
   Widget build(BuildContext context) {
     return Container(
       width: 100.w,
-      height: 50.h,
       color: Colors.black,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
-            padding: EdgeInsets.all(10),
+            width: 100.w,
+            padding: EdgeInsets.all(14),
             decoration: BoxDecoration(
               border: Border(
                 bottom: BorderSide(
@@ -30,7 +30,7 @@ class _CustomSelectBottomModalScreenState extends State<CustomSelectBottomModalS
               ),
             ),
             child: Text(
-              '지역 선택',
+              'Unbound',
               style: TextStyle(
                 color: Colors.white,
                 fontSize: 19,
@@ -39,13 +39,23 @@ class _CustomSelectBottomModalScreenState extends State<CustomSelectBottomModalS
             ),
           ),
 
+          // SingleChildScrollView를 Expanded로 감싸서 스크롤 영역을 확보
+          Expanded(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      Text('12123',style: TextStyle(color: Colors.white),),
+                      Text('12123',style: TextStyle(color: Colors.white),),
 
-          
-
-
-
-
-
+                    ],
+                  ),
+                ],
+              ),
+            ),
+          ),
 
         ],
       ),

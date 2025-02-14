@@ -23,6 +23,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   final TextEditingController birthTextEdController = TextEditingController();
   late int? selectedGender = 0;
   Uint8List? _imageBytes = null;
+  late FilePickerResult filePickerResult;
 
   @override
   Widget build(BuildContext context) {
@@ -38,11 +39,10 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
       if (result != null && result.files.isNotEmpty) {
         _imageBytes = await Helpers.cropImage(result.files.first.path!);
 
-        FilePickerResult filePickerResult = await Helpers.convertUint8ListToFilePickerResult(
+        filePickerResult = await Helpers.convertUint8ListToFilePickerResult(
             _imageBytes!, result.files.first.size
         );
 
-        await memberController.fnSetMemberProfileImg(filePickerResult,_imageBytes!);
         setState(() {});
 
       }
@@ -240,11 +240,11 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                                   String memberGender = selectedGender == 0? "M" : "F";
 
                                   bool isUpdate = await memberController.fnSetMemberInfo(memberNickName,memberBirth,memberGender);
-
-                                  if(isUpdate) {
+                                  bool isInsert = await memberController.fnSetMemberProfileImg(filePickerResult,_imageBytes!);
+                                  if(isUpdate && isInsert) {
                                     Get.toNamed('/');
                                   } else {
-
+                                    print('토스트 생성할 곳');
                                   }
 
                                 },

@@ -1,9 +1,14 @@
+import 'dart:async';
+
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/custom_select_bottom_modal_screen.dart';
+import 'package:badboys/screen/comn/user_profile_container.dart';
 import 'package:badboys/subScreen/home/event_list_item.dart';
+import 'package:badboys/subScreen/home/home_match_btn.dart';
+import 'package:badboys/subScreen/home/home_menu_list.dart';
 import 'package:badboys/subScreen/home/match_list_item.dart';
 import 'package:badboys/screen/info/member_page_screen.dart';
 import 'package:badboys/subScreen/home/home_menu_btn.dart';
@@ -30,16 +35,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   late TabController _tabController;
   late PageController _pageController;
-  late MemberController memberController;
-  late MatchController matchController;
+
+
 
   @override
   void initState() {
     super.initState();
-    memberController = Get.put(MemberController());
-    matchController = Get.put(MatchController());
-
-    memberController.fnGetMemberInfo();
     // TabController 초기화 (탭의 개수는 2로 설정)
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
@@ -62,14 +63,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
         width: 100.w,
         height: 100.h,
         child: SingleChildScrollView(
-          child: Obx(() {
-
-            if (memberController.isLoading.value) {
-              return CircularProgressIndicator();
-            }
-            var model = memberController.model.value;
-
-            return Column(
+          child: Column(
 
               mainAxisAlignment: MainAxisAlignment.start,
               children: [
@@ -129,87 +123,12 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 //   color: Colors.black.withOpacity(0.3),
                 // ),
 
-                Padding(
-                  padding: EdgeInsets.only(left: 5, right: 5),
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                    children: [
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        children: [
-                          CachedNetworkImage(
-                            imageUrl: model.profileImage!,
-                            // 이미지 URL
-                            placeholder: (context, url) {
-                              return CircularProgressIndicator(); // 로딩 중에 표시할 위젯
-                            },
-                            errorWidget: (context, url, error) {
-                              print('이미지 로딩 실패: $error');
-                              return Icon(Icons.error); // 로딩 실패 시 표시할 위젯
-                            },
-                            fadeInDuration: Duration(milliseconds: 500),
-                            // 이미지가 로드될 때 페이드 인 효과
-                            fadeOutDuration: Duration(milliseconds: 500),
-                            // 이미지가 사라질 때 페이드 아웃 효과
-                            width: 10.w,
-                            // height: 4.h,
-                            fit: BoxFit.cover,
-                            // 이미지가 위젯 크기에 맞게 자르거나 확대하는 방식
-                            imageBuilder: (context, imageProvider) {
-                              return ClipOval(child: Image(image: imageProvider)); // 이미지가 로드되면 표시
-                            },
-                          ),
-                          SizedBox(width: 5,),
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(model.username ?? "null",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                              Text(model.regionNm ?? "null",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                  fontWeight: FontWeight.w700,
-                                ),
-                              ),
-                            ],
-                          ),
 
-                        ],
-                      ),
+                /**
+                 *  상단 유저 프로필
+                 */
+                UserProfileContainer(),
 
-                      Row(
-                        children: [
-                          Image.asset(
-                            'assets/images/color_world.png',
-                            width: 5.w,
-                            height: 2.h,
-                            color: Colors.white,
-                            fit: BoxFit.cover,
-                          ),
-                          SizedBox(width: 7,),
-                          Column(
-                              mainAxisAlignment: MainAxisAlignment.start,
-                              children: [
-                                Text( (model.mmr ?? '0').toString() + ' pts',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 18,
-                                    fontWeight: FontWeight.w700,
-                                  ),
-                                ),
-                              ]
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-                ),
 
 
                 Container(
@@ -435,114 +354,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 mainAxisAlignment: MainAxisAlignment.center,
                                 children: [
 
-                                  ElevatedButton(
-                                    style: ButtonStyle(
-                                      backgroundColor: WidgetStateProperty.all(
-                                          Colors.white),
-                                      shadowColor: WidgetStateProperty.all(
-                                          Colors.transparent),
-                                      shape: WidgetStateProperty.all(
-                                        RoundedRectangleBorder(
-                                          borderRadius: BorderRadius.circular(
-                                              50),
-                                        ),
-                                      ),
-                                    ),
-                                    onPressed: () async =>
-                                    {
-                                      if (!matchController.isMatch.value)
-                                        {
-                                          await matchController.fnMatchStart(model.regionId),
-                                        }
-                                      else
-                                        if (matchController.isMatch.value)
-                                          {
-                                            Get.toNamed('/lockerRoomScreen')
-                                          }
-                                    },
-                                    child: Container(
-                                      padding: EdgeInsets.all(10),
-                                      child: Text(
-                                        !matchController.isMatch.value ? '매칭하기' : '라커룸 이동',
-                                        style: TextStyle(
-                                            color: Colors.black,
-                                            fontSize: 20,
-                                            fontWeight: FontWeight.w700
-                                        ),
-                                      ),
-                                    ),
-                                  )
+                                  /**
+                                   * 매칭버튼
+                                   */
+                                  HomeMatchBtn(regionId : 1)
+
                                 ],
                               ),
                             ),
                             SizedBox(height: 20,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/admin.png',
-                                    title: "내 정보",
-                                    iconWSize: 6.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/memberPageScreen',
-                                    arguments: {'tab': 0,}),
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/rank.png',
-                                    title: "동네랭킹",
-                                    iconWSize: 6.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/rank',
-                                    arguments: {}),
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/play_record.png',
-                                    title: "경기기록",
-                                    iconWSize: 6.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/memberPageScreen',
-                                    arguments: {'tab': 1}),
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/notice.png',
-                                    title: "공지",
-                                    iconWSize: 10.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/',
-                                    arguments: {}),
-                              ],
-                            ),
-                            SizedBox(height: 10,),
-                            Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              children: [
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/admin.png',
-                                    title: "방 만들기",
-                                    iconWSize: 6.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/',
-                                    arguments: {}),
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/admin.png',
-                                    title: "내 정보",
-                                    iconWSize: 6.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/',
-                                    arguments: {}),
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/admin.png',
-                                    title: "문의하기",
-                                    iconWSize: 6.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/inquiry',
-                                    arguments: {}),
-                                HomeMenuBtn(icon: null,
-                                    imagePath: 'assets/images/admin.png',
-                                    title: "신고하기",
-                                    iconWSize: 6.6.w,
-                                    iconHSize: 3.h,
-                                    uri: '/report',
-                                    arguments: {}),
-                              ],
-                            ),
+
+                            /**
+                             * 홈 메뉴
+                             */
+                            HomeMenuList(),
 
 
                           ],
@@ -677,10 +502,9 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   ),
                 ),
               ],
-            );
+            ),
 
-          }
-          ),
+
 
 
         ),
