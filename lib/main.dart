@@ -19,6 +19,7 @@ import 'package:badboys/screen/register/login.dart';
 import 'package:badboys/screen/register/profile_setting_screen.dart';
 import 'package:badboys/screen/report/report_screen.dart';
 import 'package:badboys/subScreen/comn/custom_bottom_navigatoion_bar.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -32,6 +33,7 @@ void main() async {
     options: DefaultFirebaseOptions,  // FirebaseOptions 설정
   );
   FcmNotifications.initializeNotification();
+  await Helpers.fnSetRegionList();
   runApp(MyApp());
 }
 

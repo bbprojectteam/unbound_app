@@ -14,18 +14,18 @@ MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel()
   ..profileImage = json['profileImage'] as String?
   ..uid = json['uid'] as String?
   ..username = json['username'] as String?
-  ..regionNm = json['regionNm'] as String?
-  ..regionId = (json['regionId'] as num?)?.toInt();
+  ..regionId = (json['regionId'] as num?)?.toInt()
+  ..regionNm = json['regionNm'] as String?;
 
 Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
     <String, dynamic>{
-      'id': instance.userId,
+      'userId': instance.userId,
       'birth': instance.birth,
       'gender': instance.gender,
       'mmr': instance.mmr,
       'profileImage': instance.profileImage,
       'uid': instance.uid,
-      'userName': instance.username,
-      'regionNm': instance.regionNm,
+      'username': instance.username,
       'regionId': instance.regionId,
+      'regionNm': instance.regionNm,
     };

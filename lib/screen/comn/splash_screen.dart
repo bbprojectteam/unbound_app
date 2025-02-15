@@ -1,16 +1,11 @@
 import 'dart:async';
 
-import 'package:badboys/controller/auth_controller.dart';
-import 'package:badboys/controller/member_controller.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:go_router/go_router.dart';
-import 'package:provider/provider.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-import '../../firebase/auth_service.dart';
 
 class SplashScreen extends StatefulWidget {
   const SplashScreen({super.key});
@@ -30,7 +25,6 @@ class _SplashScreenState extends State<SplashScreen> {
 
   void _checkUser() {
     User? user = FirebaseAuth.instance.currentUser; // 현재 사용자 정보 가져오기
-
 
     Timer(const Duration(seconds: 3), () async {
       if (user == null) {

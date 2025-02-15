@@ -4,7 +4,8 @@ import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
-import 'package:badboys/screen/comn/custom_select_bottom_modal_screen.dart';
+import 'package:badboys/modal/select_bottom_modal_screen.dart';
+import 'package:badboys/screen/comn/select_match_info_btn.dart';
 import 'package:badboys/screen/comn/user_profile_container.dart';
 import 'package:badboys/subScreen/home/event_list_item.dart';
 import 'package:badboys/subScreen/home/home_match_btn.dart';
@@ -15,10 +16,6 @@ import 'package:badboys/subScreen/home/home_menu_btn.dart';
 import 'package:badboys/subScreen/playHistory/play_history_result_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_svg/flutter_svg.dart';
-import 'package:get/get.dart';
-import 'package:get/get_core/src/get_main.dart';
-import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -131,6 +128,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
 
 
+
+
                 Container(
                   width: 100.w,
                   padding: EdgeInsets.only(left: 10, right: 10, top: 12),
@@ -139,193 +138,30 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        GestureDetector(
-                          onTap: () {
-                            showModalBottomSheet(
-                              context: context,
-                              builder: (BuildContext context) {
-                                return CustomSelectBottomModalScreen();
-                              },
-                            );
-                          },
-                          child: Container(
-                            padding: EdgeInsets.only(
-                                left: 10, right: 10, top: 5, bottom: 5),
-                            decoration: BoxDecoration(
-                              color: Color(0xff333333),
-                              borderRadius: BorderRadius.circular(50),
-                              border:
-                              Border.all(color: Color(0xff333333), width: 2.5),
-                            ),
-                            child: Row(
-                              mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                              mainAxisSize: MainAxisSize.min,
-                              children: [
-                                Text(
-                                  '지역',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 13,
-                                  ),
-                                ),
-                                Icon(
-                                  Icons.arrow_drop_down_sharp,
-                                  color: Colors.white,
-                                  size: 15,
-                                ),
-                              ],
-                            ),
-                          ),
-                        ),
+                        SelectMatchInfoBtn(title: "지역",listId: 1,),
                         SizedBox(
                           width: 5,
                         ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            color: Color(0xff333333),
-                            borderRadius: BorderRadius.circular(50),
-                            border:
-                            Border.all(color: Color(0xff333333), width: 2.5),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '동네',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down_sharp,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            ],
-                          ),
-                        ),
+                        SelectMatchInfoBtn(title: "성별",listId: 2,),
                         SizedBox(
                           width: 5,
                         ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            color: Color(0xff333333),
-                            borderRadius: BorderRadius.circular(50),
-                            border:
-                            Border.all(color: Color(0xff333333), width: 2.5),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '마감 가리기',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                              ),
-                            ],
-                          ),
-                        ),
+                        SelectMatchInfoBtn(title: "pts",listId: 3,),
                         SizedBox(
                           width: 5,
                         ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Color(0xff333333),
-                            border:
-                            Border.all(color: Color(0xff333333), width: 2.5),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '성별',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down_sharp,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            ],
-                          ),
-                        ),
+                        SelectMatchInfoBtn(title: "10km",listId: 4,),
                         SizedBox(
                           width: 5,
                         ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            color: Color(0xff333333),
-                            borderRadius: BorderRadius.circular(50),
-                            border:
-                            Border.all(color: Color(0xff333333), width: 2.5),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '레벨',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down_sharp,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            ],
-                          ),
-                        ),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        Container(
-                          padding: EdgeInsets.only(
-                              left: 10, right: 10, top: 5, bottom: 5),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(50),
-                            color: Color(0xff333333),
-                            border:
-                            Border.all(color: Color(0xff333333), width: 2.5),
-                          ),
-                          child: Row(
-                            mainAxisSize: MainAxisSize.min,
-                            children: [
-                              Text(
-                                '스꺼러스꺼러',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13,
-                                ),
-                              ),
-                              Icon(
-                                Icons.arrow_drop_down_sharp,
-                                color: Colors.white,
-                                size: 15,
-                              ),
-                            ],
-                          ),
-                        ),
+
                       ],
                     ),
                   ),
                 ),
+
+
+
                 SizedBox(height: 20,),
                 Container(
                   // height: 100.h,

@@ -12,6 +12,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
 import 'package:image_cropper/image_cropper.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Helpers {
@@ -183,11 +184,45 @@ class Helpers {
       isGetRefreshToken: true
     );
 
-
     return response;
-
-
   }
+
+
+
+  static Future<void> fnSetRegionList() async {
+
+    try {
+
+      http.Response response = await Helpers.apiCall(
+          '/service/region/list',
+          method: "GET",
+          headers: {
+            'Content-Type': 'application/json', // JSON 형식
+          },
+      );
+
+
+      if (response.statusCode == 200) {
+        final decodedBody = utf8.decode(response.bodyBytes);
+        // var jsonResponse = jsonDecode(decodedBody);
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        await prefs.setString('regionList', decodedBody);
+
+      } else {
+        // 오류 처리
+        throw Exception('fnMatchStart Failed');
+      }
+
+    } catch (error) {
+      print('fnSetRegionList Error: $error');
+
+    }
+  }
+
+
+
+
+
 
 
 
