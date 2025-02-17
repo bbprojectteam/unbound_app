@@ -5,17 +5,14 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class SelectBottomModalScreen extends StatefulWidget {
   const SelectBottomModalScreen({
     super.key,
-    required this.firstSelectIdx,
-    required this.secondSelectIdx,
-    required this.firstItemList,
-    required this.secondItemList,
+    required this.selectItemIdx,
+    required this.selectItemList,
+    required this.callBack,
   });
 
-  final int? firstSelectIdx;
-  final int? secondSelectIdx;
-  final List<dynamic> firstItemList;
-  final List<dynamic> secondItemList;
-
+  final int? selectItemIdx;
+  final List<dynamic> selectItemList;
+  final Function callBack;
   @override
   State<SelectBottomModalScreen> createState() =>
       _SelectBottomModalScreenState();
@@ -24,14 +21,12 @@ class SelectBottomModalScreen extends StatefulWidget {
 class _SelectBottomModalScreenState
     extends State<SelectBottomModalScreen> {
 
-  late int? firstIdx;
-  late int? secondIdx;
+  late int? itemIdx;
 
   @override
   void initState() {
     // TODO: implement initState
-    firstIdx = widget.firstSelectIdx;
-    secondIdx = widget.secondSelectIdx;
+    itemIdx = widget.selectItemIdx;
 
     super.initState();
   }
@@ -47,7 +42,7 @@ class _SelectBottomModalScreenState
       width: 100.w,
       color: Colors.black,
       child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
+        mainAxisAlignment: MainAxisAlignment.center,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           Container(
@@ -73,35 +68,45 @@ class _SelectBottomModalScreenState
 
           SizedBox(height: 20,),
           Expanded(
-            child: Row(
-              mainAxisAlignment: MainAxisAlignment.center,
-              crossAxisAlignment: CrossAxisAlignment.start,
-              children: [
-                if(widget.firstSelectIdx != null)
-                  SingleChildScrollView(
-                    child: SelectBottomModalList(
-                        itemList : widget.firstItemList,
-                        selectItemIdx : firstIdx,
-                        callBack: (selectItemIdx){
-                            firstIdx = selectItemIdx;
-                            setState(() {});
-                        },
-                    ),
+            child: SingleChildScrollView(
+              child: Container(
+                width: 96.w,
+                height: 25.5.h,
+                child: SelectBottomModalList(
+                  itemList : widget.selectItemList,
+                  selectItemIdx : itemIdx,
+                  callBack: (selectItemIdx){
+                    itemIdx = selectItemIdx;
+                    setState(() {});
+                  },
+                ),
+              ),
+            ),
+          ),
+          GestureDetector(
+            onTap: ()=>{
+              print(itemIdx),
+              print(widget.selectItemList[itemIdx!]),
+              widget.callBack(itemIdx,widget.selectItemList[itemIdx!]),
+              Navigator.pop(context),
+            },
+            child: Container(
+              height: 6.h,
+              width: 96.w,
+              decoration: BoxDecoration(
+                color: Color(0x33ffffff),
+                borderRadius: BorderRadius.circular(10)
+              ),
+              child: Center(
+                child: Text(
+                  '선택 완료',
+                  style: TextStyle(
+                    color: Colors.white,
+                    fontSize: 17,
+                    fontWeight: FontWeight.w700
                   ),
-                if(widget.secondSelectIdx != null)
-                  SingleChildScrollView(
-                    child: SelectBottomModalList(
-                      itemList: widget.secondItemList,
-                      selectItemIdx : secondIdx,
-                      callBack: (selectItemIdx){
-                        secondIdx = selectItemIdx;
-                        setState(() {});
-                      },
-                    ),
-                  ),
-
-
-              ],
+                ),
+              ),
             ),
           ),
 

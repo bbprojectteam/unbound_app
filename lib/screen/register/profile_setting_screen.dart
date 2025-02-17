@@ -1,6 +1,7 @@
 import 'package:badboys/controller/auth_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
+import 'package:badboys/screen/comn/select_match_info_btn.dart';
 import 'package:badboys/subScreen/register/profile_setting_text_field.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:file_picker/file_picker.dart';
@@ -206,13 +207,17 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                                 borderRadius: BorderRadius.circular(10),
                               ),
                               child: Center(
-                                child: Text(
-                                    '지역 선택',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontSize: 17,
-                                    fontWeight: FontWeight.w500
-                                  ),
+                                child: Row(
+                                  children: [
+                                    // SelectMatchInfoBtn(title: "지역",listId: 1,),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                    // SelectMatchInfoBtn(title: "동네",listId: 2,),
+                                    SizedBox(
+                                      width: 5,
+                                    ),
+                                  ],
                                 ),
                               ),
                             ),

@@ -29,7 +29,10 @@ class HomeScreen extends StatefulWidget {
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int matchIndex = 0;
-
+  String defaultMatchSelText = '지역';
+  String defaultMatchSelText2 = '동네';
+  String defaultMatchSelText3 = '성별';
+  String defaultMatchSelText4 = '전체';
   late TabController _tabController;
   late PageController _pageController;
 
@@ -138,22 +141,35 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     child: Row(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
                       children: [
-                        SelectMatchInfoBtn(title: "지역",listId: 1,),
+                        SelectMatchInfoBtn(title: defaultMatchSelText,listId: 1,callBack : (int? id, String text)=>{
+                          defaultMatchSelText= text,
+                          setState(() {}),
+                        }),
                         SizedBox(
                           width: 5,
                         ),
-                        SelectMatchInfoBtn(title: "성별",listId: 2,),
+                        SelectMatchInfoBtn(title: defaultMatchSelText2,listId: 2,callBack : (int? id, String text)=>{
+                            defaultMatchSelText2= text,
+                          setState(() {}),
+                        }),
                         SizedBox(
                           width: 5,
                         ),
-                        SelectMatchInfoBtn(title: "pts",listId: 3,),
+                        SelectMatchInfoBtn(title: defaultMatchSelText3,listId: 3,callBack : (int? id, String text)=>{
+                          defaultMatchSelText3= text,
+                          setState(() {}),
+                        }),
                         SizedBox(
                           width: 5,
                         ),
-                        SelectMatchInfoBtn(title: "10km",listId: 4,),
+                        SelectMatchInfoBtn(title: defaultMatchSelText4,listId: 4,callBack : (int? id, String text)=>{
+                            defaultMatchSelText4= text,
+                          setState(() {}),
+                        }),
                         SizedBox(
                           width: 5,
                         ),
+
 
                       ],
                     ),

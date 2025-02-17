@@ -71,7 +71,7 @@ class MemberController extends GetxController {
           file: http.MultipartFile.fromBytes(
             'profileImageFile', // 서버에서 받을 필드 이름
             _imageBytes, // 선택한 파일의 바이트
-            filename: profileImageFile.files.first.name, // 파일 이름
+            filename: profileImageFile.files.first.name.replaceAll('_' + profileImageFile.files.first.size.toString() , ''), // 파일 이름
             contentType: MediaType('image', 'jpg'), // MIME 타입 (필요에 따라 수정)
           )
       );
