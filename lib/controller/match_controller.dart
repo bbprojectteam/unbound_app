@@ -60,16 +60,14 @@ class MatchController extends GetxController {
   Future<void> fnMatchInfo(matchInfoId ) async {
 
     try {
-      // POST 요청 보내기
+
       http.Response response = await Helpers.apiCall(
           '/service/match/info?matchInfoId=${matchInfoId}',
           method: "GET",
           headers: {
             'Content-Type': 'application/json', // JSON 형식
           },
-
       );
-
 
       if (response.statusCode == 200) {
         final decodedBody = utf8.decode(response.bodyBytes);

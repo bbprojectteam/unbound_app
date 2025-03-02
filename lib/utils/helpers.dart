@@ -62,7 +62,7 @@ class Helpers {
     /**
      * 개발용
      */
-    await Future.delayed(Duration(seconds: 1)); 
+    await Future.delayed(Duration(seconds: 1));
 
     try {
 

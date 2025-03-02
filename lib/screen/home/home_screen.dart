@@ -79,6 +79,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 UserProfileContainer(),
 
                 SizedBox(height: 5,),
+
                 CustomCalenderScreen(),
 
                 Container(
@@ -91,24 +92,97 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                 Container(
                   width: 95.w,
-                  height: 6.h,
+                  height: 15.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
                     color: Color(0x39ffffff),
                   ),
 
                   child: Padding(
-                    padding: const EdgeInsets.all(8.0),
+                    padding: const EdgeInsets.all(15.0),
                     child: Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                      crossAxisAlignment: CrossAxisAlignment.start,
 
                       children: [
-                        Text('오늘 날씨정보',
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontWeight: FontWeight.w700,
-                            fontSize: 15
-                          ),
+
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text('양산시',
+                                  style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15
+                                  ),
+                                ),
+                                Text('물금읍',
+                                  style: TextStyle(
+                                      color: Colors.grey,
+                                      fontWeight: FontWeight.w700,
+                                      fontSize: 12
+                                  ),
+                                ),
+                              ],
+                            ),
+
+                            Row(
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Text('26',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 20
+                                  ),
+                                ),
+                                SizedBox(
+                                  width: 10,
+                                ),
+                                Icon(Icons.umbrella,color: Colors.white,),
+
+                                Text('38%',
+                                  style: TextStyle(
+                                      color: Colors.white,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14
+                                  ),
+                                ),
+                              ],
+                            ),
+
+
+                          ],
                         ),
+
+
+
+                        Column(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Column(
+                              crossAxisAlignment: CrossAxisAlignment.end,
+                              children: [
+                               
+                               Icon(Icons.cloud,color: Colors.white,size: 50,),
+                              ],
+                            ),
+
+                            Text('9:15 오후',
+                              style: TextStyle(
+                                  color: Colors.white,
+                                  fontWeight: FontWeight.w700,
+                                  fontSize: 20
+                              ),
+                            ),
+                          ],
+                        ),
+
+
 
 
                       ],
@@ -203,28 +277,28 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.center,
                                     children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(15.0),
-                                        child: Text(
-                                          '최근 진행된 경기',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 17,
-                                              color: Colors.white
-                                          ),
-                                        ),
-                                      ),
-
-                                      Container(
-                                        decoration: BoxDecoration(
-                                            borderRadius: BorderRadius.circular(
-                                                10),
-                                            border: Border.all(
-                                                width: 3, color: Colors.white)
-                                        ),
-                                        child: PlayHistoryResultItem(
-                                          pageCnt: 3,),
-                                      ),
+                                      // Padding(
+                                      //   padding: const EdgeInsets.all(15.0),
+                                      //   child: Text(
+                                      //     '최근 진행된 경기',
+                                      //     style: TextStyle(
+                                      //         fontWeight: FontWeight.w700,
+                                      //         fontSize: 17,
+                                      //         color: Colors.white
+                                      //     ),
+                                      //   ),
+                                      // ),
+                                      //
+                                      // Container(
+                                      //   decoration: BoxDecoration(
+                                      //       borderRadius: BorderRadius.circular(
+                                      //           10),
+                                      //       border: Border.all(
+                                      //           width: 3, color: Colors.white)
+                                      //   ),
+                                      //   child: PlayHistoryResultItem(
+                                      //     pageCnt: 3,),
+                                      // ),
 
                                       SizedBox(
                                         height: 20,

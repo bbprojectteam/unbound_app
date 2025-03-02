@@ -15,8 +15,6 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:go_router/go_router.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-
-
 class AppScreen extends StatefulWidget {
   final Widget child;
 
@@ -40,9 +38,8 @@ class _AppScreenState extends State<AppScreen> {
     _pageController.addListener(() {
       int newPage = _pageController.page!.round();
       if (newPage != _currentPage) {
-        setState(() {
-          _currentPage = newPage;
-        });
+        _currentPage = newPage;
+        setState(() {});
       }
     });
 
@@ -61,49 +58,43 @@ class _AppScreenState extends State<AppScreen> {
   Widget build(BuildContext context) {
     bool showBottomNav = !(
         widget.child is SplashScreen ||
-        widget.child is LoginScreen ||
-        widget.child is ProfileSettingScreen ||
-        widget.child is CountDownScreen ||
-        widget.child is PlayingScreen
+            widget.child is LoginScreen ||
+            widget.child is ProfileSettingScreen ||
+            widget.child is CountDownScreen ||
+            widget.child is PlayingScreen
     );
 
     return Scaffold(
       body: Stack(
         children: [
+
           ValueListenableBuilder<Widget>(
             valueListenable: _childNotifier,
             builder: (context, child, childWidget) {
-              return AnimatedSwitcher(
-                duration: const Duration(milliseconds: 700),
-                child: child,
-                transitionBuilder: (Widget child, Animation<double> animation) {
-                  return FadeTransition(opacity: animation, child: child);
-                },
-              );
+              return child;
             },
           ),
+
         ],
       ),
       bottomNavigationBar: showBottomNav
           ? CustomBottomNavigationBar(
         currentIndex: _currentIndex,
         onTap: (index) {
-          setState(() {
-            _currentIndex = index;
+          _currentIndex = index;
+          if (index == 0) {
+            Get.toNamed('/'); // HomeScreen
+          } else if (index == 1) {
+            Get.toNamed('/rank'); // PlayingScreen
+          } else if (index == 2) {
+            Get.toNamed('/match'); // PlayingScreen
+          } else if (index == 3) {
+            Get.toNamed('/rank'); // RankScreen
+          } else if (index == 4) {
+            Get.toNamed('/rank'); // CountDownScreen
+          }
 
-            // GetX의 라우팅 사용하여 화면 전환
-            if (index == 0) {
-              Get.toNamed('/'); // HomeScreen
-            } else if (index == 1) {
-              Get.toNamed('/rank'); // PlayingScreen
-            } else if (index == 2) {
-              Get.toNamed('/match'); // PlayingScreen
-            } else if (index == 3) {
-              Get.toNamed('/rank'); // RankScreen
-            } else if (index == 4) {
-              Get.toNamed('/rank'); // CountDownScreen
-            }
-          });
+
         },
       )
           : null,

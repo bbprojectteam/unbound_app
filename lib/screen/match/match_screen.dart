@@ -3,6 +3,7 @@ import 'package:badboys/screen/comn/select_match_info_btn.dart';
 import 'package:badboys/subScreen/home/home_match_btn.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MatchScreen extends StatefulWidget {
   const MatchScreen({super.key});
@@ -60,6 +61,19 @@ class _MatchScreenState extends State<MatchScreen> {
                   child: Center(
                     child: Column(
                       children: [
+                        GestureDetector(
+                          onTap: () async {
+                            SharedPreferences prefs = await SharedPreferences.getInstance();
+                            await prefs.setBool("isMatching", false);
+
+                          },
+                          child: Container(
+                            height: 10.h,
+                            child: Text('테스트 임시저장소비우기',
+                              style: TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        ),
                         Row(
                           mainAxisAlignment: MainAxisAlignment.spaceBetween,
                           children: [

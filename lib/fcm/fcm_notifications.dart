@@ -1,6 +1,7 @@
 
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class FcmNotifications{
 
@@ -99,6 +100,11 @@ class FcmNotifications{
             ),
           ),
         );
+
+
+        final prefs = await SharedPreferences.getInstance();
+        // 예시: 문자열 저장
+        await prefs.setBool('isMatching', true);
 
         print("Foreground 메시지 수신: ${{message.notification!.body!}}");
       }
