@@ -21,13 +21,12 @@ class _HomeMatchBtnState extends State<HomeMatchBtn> {
   @override
   Widget build(BuildContext context) {
 
-    print('1111');
 
     return Obx(() {
         return ElevatedButton(
           style: ButtonStyle(
             backgroundColor: WidgetStateProperty.all(
-                Colors.white),
+                Colors.orange),
             shadowColor: WidgetStateProperty.all(
                 Colors.transparent),
             shape: WidgetStateProperty.all(
@@ -56,31 +55,24 @@ class _HomeMatchBtnState extends State<HomeMatchBtn> {
           },
           child: matchController.isMatching.value ?
           Container(
-            padding: const EdgeInsets.only(left: 15,right: 15,top: 5,bottom: 5),
+
             child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 CircularProgressIndicator(
                   color: Colors.black,
                 ),
-                SizedBox(height: 15,),
-                Text('매칭 시작...',
-                  style: TextStyle(
-                    color: Colors.black,
-                    fontWeight: FontWeight.w700,
 
-                  ),
-                )
               ],
             ),
 
           )
               :Container(
-            padding: EdgeInsets.all(10),
             child: Text(
               !matchController.isMatch.value ? '매칭하기' : '라커룸 이동',
               style: TextStyle(
-                  color: Colors.black,
-                  fontSize: 20,
+                  color: Colors.white,
+                  fontSize: 18,
                   fontWeight: FontWeight.w700
               ),
             ),

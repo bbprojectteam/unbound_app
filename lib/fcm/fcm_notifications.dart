@@ -56,6 +56,9 @@ class FcmNotifications{
       badge: true, /** 앱 아이콘에 배지를 표시할 지 */
       sound: true, /** 알림 소리를 울릴 지 여부 */
     );
+
+
+    firebaseMessagingForegroundHandler();
   }
 
   /** 백그라운드 이벤트 리스너*/
@@ -75,7 +78,6 @@ class FcmNotifications{
 
       /** 알림이 존재하면 */
       if (notification != null) {
-
         /**
          * 로컬 알림을 표시하기 위한 객체를 생성
          * fcm에서 수신한 푸시 메시지를 화면에 표시하는 데 사용됨
@@ -97,6 +99,7 @@ class FcmNotifications{
             ),
           ),
         );
+
         print("Foreground 메시지 수신: ${{message.notification!.body!}}");
       }
     });

@@ -8,6 +8,7 @@ import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/splash_screen.dart';
 import 'package:badboys/screen/game/count_down_screen.dart';
 import 'package:badboys/screen/inquiry/inquiry_screen.dart';
+import 'package:badboys/screen/match/match_screen.dart';
 import 'package:badboys/screen/playHistory/play_history_screen.dart';
 import 'package:badboys/screen/game/playing_screen.dart';
 import 'package:badboys/screen/home/home_screen.dart';
@@ -26,6 +27,8 @@ import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
+import 'package:badboys/utils/permissions.dart';
+
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "env/config.env");
@@ -34,6 +37,7 @@ void main() async {
   );
   FcmNotifications.initializeNotification();
   await Helpers.fnSetRegionList();
+  Permissions.requestNotificationPermission();  // 알림 권한 요청
   runApp(MyApp());
 }
 
@@ -59,6 +63,8 @@ class MyApp extends StatelessWidget {
                   page: () => AppScreen(child: LoginScreen())),
               GetPage(name: '/profileSettingScreen',
                   page: () => AppScreen(child: ProfileSettingScreen())),
+              GetPage(name: '/match',
+                  page: () => AppScreen(child: MatchScreen())),
               GetPage(name: '/rank',
                   page: () => AppScreen(child: RankScreen())),
               GetPage(name: '/memberPageScreen',

@@ -70,47 +70,6 @@ class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
                   child: SelectBottomModalScreen(selectItemIdx : 15, selectItemList : selectItemList,  callBack : (int? id, String text)=>{
                     widget.callBack(id,text),
                   }));
-            } else if(widget.listId == 3) {
-              List<String> selectItemList = ['남자만','여자만','상관없음'];
-
-              return Container(
-                height: 40.h,
-                  child: SelectBottomModalScreen(selectItemIdx :2, selectItemList : selectItemList, callBack : (int? id, String text)=>{
-                    widget.callBack(id,text),
-              }));
-            } else if(widget.listId == 4) {
-
-              List<String> selectItemList = [
-                '전체',
-                '1000pts ~ 1100 pts',
-                '1100pts ~ 1200 pts',
-                '1200pts ~ 1300 pts',
-                '1300pts ~ 1400 pts',
-                '1400pts ~ 1500 pts',
-                '1500pts ~ 1600 pts',
-                '1600pts ~ 1700 pts',
-                '1700pts ~ 1800 pts',
-                '1800pts ~ 1900 pts',
-                '1900pts ~ 2000 pts',
-                '2000pts ~ 2100 pts',
-                '2100pts ~ 2200 pts',
-                '2200pts ~ 2300 pts',
-                '2300pts ~ 2400 pts',
-                '2400pts ~ 2500 pts',
-                '2500pts ~ 2600 pts',
-                '2600pts ~ 2700 pts',
-                '2700pts ~ 2800 pts',
-                '2800pts ~ 2900 pts',
-                '2900pts ~ 3000 pts',
-              ];
-
-              return Container(
-                  height: 40.h,
-                  child: SelectBottomModalScreen(selectItemIdx :5, selectItemList : selectItemList, callBack : (int? id, String text)=>{
-                    widget.callBack(id,text),
-                  }));
-            } else if(widget.listId == 5) {
-
             }
 
             return SelectBottomModalScreen(selectItemIdx : null, selectItemList: [], callBack : (int? id, String text)=>{
@@ -120,31 +79,19 @@ class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
         );
       },
       child: Container(
-        padding: EdgeInsets.only(
-            left: 10, right: 10, top: 5, bottom: 5),
+        width: 45.w,
+        padding: EdgeInsets.all(15),
         decoration: BoxDecoration(
-          color: Color(0xff333333),
-          borderRadius: BorderRadius.circular(50),
-          border:
-          Border.all(color: Color(0xff333333), width: 2.5),
+          color: Colors.white.withOpacity(0.9),
+          borderRadius: BorderRadius.circular(30),
         ),
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Text(
-              '${widget.title}',
-              style: TextStyle(
-                color: Colors.white,
-                fontSize: 13,
-              ),
+        child: Center(
+          child: Text('${widget.title}',
+            style: TextStyle(
+                fontSize: 18,
+                fontWeight: FontWeight.w700
             ),
-            Icon(
-              Icons.arrow_drop_down_sharp,
-              color: Colors.white,
-              size: 15,
-            ),
-          ],
+          ),
         ),
       ),
     );

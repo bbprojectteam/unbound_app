@@ -29,6 +29,7 @@ dependencies:
   file_picker: ^8.1.7
   image_picker: ^1.0.4
   image_cropper: ^9.0.0
+  permission_handler: ^10.0.0
   flutter_lints: ^3.0.0
   flutter_local_notifications: ^9.0.0
   stomp_dart_client: ^1.0.0
@@ -44,3 +45,13 @@ flutter:
   assets:
     - assets/images/
     - env/
+  fonts:
+    - family: Digital7
+      fonts:
+        - asset: assets/fonts/Digital-7.ttf
+    - family: EHSMB
+      fonts:
+        - asset: assets/fonts/EHSMB.ttf
+    - family: backToSchool
+      fonts:
+        - asset: assets/fonts/backToSchool.ttf

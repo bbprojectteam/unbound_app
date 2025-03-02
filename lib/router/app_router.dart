@@ -95,11 +95,13 @@ class _AppScreenState extends State<AppScreen> {
             if (index == 0) {
               Get.toNamed('/'); // HomeScreen
             } else if (index == 1) {
-              Get.toNamed('/playingScreen'); // PlayingScreen
+              Get.toNamed('/rank'); // PlayingScreen
             } else if (index == 2) {
-              Get.toNamed('/rank'); // RankScreen
+              Get.toNamed('/match'); // PlayingScreen
             } else if (index == 3) {
-              Get.toNamed('/countDownScreen'); // CountDownScreen
+              Get.toNamed('/rank'); // RankScreen
+            } else if (index == 4) {
+              Get.toNamed('/rank'); // CountDownScreen
             }
           });
         },

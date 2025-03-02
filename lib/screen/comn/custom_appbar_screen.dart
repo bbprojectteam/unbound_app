@@ -33,7 +33,7 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
 
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10),
-      color: Colors.black,
+      color: Colors.transparent,
       width: 100.w,
       height: 40,
       child: Row(

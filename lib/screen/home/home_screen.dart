@@ -5,6 +5,7 @@ import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/modal/select_bottom_modal_screen.dart';
+import 'package:badboys/screen/comn/custom_calender_screen.dart';
 import 'package:badboys/screen/comn/select_match_info_btn.dart';
 import 'package:badboys/screen/comn/user_profile_container.dart';
 import 'package:badboys/subScreen/home/event_list_item.dart';
@@ -31,8 +32,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
   int matchIndex = 0;
   String defaultMatchSelText = '지역';
   String defaultMatchSelText2 = '동네';
-  String defaultMatchSelText3 = '성별';
-  String defaultMatchSelText4 = '전체';
   late TabController _tabController;
   late PageController _pageController;
 
@@ -73,101 +72,42 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   isListMenu: false,
                 ),
 
-                // SingleChildScrollView(
-                //   scrollDirection: Axis.horizontal,
-                //   child: Row(
-                //     children: [
-                //       for (int i = 0; i < 10; i++)...[
-                //         Container(
-                //           width: 10.w,
-                //           height: 5.h,
-                //           decoration: BoxDecoration(
-                //             borderRadius: BorderRadius.circular(100),
-                //           ),
-                //           child: Column(
-                //             mainAxisAlignment: MainAxisAlignment.center,
-                //             children: [
-                //               Text(
-                //                 '3',
-                //                 style: TextStyle(
-                //                   color: i == 2 ? Colors.white : i==3 ?  Colors.blue : i == 4 ? Colors.red : null,
-                //                   fontWeight: FontWeight.w800,
-                //
-                //                 ),
-                //               ),
-                //               Text(
-                //                 '금',
-                //                 style: TextStyle(
-                //                   color: i == 2 ? Colors.white : i==3 ?  Colors.blue : i == 4 ? Colors.red : null,
-                //                   fontWeight: FontWeight.w800,
-                //
-                //                 ),
-                //               ),
-                //             ],
-                //           ),
-                //         ),
-                //
-                //         SizedBox(
-                //           width: 10,
-                //         ),
-                //       ],
-                //
-                //     ],
-                //   ),
-                // ),
-
-                // Container(
-                //   margin: EdgeInsets.only(top: 5,bottom: 3),
-                //   width: maxWidth,
-                //   height: 0.8,
-                //   color: Colors.black.withOpacity(0.3),
-                // ),
-
-
+                SizedBox(height: 5,),
                 /**
                  *  상단 유저 프로필
                  */
                 UserProfileContainer(),
 
-
-
-
+                SizedBox(height: 5,),
+                CustomCalenderScreen(),
 
                 Container(
+                  margin: EdgeInsets.only(top: 5,bottom: 3),
                   width: 100.w,
-                  padding: EdgeInsets.only(left: 10, right: 10, top: 12),
-                  child: SingleChildScrollView(
-                    scrollDirection: Axis.horizontal,
+                  height: 0.8,
+                  color: Colors.orange.withOpacity(0.3),
+                ),
+                SizedBox(height: 10,),
+
+                Container(
+                  width: 95.w,
+                  height: 6.h,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    color: Color(0x39ffffff),
+                  ),
+
+                  child: Padding(
+                    padding: const EdgeInsets.all(8.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+
                       children: [
-                        SelectMatchInfoBtn(title: defaultMatchSelText,listId: 1,callBack : (int? id, String text)=>{
-                          defaultMatchSelText= text,
-                          setState(() {}),
-                        }),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        SelectMatchInfoBtn(title: defaultMatchSelText2,listId: 2,callBack : (int? id, String text)=>{
-                            defaultMatchSelText2= text,
-                          setState(() {}),
-                        }),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        SelectMatchInfoBtn(title: defaultMatchSelText3,listId: 3,callBack : (int? id, String text)=>{
-                          defaultMatchSelText3= text,
-                          setState(() {}),
-                        }),
-                        SizedBox(
-                          width: 5,
-                        ),
-                        SelectMatchInfoBtn(title: defaultMatchSelText4,listId: 4,callBack : (int? id, String text)=>{
-                            defaultMatchSelText4= text,
-                          setState(() {}),
-                        }),
-                        SizedBox(
-                          width: 5,
+                        Text('오늘 날씨정보',
+                          style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 15
+                          ),
                         ),
 
 
@@ -177,8 +117,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
 
 
-
-                SizedBox(height: 20,),
                 Container(
                   // height: 100.h,
                   child: Column(
@@ -192,28 +130,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                         child: Column(
                           mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Container(
-                              width: 100.w,
-                              height: 18.h,
-                              decoration: BoxDecoration(
-                                border: Border.all(
-                                    color: Colors.white, width: 3),
-                                // 테두리 색상과 두께 설정
-                                borderRadius:
-                                BorderRadius.circular(50), // 동그란 모서리 설정
-                              ),
-                              child: Column(
-                                mainAxisAlignment: MainAxisAlignment.center,
-                                children: [
 
-                                  /**
-                                   * 매칭버튼
-                                   */
-                                  HomeMatchBtn(regionId : 1)
-
-                                ],
-                              ),
-                            ),
                             SizedBox(height: 20,),
 
                             /**

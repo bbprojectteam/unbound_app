@@ -11,7 +11,6 @@ class PlayingScreen extends StatefulWidget {
     super.key,
   });
 
-
   @override
   State<PlayingScreen> createState() => _PlayingScreenState();
 }
@@ -97,259 +96,296 @@ class _PlayingScreenState extends State<PlayingScreen> {
     double maxHeight = MediaQuery.of(context).size.height;
 
     return Container(
-      color: Colors.black,
+      color: Colors.black87,
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          SizedBox(height: 40,),
-          CustomAppbarScreen(
-            isNotification: true,
-            isListMenu: false,
+          SizedBox(
+            height: 40,
           ),
 
-
-
-          // 경기 이름 텍스트
-
-          SizedBox(height: 5),
-
-
-          Column(
-            children: [
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (int i = 0; i < 3; i++)
-                    ClipOval(
-                      child: Image.asset(
-                        'assets/images/intro.png',
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                ],
-              ),
-              Padding(
-                padding: const EdgeInsets.all(8.0),
-                child: Text(
-                  'vs',
-                  style: TextStyle(
-                    color: Colors.white,
-                    fontSize: 17,
-                    fontWeight: FontWeight.w600
-                  ),
+          Container(
+            child: Center(
+              child: Text(
+                '00 : 00',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 80,
+                  fontWeight: FontWeight.w600,
+                  fontFamily: 'Digital7',
                 ),
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  for (int i = 0; i < 3; i++)
-                    ClipOval(
-                      child: Image.asset(
-                        'assets/images/intro.png',
-                        width: 40,
-                        height: 40,
-                        fit: BoxFit.fill,
-                      ),
-                    ),
-                ],
-              ),
-
-            ],
-          ),
-
-
-
-          // _minutes, _seconds, _milliseconds
-
-
-
-          SizedBox(height: 25),
-          // 타이머 화면
-          Container(
-            width: maxWidth,
-            child: Center(
-              child: Row(
-                mainAxisAlignment: MainAxisAlignment.spaceAround,
-                children: [
-
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width : maxWidth * 0.28,
-                        height: maxHeight * 0.065,
-                        decoration: BoxDecoration(
-                          color: Color(0xff333333),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text('00',
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontSize: 27,
-                              fontWeight: FontWeight.w700
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Text('시',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500
-                        ),
-                      ),
-
-                    ],
-                  ),
-
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width : maxWidth * 0.28,
-                        height: maxHeight * 0.065,
-                        decoration: BoxDecoration(
-                          color: Color(0xff333333),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text(
-                            '$_minutes',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 27,
-                                fontWeight: FontWeight.w700
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Text('분',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500
-                        ),
-                      ),
-                    ],
-                  ),
-                  Column(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Container(
-                        width : maxWidth * 0.28,
-                        height: maxHeight * 0.065,
-                        decoration: BoxDecoration(
-                          color: Color(0xff333333),
-                          borderRadius: BorderRadius.circular(10),
-                        ),
-                        child: Center(
-                          child: Text('$_seconds',
-                            style: TextStyle(
-                                color: Colors.white,
-                                fontSize: 27,
-                                fontWeight: FontWeight.w700
-                            ),
-                          ),
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-                      Text('초',
-                        style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 15,
-                            fontWeight: FontWeight.w500
-                        ),
-                      ),
-                    ],
-                  ),
-
-
-
-                ],
-              ),
             ),
           ),
-          SizedBox(height: 15),
-          Column(
-            children: [
-              Text(
-                '대전 탄방동 스꺼러 경기장',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w600,color: Colors.white),
-              ),
-              Text(
-                '25-01-01 14:30',
-                style: TextStyle(fontSize: 17, fontWeight: FontWeight.w500,color: Colors.white),
-              ),
-            ],
-          ),
+
 
           Container(
-            width: maxWidth,
-            height: maxHeight * 0.39,
-            padding: EdgeInsets.all(15),
-            child: SingleChildScrollView(
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  for (int i = 0; i < 5; i++)
-                    Padding(
-                      padding: EdgeInsets.only(top: 15),
-                      child: Row(
-                        children: [
-                          Container(
-                            width: 12.w,
-                            height: 5.h,
-                            decoration: BoxDecoration(
-                              borderRadius: BorderRadius.circular(10),
-                              color: Color(0xff333333)
-                            ),
-                              child: Center(
-                                child: SvgPicture.asset(
-                                  'assets/images/stop.svg',
-                                  color: Colors.white70,
-                                ),
+            padding: EdgeInsets.only(left: 25, right: 25),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.spaceAround,
+              children: [
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+                    Stack(
+                      children: [
+                        // 테두리 텍스트
+                        Text(
+                          'HOME',
+                          style: TextStyle(
+                            color: Colors.white,
+                            // 테두리 색상
+                            fontSize: 65,
+                            // fontWeight: FontWeight.w600,
+                            fontFamily: 'backToSchool',
+                            shadows: [
+                              Shadow(
+                                blurRadius: 3.0,
+                                color: Colors.white, // 테두리 색상
+                                offset: Offset(1.0, 1.0), // 테두리의 위치
                               ),
-                          ),
-                          SizedBox(width: 15,),
-
-                          Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
-                            children: [
-                              Text(
-                                '01:14:00',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 16,color: Colors.white),
-                              ),
-                              SizedBox(
-                                width: 10,
-                              ),
-                              Text(
-                                '경기가 중지되었습니다',
-                                style: TextStyle(
-                                    fontWeight: FontWeight.w600, fontSize: 14,color: Colors.grey),
-                              ),
-
                             ],
                           ),
-                        ],
-                      ),
+                        ),
+                        // 실제 텍스트
+                        Text(
+                          'HOME',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 65,
+                            // fontWeight: FontWeight.w600,
+                            fontFamily: 'backToSchool',
+                          ),
+                        ),
+                      ],
                     ),
-                ],
-              ),
+
+                    Stack(
+                      children: [
+                        // 테두리 텍스트
+                        Text(
+                          'AWAY',
+                          style: TextStyle(
+                            color: Colors.white,
+                            // 테두리 색상
+                            fontSize: 60,
+                            // fontWeight: FontWeight.w600,
+                            fontFamily: 'backToSchool',
+
+                          ),
+                        ),
+                        // 실제 텍스트
+                        Text(
+                          'AWAY',
+                          style: TextStyle(
+                            color: Colors.orange,
+                            fontSize: 60,
+                            // fontWeight: FontWeight.w600,
+                            fontFamily: 'backToSchool',
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                  ],
+                ),
+
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: [
+
+                    Stack(
+                      children: [
+                        Container(
+                          width: 35.w,
+                          height: 13.5.h,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Align(
+                            alignment: Alignment.topCenter,  // Centers text both vertically and horizontally
+                            child: Text(
+                              '00',
+                              style: TextStyle(
+                                color: Colors.white10,
+                                fontSize: 98, // Increased font size
+                                fontFamily: 'EHSMB',
+                                letterSpacing: 0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+
+                    Stack(
+                      children: [
+                        Container(
+                          width: 35.w,
+                          height: 13.5.h,
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Align(
+                            alignment: Alignment.topCenter,  // Centers text both vertically and horizontally
+                            child: Text(
+                              '00',
+                              style: TextStyle(
+                                color: Colors.white10,
+                                fontSize: 98, // Increased font size
+                                fontFamily: 'EHSMB',
+                                letterSpacing: 0,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+
+
+                  ],
+                ),
+              ],
             ),
           ),
 
-          SizedBox(height: 30),
+          SizedBox(height: 30,),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 40.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 10.w,
+                        height: 5.h,
+                        color: Colors.red,
+                        child: Center(
+                            child: Text("+ 1",
+                              style: TextStyle(
+                                color: Colors.black54,
+                                fontSize: 25,
+                                fontWeight: FontWeight.w700,
+                                fontFamily: 'roboto',
+
+                              ),
+                            ),
+                        ),
+                    ),
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 2",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 3",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                width: 40.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 1",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 2",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 3",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
+          Image.asset(
+            'assets/images/court2.jpg',
+            width: 100.w,
+            height: 40.h,
+            fit: BoxFit.cover,
+          ),
 
 
-
-
-
+          SizedBox(height: 20,),
           // 버튼들
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
@@ -368,13 +404,13 @@ class _PlayingScreenState extends State<PlayingScreen> {
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      border: Border.all(width: 1, color: Colors.white),
-                      color: Colors.white),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      color: Colors.orange),
                   child: Center(
                     child: Text(
                       _isRunning ? "경기 중단" : "경기 재시작",
                       style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.w900,
                           fontSize: 16,
                           letterSpacing: -0.3),
@@ -396,21 +432,19 @@ class _PlayingScreenState extends State<PlayingScreen> {
                       );
                     },
                   );
-
-
                 },
                 child: Container(
                   width: maxWidth * 0.35,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
-                      border: Border.all(width: 1, color: Colors.white),
-                      color: Colors.white),
+                      border: Border.all(width: 1, color: Colors.orange),
+                      color: Colors.orange),
                   child: Center(
                     child: Text(
                       '종료',
                       style: TextStyle(
-                          color: Colors.black,
+                          color: Colors.white,
                           fontWeight: FontWeight.w900,
                           fontSize: 16,
                           letterSpacing: -0.3),
@@ -418,8 +452,6 @@ class _PlayingScreenState extends State<PlayingScreen> {
                   ),
                 ),
               ),
-
-
             ],
           ),
         ],

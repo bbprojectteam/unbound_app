@@ -21,7 +21,7 @@ class Helpers {
   static Future<FilePickerResult> convertUint8ListToFilePickerResult(Uint8List imageBytes, int size) async {
     final tempFile = await _writeToTempFile(imageBytes);
 
-    return FilePickerResult([PlatformFile(path: tempFile.path, name: 'image.jpg_${size}', size: size)]);
+    return FilePickerResult([PlatformFile(path: tempFile.path, name: 'image.jpg}', size: size)]);
   }
 
   static Future<File> _writeToTempFile(Uint8List bytes) async {
@@ -142,6 +142,7 @@ class Helpers {
       http.MultipartFile? file) async {
 
 
+    print(response.statusCode);
 
     if(url.startsWith("/auth/refresh")) {
       return response;
