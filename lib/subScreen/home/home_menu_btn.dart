@@ -43,7 +43,7 @@ class HomeMenuBtn extends StatelessWidget {
               imagePath!,
               width: iconWSize,
               height: iconHSize,
-              color: Colors.white,
+              color: Colors.orange,
               fit: BoxFit.cover,
             ),
           SizedBox(height: 10,),

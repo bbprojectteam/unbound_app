@@ -240,9 +240,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                           children: [
                             // TabBar 생성
                             TabBar(
-                              tabAlignment: TabAlignment.start,
+                              tabAlignment: TabAlignment.center,
                               isScrollable: true,
                               controller: _tabController,
+                              indicatorColor: Colors.orange,
                               indicatorSize: TabBarIndicatorSize.label,
                               // 탭에 맞는 indicator 크기
                               tabs: [
@@ -257,7 +258,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ),
                                 Tab(
                                   child: Text(
-                                    '이벤트',
+                                    '이벤트 ',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,

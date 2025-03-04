@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_svg/flutter_svg.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class CustomBottomNavigationBar extends StatelessWidget {
@@ -10,24 +11,23 @@ class CustomBottomNavigationBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Container(
-      height: 50, // 네비게이션 바 높이
+      height: 5.5.h, // 네비게이션 바 높이
       decoration: BoxDecoration(
         color: Colors.black, // 배경색
       ),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
+        crossAxisAlignment: CrossAxisAlignment.end,
         children: [
-          _buildNavItem(Icons.home, '', 0,20.w),
-          _buildNavItem(Icons.feed, '', 1,20.w),
-          _buildNavItem(Icons.opacity, '', 2,20.w),
-          _buildNavItem(Icons.search, '', 3,20.w),
-          _buildNavItem(Icons.settings, '', 4,20.w),
+          _buildNavItem('assets/images/basketball.svg', 'Unbound', 0,34.w),
+          _buildNavItem('assets/images/spinner.svg', 'Match', 1,33.w),
+          _buildNavItem('assets/images/setting.svg', 'Setting', 2,33.w),
         ],
       ),
     );
   }
 
-  Widget _buildNavItem(IconData icon, String label, int index, double width) {
+  Widget _buildNavItem(String iconUri, String label, int index, double width) {
     final isSelected = currentIndex == index;
     return GestureDetector(
       onTap: () => onTap(index),
@@ -38,18 +38,20 @@ class CustomBottomNavigationBar extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
-              Icon(
-                icon,
-                size: 30,
-                color: isSelected ? Colors.white : Colors.grey,
+              SvgPicture.asset(
+                iconUri,
+                width: 3.w,
+                height: 3.h,
+                color: Colors.orange,
               ),
+
               SizedBox(
-                width: 10,
+                width: 5,
               ),
               Text(
                 label,
                 style: TextStyle(
-                    color: isSelected == 0 ? Colors.grey : Colors.white,
+                    color: !isSelected ? Colors.grey : Colors.white,
                     fontWeight: FontWeight.w900,
                     fontSize: 17),
               ),

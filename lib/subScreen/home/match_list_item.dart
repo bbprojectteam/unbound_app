@@ -54,10 +54,10 @@ class _MatchListItemState extends State<MatchListItem> {
               padding: EdgeInsets.all(10),
               decoration: BoxDecoration(
                 borderRadius: BorderRadius.circular(10),
-                border: Border.all(width: 1,color: Colors.white),
-                color: Colors.white
+                border: Border.all(width: 1,color: Colors.orange),
+                color: Colors.orange
               ),
-              child: Text('자세히 보기',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w900,fontSize: 13,letterSpacing: -0.3),),
+              child: Text('자세히 보기',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 13,letterSpacing: -0.3),),
             ),
           ),
 
