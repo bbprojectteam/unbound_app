@@ -1,8 +1,16 @@
+import 'package:badboys/model/match/match_info_model.dart';
+import 'package:badboys/model/match/match_model.dart';
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LockerRoomInfo extends StatefulWidget {
-  const LockerRoomInfo({super.key});
+  const LockerRoomInfo({
+    super.key,
+    required this.matchModel,
+  });
+
+  final MatchModel matchModel;
 
   @override
   State<LockerRoomInfo> createState() => _LockerRoomInfoState();
@@ -15,7 +23,6 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-
 
           Container(
             width: 90.w,
@@ -112,12 +119,12 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('1월 9일 목요일 12:00',style: TextStyle(fontWeight: FontWeight.w800,letterSpacing: -0.3,color: Colors.white),),
-                      Text('대전 서구 아크 실내 농구장',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white),),
+                      // Text('1월 9일 목요일 12:00',style: TextStyle(fontWeight: FontWeight.w800,letterSpacing: -0.3,color: Colors.white),),
+                      Text(widget.matchModel.matchInfoModel?.name ?? "방 제목을 지어주세요.",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white),),
 
                       Row(
                         children: [
-                          Text('서울 특별시 도봉구 도봉로 100라길 69-6 4층',style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.grey),),
+                          Text( widget.matchModel.matchInfoModel?.location ?? '주소를 선택해주세요.' ,style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.grey),),
                           SizedBox(width: 3,),
                           Row(
                             children: [
@@ -133,7 +140,7 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                         children: [
                           Icon(Icons.heart_broken,color: Colors.red,),
                           SizedBox(width: 5,),
-                          Text('5',style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),)
+                          Text('0',style: TextStyle(fontWeight: FontWeight.w500,color: Colors.white),)
                         ],
                       ),
 
@@ -154,11 +161,38 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                         children: [
                           Row(
                             children: [
-                              Icon(Icons.account_circle_sharp,color: Colors.white,size: 40,),
-                              Icon(Icons.account_circle_sharp,color: Colors.red,size: 40),
-                              Icon(Icons.account_circle_sharp,color: Colors.blue,size: 40),
-                              Icon(Icons.account_circle_sharp,color: Colors.purpleAccent,size: 40),
-                              Icon(Icons.account_circle_sharp,color: Colors.green,size: 40),
+                              for (int i = 0; i < widget.matchModel.matchMemberModel.length; i++)...[
+                                if(widget.matchModel.matchMemberModel[i].profileImage != null)
+                                  CachedNetworkImage(
+                                    imageUrl: widget.matchModel.matchMemberModel[i].profileImage!,
+                                    // 이미지 URL
+                                    placeholder: (context, url) {
+                                      return CircularProgressIndicator(); // 로딩 중에 표시할 위젯
+                                    },
+                                    errorWidget: (context, url, error) {
+                                      // print('이미지 로딩 실패: ');
+                                      return Icon(Icons.account_circle_sharp); // 로딩 실패 시 표시할 위젯
+                                    },
+                                    fadeInDuration: Duration(milliseconds: 500),
+                                    // 이미지가 로드될 때 페이드 인 효과
+                                    fadeOutDuration: Duration(milliseconds: 500),
+                                    // 이미지가 사라질 때 페이드 아웃 효과
+                                    width: 10.w,
+                                    // height: 4.h,
+                                    fit: BoxFit.cover,
+                                    // 이미지가 위젯 크기에 맞게 자르거나 확대하는 방식
+                                    imageBuilder: (context, imageProvider) {
+                                      return ClipOval(child: Image(image: imageProvider)); // 이미지가 로드되면 표시
+                                    },
+                                  ),
+
+                              ]
+
+                              // Icon(Icons.account_circle_sharp,color: Colors.white,size: 40,),
+                              // Icon(Icons.account_circle_sharp,color: Colors.red,size: 40),
+                              // Icon(Icons.account_circle_sharp,color: Colors.blue,size: 40),
+                              // Icon(Icons.account_circle_sharp,color: Colors.purpleAccent,size: 40),
+                              // Icon(Icons.account_circle_sharp,color: Colors.green,size: 40),
                             ],
                           ),
                           GestureDetector(

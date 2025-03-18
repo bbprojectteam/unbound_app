@@ -31,13 +31,14 @@ class _CustomCalenderScreenState extends State<CustomCalenderScreen> {
       child: Row(
         children: [
 
-          ...List.generate(10, (i) {
+          ...List.generate(9, (i) {
             DateTime date = startDate.add(Duration(days: i));
             return Container(
-              width: 10.w,
+              width: 11.w,
               height: 5.h,
               decoration: BoxDecoration(
-                borderRadius: BorderRadius.circular(100),
+                borderRadius: BorderRadius.circular(10),
+                border: date.day == today.day ? Border.all(color: Colors.orange,width: 2) : null,
 
               ),
               child: Column(

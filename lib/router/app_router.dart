@@ -58,7 +58,6 @@ class _AppScreenState extends State<AppScreen> {
   @override
   Widget build(BuildContext context) {
 
-    print('tes123');
 
     bool showBottomNav = !(
         widget.child is SplashScreen ||

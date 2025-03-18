@@ -30,14 +30,13 @@ class MemberController extends GetxController {
 
       );
 
+
       if (response.statusCode == 200) {
 
         final decodedBody = utf8.decode(response.bodyBytes);
         print(decodedBody);
         var jsonResponse = jsonDecode(decodedBody);
         model.value = MemberModel.fromJson(jsonResponse['userInfo']);
-
-
         isLoading.value = false;
 
       } else if (response.statusCode == 404 || response.statusCode == 500 ) {
@@ -46,7 +45,7 @@ class MemberController extends GetxController {
 
       } else{
           // 오류 처리
-          throw Exception('Failed to set playlist like');
+          throw Exception('Failed to fnGetMemberInfo');
         }
 
     } catch (error) {

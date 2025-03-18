@@ -1,5 +1,8 @@
 import 'dart:convert';
 
+import 'package:badboys/model/match/match_info_model.dart';
+import 'package:badboys/model/match/match_member_model.dart';
+import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:firebase_auth/firebase_auth.dart';
@@ -10,13 +13,13 @@ import 'package:http/http.dart' as http;
 
 class MatchController extends GetxController {
 
-  var model = MemberModel().obs;
+  var matchModel = MatchModel().obs;
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   var isMatch = false.obs;
   var isMatching = false.obs;
 
   void clear() {
-    model.value = MemberModel(); // 상태 초기화
+    matchModel.value = MatchModel(); // 상태 초기화
   }
 
 
@@ -36,10 +39,6 @@ class MatchController extends GetxController {
 
 
       if (response.statusCode == 200) {
-        final decodedBody = utf8.decode(response.bodyBytes);
-        var jsonResponse = jsonDecode(decodedBody);
-        print(jsonResponse);
-
 
       } else {
         // 오류 처리
@@ -57,12 +56,12 @@ class MatchController extends GetxController {
   }
 
 
-  Future<void> fnMatchInfo(matchInfoId ) async {
+  Future<void> fnMatchInfo(String matchInfoId ) async {
 
     try {
 
       http.Response response = await Helpers.apiCall(
-          '/service/match/info?matchInfoId=${matchInfoId}',
+          '/service/chatRoom/${matchInfoId}/info',
           method: "GET",
           headers: {
             'Content-Type': 'application/json', // JSON 형식
@@ -72,12 +71,20 @@ class MatchController extends GetxController {
       if (response.statusCode == 200) {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
-        print(jsonResponse);
+
+        clear();
+
+        matchModel.value.matchInfoModel = MatchInfoModel.fromJson(jsonResponse['chatRoomInfo']);
+
+        for (var item in jsonResponse['memberList']) {
+          matchModel.value.matchMemberModel.add(MatchMemberModel.fromJson(item));
+        }
+
 
 
       } else {
         // 오류 처리
-        throw Exception('fnMatchStart Failed');
+        throw Exception('fnMatchInfo Failed');
       }
 
     } catch (error) {

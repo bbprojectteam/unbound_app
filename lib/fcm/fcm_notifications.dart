@@ -105,6 +105,7 @@ class FcmNotifications{
         final prefs = await SharedPreferences.getInstance();
         // 예시: 문자열 저장
         await prefs.setBool('isMatching', true);
+        await prefs.setString('matchingRoomId', message.data['chatRoomId'].toString());
 
         print("Foreground 메시지 수신: ${{message.notification!.body!}}");
       }

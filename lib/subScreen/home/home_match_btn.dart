@@ -62,7 +62,11 @@ class _HomeMatchBtnState extends State<HomeMatchBtn> {
       if (timer != null) {
         timer?.cancel();
       }
-      Get.toNamed('/lockerRoomScreen');
+
+
+      final prefs = await SharedPreferences.getInstance();
+      String? matchingRoomId =  await prefs.getString('matchingRoomId');
+      Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : matchingRoomId});
 
     }
   }

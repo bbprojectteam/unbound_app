@@ -20,6 +20,7 @@ class AuthService {
 
 
   Future<bool?> signInWithGoogle() async {
+    print('test123');
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 
@@ -35,8 +36,9 @@ class AuthService {
 
 
     // print(idToken!.length);
-    // print(idToken!.substring(0,1000));
-    // print( idToken!.substring(1000,idToken.length));
+    print(idToken!.substring(0,1000));
+    print( idToken!.substring(1000,idToken.length));
+    print('----');
     final String? deviceToken = await FcmNotifications.getMyDeviceToken();
     print(deviceToken);
     http.Response response = await Helpers.apiCall(
@@ -52,6 +54,8 @@ class AuthService {
       }
     );
 
+    print('tt11');
+    print(response);
     if(response.statusCode == 204) {
       print('회원가입 화면으로 이동');
 

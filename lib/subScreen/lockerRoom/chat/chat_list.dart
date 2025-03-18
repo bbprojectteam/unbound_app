@@ -1,17 +1,41 @@
+import 'package:badboys/controller/chat_controller.dart';
 import 'package:badboys/subScreen/lockerRoom/chat/chat_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ChatList extends StatefulWidget {
-  const ChatList({super.key});
+  const ChatList({
+    super.key,
+    required this.chatRoomId
+  });
+
+  final String chatRoomId;
 
   @override
   State<ChatList> createState() => _ChatListState();
 }
 
 class _ChatListState extends State<ChatList> {
+  final TextEditingController textController = TextEditingController();
+  late ChatController chatController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    chatController = Get.put(ChatController());
+    chatController.fnConnectToStompServer();
+    chatController.fnChatList(widget.chatRoomId);
+  }
+
+
+
   @override
   Widget build(BuildContext context) {
+
+
     return SingleChildScrollView(
       child: Column(
         children: [
@@ -71,6 +95,7 @@ class _ChatListState extends State<ChatList> {
                 // 텍스트 입력 필드
                 Expanded(
                   child: TextField(
+                    controller: textController,
                     decoration: InputDecoration(
                       hintText: '메시지를 입력하세요',  // 기본 텍스트
                       hintStyle: TextStyle(color: Colors.grey),
@@ -91,6 +116,7 @@ class _ChatListState extends State<ChatList> {
                   onPressed: () {
                     // 전송 버튼 클릭 시 동작 (예: 메시지 전송 처리)
                     print('메시지 전송');
+                    chatController.sendMessage(widget.chatRoomId,textController.text);
                   },
                 ),
               ],

@@ -95,6 +95,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   height: 15.h,
                   decoration: BoxDecoration(
                     borderRadius: BorderRadius.circular(10),
+                    // border: Border.all(color: Colors.orange,width: 1),
                     color: Color(0x39ffffff),
                   ),
 
@@ -197,7 +198,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     children: [
                       Container(
                         width: 100.w, // 화면 너비에 맞게
-                        padding: EdgeInsets.only(left: 30, right: 30),
                         decoration: BoxDecoration(
                           color: Colors.black,
                         ),

@@ -25,36 +25,44 @@ class HomeMenuBtn extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: ()=>{
-        Get.toNamed(uri!,
-          arguments: arguments,
-        )
-      },
-      child: Column(
-        children: [
+    return Container(
+      width: 45.w,
+      height: 8.h,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(10),
+        border: Border.all(color: Colors.orange,width: 1.5)
+      ),
+      child: GestureDetector(
+        onTap: ()=>{
+          Get.toNamed(uri!,
+            arguments: arguments,
+          )
+        },
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: [
 
-          if(icon != null)
-            Icon(icon,),
+            if(icon != null)
+              Icon(icon,),
 
-
-          if(imagePath != null)
-            Image.asset(
-              imagePath!,
-              width: iconWSize,
-              height: iconHSize,
-              color: Colors.orange,
-              fit: BoxFit.cover,
+            if(imagePath != null)
+              Image.asset(
+                imagePath!,
+                width: iconWSize,
+                height: iconHSize,
+                color: Colors.orange,
+                fit: BoxFit.cover,
+              ),
+            SizedBox(height: 10,),
+            Text(
+              title,
+              style: TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.w700
+              ),
             ),
-          SizedBox(height: 10,),
-          Text(
-            title,
-            style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w700
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }

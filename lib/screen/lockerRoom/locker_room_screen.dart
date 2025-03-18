@@ -1,4 +1,5 @@
 import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/subScreen/lockerRoom/chat/chat_item.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/subScreen/home/match_list_item.dart';
@@ -14,7 +15,6 @@ class LockerRoomScreen extends StatefulWidget {
     super.key,
   });
 
-
   @override
   State<LockerRoomScreen> createState() => _LockerRoomScreenState();
 }
@@ -24,13 +24,16 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
   late TabController _tabController;
   late PageController _pageController;
   late MatchController matchController;
+  late String matchingRoomId;
 
   @override
   void initState() {
     super.initState();
     // TabController 초기화 (탭의 개수는 2로 설정)
+    matchingRoomId = Get.arguments['matchingRoomId'];
     matchController = Get.put(MatchController());
-    matchController.fnMatchInfo(2);
+    matchController.fnMatchInfo(matchingRoomId);
+
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
   }
@@ -46,16 +49,12 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
   @override
   Widget build(BuildContext context) {
-    double maxWidth = MediaQuery.of(context).size.width;
-    double maxHeight = MediaQuery.of(context).size.height;
 
-
-
-
+    MatchModel matchModel = matchController.matchModel.value;
 
     return Container(
       color: Colors.black,
-      width: maxWidth,
+      width: 100.w,
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
@@ -93,10 +92,9 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
               children: [
 
                 // 첫 번째 탭 (새로운 사람들)
-                LockerRoomInfo(),
-
+                LockerRoomInfo(matchModel : matchModel),
                 // 두 번째 탭
-                ChatList(),
+                ChatList(chatRoomId: matchingRoomId,),
 
 
               ],

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MatchListItem extends StatefulWidget {
   const MatchListItem({
@@ -47,8 +48,10 @@ class _MatchListItemState extends State<MatchListItem> {
           ),
 
           GestureDetector(
-            onTap: ()=>{
-              Get.toNamed('/lockerRoomScreen')
+            onTap: () async {
+              SharedPreferences prefs = await SharedPreferences.getInstance();
+              String? matchingRoomId =  await prefs.getString('matchingRoomId');
+              Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : matchingRoomId});
             },
             child: Container(
               padding: EdgeInsets.all(10),
