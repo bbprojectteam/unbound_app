@@ -77,10 +77,10 @@ class MatchController extends GetxController {
         matchModel.value.matchInfoModel = MatchInfoModel.fromJson(jsonResponse['chatRoomInfo']);
 
         for (var item in jsonResponse['memberList']) {
+          print(item);
+
           matchModel.value.matchMemberModel.add(MatchMemberModel.fromJson(item));
         }
-
-
 
       } else {
         // 오류 처리
@@ -89,7 +89,7 @@ class MatchController extends GetxController {
 
     } catch (error) {
       // 오류 처리
-      print('fnMatchStart Error: $error');
+      print('fnMatchInfo Error: $error');
 
     } finally {
       isLoading.value = false;

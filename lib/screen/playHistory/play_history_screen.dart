@@ -23,7 +23,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
             SizedBox(height : 40),
-            CustomAppbarScreen(isNotification: true, isListMenu: false),
+            CustomAppbarScreen(isNotification: true, ),
 
             Container(
               width: 90.w,

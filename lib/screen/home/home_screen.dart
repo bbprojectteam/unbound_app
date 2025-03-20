@@ -69,7 +69,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 SizedBox(height: 40,),
                 CustomAppbarScreen(
                   isNotification: true,
-                  isListMenu: false,
                 ),
 
                 SizedBox(height: 5,),

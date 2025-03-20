@@ -1,18 +1,43 @@
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/modal/team_player_list_item.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TeamPlayerListModalPop extends StatefulWidget {
-  const TeamPlayerListModalPop({super.key});
+  const TeamPlayerListModalPop({
+    super.key,
+    required this.chatRoomId,
+  });
+
+  final String chatRoomId;
 
   @override
   State<TeamPlayerListModalPop> createState() => _TeamPlayerListModalPopState();
 }
 
 class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
+
+
+  late MatchController matchController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    matchController = Get.put(MatchController());
+    matchController.fnMatchInfo(widget.chatRoomId);
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+    var matchModel = matchController.matchModel.value;
+
+
     return Container(
       width: 100.w,
       height: 47.h,
@@ -24,14 +49,14 @@ class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppbarScreen(isNotification: false, isListMenu: false),
+          CustomAppbarScreen(isNotification: false, ),
 
           Expanded(
             child: SingleChildScrollView(
               child: Column(
                 children: [
-                  for(int i = 0; i< 10; i++)
-                    TeamPlayerListItem(),
+                  for(int i = 0; i< matchModel.matchMemberModel.length; i++)
+                    TeamPlayerListItem(matchMemberModel : matchModel.matchMemberModel[i]),
 
 
                 ],

@@ -1,7 +1,12 @@
 import 'dart:convert';
 
+import 'package:badboys/model/chat/chat_model.dart';
+import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
@@ -9,9 +14,64 @@ import 'package:http/http.dart' as http;
 
 class ChatController extends GetxController{
   late StompClient stompClient;
+  var chatModelList = <ChatModel>[].obs;
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
+  ScrollController scrollController = ScrollController();
+  double previousPosition = 0.0;
+
+  void clear() {
+    // scrollController.dispose();
+    chatModelList.value = <ChatModel>[];
+    isLoading = false.obs;
+  }
+
+
+  Future<void> fnChatListMore(String? chatRoomId) async {
+
+    try {
+      print(chatModelList[0].toJson());
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+        '/service/chatRoom/${chatRoomId}/messages?lastMessageId=${chatModelList[0].messageId}',
+        headers: {
+          'Content-Type': 'application/json', // JSON 형식
+        },
+      );
+
+
+      if (response.statusCode == 200) {
+        final decodedBody = utf8.decode(response.bodyBytes);
+        var jsonResponse = jsonDecode(decodedBody);
+        int loginMemberId = await Helpers.getMemberId();
+
+        for (var jsonItem in jsonResponse['messageList']) {
+          DateTime dateTime = DateTime.parse(jsonItem['createdAt']);
+          jsonItem['createdAt'] =  _formatMessageTime(dateTime);
+          jsonItem['isMyChat'] = jsonItem['senderId'] == loginMemberId;
+
+          chatModelList.insert(0,ChatModel.fromJson(jsonItem));
+        }
+
+        scrollToLoadChat(!jsonResponse['messageList'].isEmpty);
+
+      } else {
+        // 오류 처리
+        throw Exception('fnChatListMore Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnChatListMore Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+
 
   Future<void> fnChatList(String? chatRoomId) async {
+
     try {
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
@@ -25,17 +85,28 @@ class ChatController extends GetxController{
       if (response.statusCode == 200) {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
-        print(jsonResponse);
+        int loginMemberId = await Helpers.getMemberId();
 
+        clear();
 
+        for (var jsonItem in jsonResponse['messageList'].reversed) {
+
+          DateTime dateTime = DateTime.parse(jsonItem['createdAt']);
+          jsonItem['createdAt'] = _formatMessageTime(dateTime);
+          jsonItem['isMyChat'] = jsonItem['senderId'] == loginMemberId;
+
+          chatModelList.add(ChatModel.fromJson(jsonItem));
+        }
+
+        scrollToBottom();
       } else {
         // 오류 처리
-        throw Exception('fnMatchStart Failed');
+        throw Exception('fnChatList Failed');
       }
 
     } catch (error) {
       // 오류 처리
-      print('fnMatchStart Error: $error');
+      print('fnChatList Error: $error');
 
     } finally {
       isLoading.value = false;
@@ -43,6 +114,50 @@ class ChatController extends GetxController{
 
   }
 
+  Future<void> loadMoreData(String? chatRoomId) async {
+    if (isLoading.value) return; // 이미 로딩 중인 경우
+
+    previousPosition = scrollController.position.maxScrollExtent - 15.h;
+    isLoading.value = true;
+    await fnChatListMore(chatRoomId);
+    isLoading.value = false;
+  }
+
+  void setScrollControllerListener(String? chatRoomId) async {
+    scrollController.addListener(() async {
+      if (scrollController.position.atEdge && scrollController.position.pixels == 0) {
+      // 최상단에 도달했을 때 데이터를 로드
+        await loadMoreData(chatRoomId);
+      }
+    });
+  }
+
+  void scrollToBottom() {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+      }
+    });
+  }
+
+
+
+  void scrollToLoadChat(bool isScrollMove) {
+    WidgetsBinding.instance.addPostFrameCallback((_) {
+
+      if(isScrollMove){
+        scrollController.jumpTo(previousPosition);
+      } else {
+        scrollController.jumpTo(0);
+      }
+
+    });
+
+  }
+  bool isAtBottom() {
+    double threshold = 50.0; //허용 범위
+    return scrollController.position.maxScrollExtent - scrollController.position.pixels <= threshold;
+  }
 
   void fnConnectToStompServer() {
     // 로그: 연결 시도 전
@@ -74,7 +189,36 @@ class ChatController extends GetxController{
     stompClient.activate();  // WebSocket 연결 활성화.
   }
 
+  void onReceive (StompFrame frame) {
+// 바이너리 데이터를 utf8로 디코딩하여 문자열로 변환
+    String decodedMessage = utf8.decode(frame.binaryBody!);
 
+    // 디코딩된 문자열을 JSON 객체로 변환
+    try {
+      Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
+      DateTime dateTime = DateTime.now();
+
+      ChatModel chatModel = ChatModel();
+      chatModel.senderId = jsonMessage['senderId'];
+      chatModel.message = jsonMessage['message'];
+      chatModel.createdAt = _formatMessageTime(dateTime);
+      chatModel.unreadMemberCnt = 5;
+      chatModel.isMyChat = false;
+
+      chatModelList.add(chatModel);
+
+      ///현재 스크롤 위치 검사
+      if (isAtBottom()) {
+        scrollToBottom();
+      }
+
+
+      print('Decoded JSON: $jsonMessage');
+    } catch (e) {
+      print('Error decoding JSON: $e');
+    }
+
+  }
   // stomp 구독
   void onConnect(StompFrame frame) {
     print('STOMP connected!');
@@ -84,29 +228,35 @@ class ChatController extends GetxController{
       destination: '/topic',  // 메시지를 받을 경로
       callback: (frame) {
         if (frame.binaryBody != null) {
-          // 바이너리 데이터를 utf8로 디코딩하여 문자열로 변환
-          String decodedMessage = utf8.decode(frame.binaryBody!);
-          print('Decoded message: $decodedMessage');
-
-          // 디코딩된 문자열을 JSON 객체로 변환
-          try {
-            String jsonMessage = jsonDecode(decodedMessage);
-
-
-
-            print('Decoded JSON: $jsonMessage');
-          } catch (e) {
-            print('Error decoding JSON: $e');
-          }
+          onReceive(frame);
         } else {
           print('No binary body received');
         }
       },
     );
   }
+  String _formatMessageTime(DateTime dateTime) {
+    return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
+  }
+
+  void _createNewSendMessage(String message) async {
+
+    DateTime dateTime = DateTime.now();
+    int loginMemberId = await Helpers.getMemberId();
+
+    ChatModel chatModel = ChatModel();
+    chatModel.senderId = loginMemberId;
+    chatModel.message = message;
+    chatModel.createdAt = _formatMessageTime(dateTime);
+    chatModel.unreadMemberCnt = 4;
+    chatModel.isMyChat = true;
+
+    chatModelList.add(chatModel);
+  }
 
   // 메시지 전송
-  void sendMessage(String chatRoomId,String message) {
+  Future<void> sendMessage(String chatRoomId,String message) async {
+
     var body = jsonEncode({
       'chatRoomId': chatRoomId,
       'senderId' : 8,
@@ -117,6 +267,9 @@ class ChatController extends GetxController{
       destination: '/app/chat.send',
       body: body,
     );
+
+    _createNewSendMessage(message);
+
   }
 
   // WebSocket 연결 오류 처리

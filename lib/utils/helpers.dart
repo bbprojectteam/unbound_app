@@ -4,6 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:badboys/firebase/auth_service.dart';
+import 'package:badboys/model/member/member_model.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -16,6 +17,20 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 
 class Helpers {
+
+
+  static Future<void> setMemberId(String userId) async {
+    // SharedPreferences에 저장
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('memberId', userId);
+  }
+
+
+  static Future<int> getMemberId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return int.parse(prefs.getString("memberId").toString());
+  }
 
 
   static Future<FilePickerResult> convertUint8ListToFilePickerResult(Uint8List imageBytes, int size) async {

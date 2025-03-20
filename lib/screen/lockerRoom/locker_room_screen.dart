@@ -1,5 +1,6 @@
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_model.dart';
+import 'package:badboys/screen/comn/custom_match_appbar_Screen.dart';
 import 'package:badboys/subScreen/lockerRoom/chat/chat_item.dart';
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/subScreen/home/match_list_item.dart';
@@ -23,7 +24,6 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
   late TabController _tabController;
   late PageController _pageController;
-  late MatchController matchController;
   late String matchingRoomId;
 
   @override
@@ -31,9 +31,6 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
     super.initState();
     // TabController 초기화 (탭의 개수는 2로 설정)
     matchingRoomId = Get.arguments['matchingRoomId'];
-    matchController = Get.put(MatchController());
-    matchController.fnMatchInfo(matchingRoomId);
-
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
   }
@@ -50,7 +47,6 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
   @override
   Widget build(BuildContext context) {
 
-    MatchModel matchModel = matchController.matchModel.value;
 
     return Container(
       color: Colors.black,
@@ -59,10 +55,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 40,),
-          CustomAppbarScreen(
-            isNotification : false,
-            isListMenu : true,
-          ),
+          CustomMatchAppbarScreen(chatRoomId: matchingRoomId,),
 
           TabBar(
             tabAlignment : TabAlignment.start,
@@ -92,7 +85,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
               children: [
 
                 // 첫 번째 탭 (새로운 사람들)
-                LockerRoomInfo(matchModel : matchModel),
+                LockerRoomInfo(chatRoomId : matchingRoomId),
                 // 두 번째 탭
                 ChatList(chatRoomId: matchingRoomId,),
 

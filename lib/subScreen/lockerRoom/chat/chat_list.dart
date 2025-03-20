@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:badboys/controller/chat_controller.dart';
 import 'package:badboys/subScreen/lockerRoom/chat/chat_item.dart';
 import 'package:flutter/material.dart';
@@ -28,101 +30,105 @@ class _ChatListState extends State<ChatList> {
     chatController = Get.put(ChatController());
     chatController.fnConnectToStompServer();
     chatController.fnChatList(widget.chatRoomId);
+    chatController.setScrollControllerListener(widget.chatRoomId);
   }
 
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    chatController.clear();
+    chatController.disconnect();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
 
 
     return SingleChildScrollView(
-      child: Column(
-        children: [
 
-          Container(
-            width: 100.w,
-            height: 72.h,
-            decoration: BoxDecoration(
+      child: Obx((){
+        var chatModelList = chatController.chatModelList;
 
-              color: Colors.white,
-            ),
-            child: SingleChildScrollView(
-              child: Column(
+        return Column(
+          children: [
+            Container(
+              width: 100.w,
+              height: 72.h,
+              decoration: BoxDecoration(
+                color: Colors.white,
+              ),
+              child: Stack(
                 children: [
-                  for(int i = 0 ; i< 20; i++)...[
-                    if(i == 3)...[
-                      Container(
-                        padding: EdgeInsets.all(15),
-                        child: Row(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: [
-                            Expanded(
-                              child: Container(
-                                height: 1,  // 선의 두께
-                                color: Colors.black.withOpacity(0.5),  // 선의 색
-                              ),
-                            ),
-                            Padding(
-                              padding: EdgeInsets.symmetric(horizontal: 10),  // 텍스트 양 옆의 여백
-                              child: Text('6월 12일'),
-                            ),
-                            Expanded(
-                              child: Container(
-                                height: 1,  // 선의 두께
-                                color: Colors.black.withOpacity(0.5),  // 선의 색
-                              ),
-                            ),
-                          ],
+                  if(chatController.isLoading.value)...[
+                    Positioned(
+                      top: 10,
+                      left: 10,
+                      right: 10,
+                      child: Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: const Center(
+                          child: CircularProgressIndicator(
+                            color: Colors.orange,),
                         ),
                       ),
-                    ],
+                    ),
+                  ],
 
-                    if(i != 3)
-                      ChatItem(isMyChat: i % 2 == 0 ? true : false )
-                  ]
+                  ListView.builder(
+                      reverse: false,  // 리스트의 항목을 역순으로 표시
+                      controller: chatController.scrollController,
+                      itemCount: chatModelList.length,
+                      padding: chatController.isLoading.value ? null : EdgeInsets.zero,
+                      itemBuilder: (context, index) {
+                        // 각 메시지를 ListView에 표시
+                        return ChatItem(chatModel: chatModelList[index],);
+                      }
+                  ),
                 ],
               ),
             ),
-          ),
 
-          Container(
-            width: 100.w,  // maxWidth는 부모 위젯에서 제공된 최대 너비
-            height: 8.h,  // maxHeight * 0.1은 컨테이너의 높이 비율
-            color: Colors.white,  // 배경색
-            child: Row(
-              children: [
-                // 텍스트 입력 필드
-                Expanded(
-                  child: TextField(
-                    controller: textController,
-                    decoration: InputDecoration(
-                      hintText: '메시지를 입력하세요',  // 기본 텍스트
-                      hintStyle: TextStyle(color: Colors.grey),
-                      prefixIcon: Icon(Icons.add, color: Colors.grey),  // 왼쪽에 플러스 아이콘 추가
-                      border: OutlineInputBorder(
-                        borderRadius: BorderRadius.circular(20),  // 둥근 모서리
-                        borderSide: BorderSide(color: Colors.grey),
+            Container(
+              width: 100.w,  // maxWidth는 부모 위젯에서 제공된 최대 너비
+              height: 8.h,  // maxHeight * 0.1은 컨테이너의 높이 비율
+              color: Colors.white,  // 배경색
+              child: Row(
+                children: [
+                  // 텍스트 입력 필드
+                  Expanded(
+                    child: TextField(
+                      controller: textController,
+                      decoration: InputDecoration(
+                        hintText: '메시지를 입력하세요',  // 기본 텍스트
+                        hintStyle: TextStyle(color: Colors.grey),
+                        prefixIcon: Icon(Icons.add, color: Colors.grey),  // 왼쪽에 플러스 아이콘 추가
+                        border: OutlineInputBorder(
+                          borderRadius: BorderRadius.circular(20),  // 둥근 모서리
+                          borderSide: BorderSide(color: Colors.grey),
+                        ),
+                        filled: true,
+                        fillColor: Colors.grey[200],  // 입력 필드 배경 색
                       ),
-                      filled: true,
-                      fillColor: Colors.grey[200],  // 입력 필드 배경 색
                     ),
                   ),
-                ),
-                SizedBox(width: 10),  // 입력 필드와 전송 버튼 사이 간격
-                // 전송 버튼
-                IconButton(
-                  icon: Icon(Icons.send),
-                  onPressed: () {
-                    // 전송 버튼 클릭 시 동작 (예: 메시지 전송 처리)
-                    print('메시지 전송');
-                    chatController.sendMessage(widget.chatRoomId,textController.text);
-                  },
-                ),
-              ],
+                  SizedBox(width: 10),  // 입력 필드와 전송 버튼 사이 간격
+                  // 전송 버튼
+                  IconButton(
+                    icon: Icon(Icons.send),
+                    onPressed: () async {
+                      await chatController.sendMessage(widget.chatRoomId,textController.text);
+                      textController.text = "";
+                      chatController.scrollToBottom();
+                    },
+                  ),
+                ],
+              ),
             ),
-          ),
-        ],
+          ],
+        );
+      }
       ),
     );
   }

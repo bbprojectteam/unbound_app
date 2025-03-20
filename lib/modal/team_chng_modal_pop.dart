@@ -68,7 +68,7 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          CustomAppbarScreen(isNotification: false, isListMenu: false),
+          CustomAppbarScreen(isNotification: false, ),
           Stack(
             children: [
               Image.asset(

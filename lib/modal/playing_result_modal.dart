@@ -26,7 +26,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
-          CustomAppbarScreen(isNotification: false, isListMenu: false),
+          CustomAppbarScreen(isNotification: false, ),
 
 
           Row(

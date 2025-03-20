@@ -47,7 +47,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
           child: Column(
             children: [
               SizedBox(height: 40,),
-              CustomAppbarScreen(isNotification: true, isListMenu: false),
+              CustomAppbarScreen(isNotification: true, ),
 
               Column(
                 crossAxisAlignment: CrossAxisAlignment.center,

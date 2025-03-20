@@ -8,6 +8,7 @@ import 'package:file_picker/file_picker.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:http_parser/http_parser.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MemberController extends GetxController {
 
@@ -34,9 +35,12 @@ class MemberController extends GetxController {
       if (response.statusCode == 200) {
 
         final decodedBody = utf8.decode(response.bodyBytes);
-        print(decodedBody);
         var jsonResponse = jsonDecode(decodedBody);
         model.value = MemberModel.fromJson(jsonResponse['userInfo']);
+
+        print('공통 멤버 저장 메서드 실행');
+        Helpers.setMemberId(model.value.userId.toString());
+
         isLoading.value = false;
 
       } else if (response.statusCode == 404 || response.statusCode == 500 ) {
@@ -56,6 +60,7 @@ class MemberController extends GetxController {
     }
 
   }
+
 
 
   Future<bool> fnSetMemberProfileImg(FilePickerResult profileImageFile, Uint8List _imageBytes) async {

@@ -12,7 +12,7 @@ class MatchMemberModel {
 
   String? profileImage;
 
-  int? lastReadMessageId;
+  String? lastReadMessageId;
 
   MatchMemberModel();
 

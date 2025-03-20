@@ -20,7 +20,7 @@ class AuthService {
 
 
   Future<bool?> signInWithGoogle() async {
-    print('test123');
+
     final GoogleSignInAccount? googleUser = await googleSignIn.signIn();
     final GoogleSignInAuthentication? googleAuth = await googleUser?.authentication;
 

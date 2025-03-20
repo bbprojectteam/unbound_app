@@ -14,11 +14,9 @@ class CustomAppbarScreen extends StatefulWidget {
   const CustomAppbarScreen({
     super.key,
     required this.isNotification,
-    required this.isListMenu,
   });
 
   final bool isNotification;
-  final bool isListMenu;
 
   @override
   State<CustomAppbarScreen> createState() => _CustomAppbarScreenState();
@@ -29,7 +27,6 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
   Widget build(BuildContext context) {
 
     AuthService _authService = AuthService();
-
 
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10),
@@ -77,24 +74,6 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
                   ),
                 ),
 
-              if(widget.isListMenu)
-                GestureDetector(
-                  onTap: ()=>{
-                  _showDropdownMenu(context),
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                      color: Colors.white,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Icon(
-                      Icons.menu_outlined,
-                      color: Colors.black,
-                      size: 25,
-                    ),
-                  ),
-                ),
             ],
           ),
 
@@ -103,67 +82,5 @@ class _CustomAppbarScreenState extends State<CustomAppbarScreen> {
     );
   }
 
-  void _showDropdownMenu(BuildContext context) async {
-
-    await showMenu(
-      context: context,
-      position: RelativeRect.fromLTRB(70, 80, 0, 0), // 드롭다운 위치
-      items: [
-        PopupMenuItem<int>(
-          value: 100,
-          child: Text('참여자 확인'),
-        ),
-        PopupMenuItem<int>(
-          value: 200,
-          child: Text('팀변경'),
-        ),
-        PopupMenuItem<int>(
-          value: 300,
-          child: Text('경기시작'),
-        ),
-        PopupMenuItem<int>(
-          value: 1,
-          child: Text('대기실 나가기'),
-        ),
-      ],
-      elevation: 8.0,
-    ).then((value) {
-      if (value != null) {
-
-        if(value == 100) {
-          showDialog<void>(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return Dialog(
-                child: TeamPlayerListModalPop(),
-              );
-            },
-          );
-        } else if (value == 200) {
-          showDialog<void>(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return Dialog(
-                child: TeamChngModalPop(),
-              );
-            },
-          );
-        } else if(value == 300){
-
-          Get.toNamed('/countDownScreen');
-
-        }
-
-
-
-        // widget.fnRouter(value);
-
-
-
-      }
-    });
-  }
 
 }

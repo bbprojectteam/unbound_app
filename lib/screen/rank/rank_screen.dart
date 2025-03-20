@@ -40,7 +40,6 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
             children: [
               CustomAppbarScreen(
                 isNotification: true,
-                isListMenu: false,
               ),
 
 

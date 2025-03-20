@@ -49,7 +49,6 @@ class _MatchScreenState extends State<MatchScreen> {
                       ),
                       CustomAppbarScreen(
                         isNotification: false,
-                        isListMenu: false,
                       ),
                     ],
                   )),

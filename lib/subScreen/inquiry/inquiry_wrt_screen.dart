@@ -30,7 +30,7 @@ class _InquiryWrtScreenState extends State<InquiryWrtScreen> {
       child: Column(
         children: [
           SizedBox(height: 40,),
-          // CustomAppbarScreen(isNotification: true, isListMenu: false),
+          // CustomAppbarScreen(isNotification: true, ),
 
           Padding(
             padding: const EdgeInsets.only(left: 10,right: 10),

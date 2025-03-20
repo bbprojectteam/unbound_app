@@ -11,7 +11,7 @@ MatchMemberModel _$MatchMemberModelFromJson(Map<String, dynamic> json) =>
       ..userId = (json['userId'] as num?)?.toInt()
       ..username = json['username'] as String?
       ..profileImage = json['profileImage'] as String?
-      ..lastReadMessageId = (json['lastReadMessageId'] as num?)?.toInt();
+      ..lastReadMessageId = json['lastReadMessageId'] as String?;
 
 Map<String, dynamic> _$MatchMemberModelToJson(MatchMemberModel instance) =>
     <String, dynamic>{
