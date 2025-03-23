@@ -1,6 +1,7 @@
 import 'dart:ffi';
 
 import 'package:badboys/controller/chat_controller.dart';
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/subScreen/lockerRoom/chat/chat_item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -22,23 +23,36 @@ class ChatList extends StatefulWidget {
 class _ChatListState extends State<ChatList> {
   final TextEditingController textController = TextEditingController();
   late ChatController chatController;
+  late MatchController matchController;
 
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
-    chatController = Get.put(ChatController());
+    Get.lazyPut<ChatController>(() => ChatController());
+    chatController = Get.find<ChatController>();
+    matchController = Get.find<MatchController>();
+
+    if (!chatController.isApiCalled.value) {  // 아직 호출되지 않았다면
+      chatController.isApiCalled.value = true;
+      chatController.fnChatList(widget.chatRoomId);
+      chatController.matchMemberModel = matchController.matchModel.value.matchMemberModel;
+    }
     chatController.fnConnectToStompServer();
-    chatController.fnChatList(widget.chatRoomId);
     chatController.setScrollControllerListener(widget.chatRoomId);
+
+
+    // 컨트롤러에 마지막 postion저장하고 거기로 이동
+    chatController.scrollToJump();
   }
 
 
   @override
   void dispose() {
     // TODO: implement dispose
-    chatController.clear();
-    chatController.disconnect();
+
+    // chatController.clear();   ///lockerroomScreen으로 뺴기?
+
     super.dispose();
   }
 
@@ -120,7 +134,6 @@ class _ChatListState extends State<ChatList> {
                     onPressed: () async {
                       await chatController.sendMessage(widget.chatRoomId,textController.text);
                       textController.text = "";
-                      chatController.scrollToBottom();
                     },
                   ),
                 ],

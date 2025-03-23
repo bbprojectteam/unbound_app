@@ -58,7 +58,7 @@ class _TeamPlayerListItemState extends State<TeamPlayerListItem> {
                         fontWeight: FontWeight.w700
                     ),
                   ),
-                  Text('2021 pts',
+                  Text('${widget.matchMemberModel.mmr} pts',
                     style: TextStyle(
                         color: Colors.grey,
                         fontWeight: FontWeight.w600

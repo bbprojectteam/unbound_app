@@ -1,6 +1,8 @@
 import 'dart:convert';
 
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/chat/chat_model.dart';
+import 'package:badboys/model/match/match_member_model.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/cupertino.dart';
@@ -15,9 +17,11 @@ import 'package:http/http.dart' as http;
 class ChatController extends GetxController{
   late StompClient stompClient;
   var chatModelList = <ChatModel>[].obs;
+  List<MatchMemberModel> matchMemberModel = [];
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   ScrollController scrollController = ScrollController();
   double previousPosition = 0.0;
+  var isApiCalled = false.obs;
 
   void clear() {
     // scrollController.dispose();
@@ -25,11 +29,10 @@ class ChatController extends GetxController{
     isLoading = false.obs;
   }
 
-
   Future<void> fnChatListMore(String? chatRoomId) async {
 
+
     try {
-      print(chatModelList[0].toJson());
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
         '/service/chatRoom/${chatRoomId}/messages?lastMessageId=${chatModelList[0].messageId}',
@@ -43,6 +46,7 @@ class ChatController extends GetxController{
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
         int loginMemberId = await Helpers.getMemberId();
+        int loadChatListCnt = jsonResponse['messageList'].length - 1;
 
         for (var jsonItem in jsonResponse['messageList']) {
           DateTime dateTime = DateTime.parse(jsonItem['createdAt']);
@@ -52,7 +56,7 @@ class ChatController extends GetxController{
           chatModelList.insert(0,ChatModel.fromJson(jsonItem));
         }
 
-        scrollToLoadChat(!jsonResponse['messageList'].isEmpty);
+        scrollToLoadChat(!jsonResponse['messageList'].isEmpty,loadChatListCnt);
 
       } else {
         // 오류 처리
@@ -66,9 +70,7 @@ class ChatController extends GetxController{
     } finally {
       isLoading.value = false;
     }
-
   }
-
 
   Future<void> fnChatList(String? chatRoomId) async {
 
@@ -116,8 +118,6 @@ class ChatController extends GetxController{
 
   Future<void> loadMoreData(String? chatRoomId) async {
     if (isLoading.value) return; // 이미 로딩 중인 경우
-
-    previousPosition = scrollController.position.maxScrollExtent - 15.h;
     isLoading.value = true;
     await fnChatListMore(chatRoomId);
     isLoading.value = false;
@@ -125,6 +125,9 @@ class ChatController extends GetxController{
 
   void setScrollControllerListener(String? chatRoomId) async {
     scrollController.addListener(() async {
+
+      previousPosition = scrollController.position.pixels;
+
       if (scrollController.position.atEdge && scrollController.position.pixels == 0) {
       // 최상단에 도달했을 때 데이터를 로드
         await loadMoreData(chatRoomId);
@@ -133,26 +136,39 @@ class ChatController extends GetxController{
   }
 
   void scrollToBottom() {
+    if (scrollController.hasClients) {
+      WidgetsBinding.instance.addPostFrameCallback((_) {
+          scrollController.animateTo(
+            chatModelList.length * 8.h,
+            duration: Duration(milliseconds: 300), // 이동 시간을 설정
+            curve: Curves.easeInOut, // 애니메이션의 곡선을 설정
+          );
+      });
+    }
+  }
+
+
+  void scrollToJump() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if (scrollController.hasClients) {
-        scrollController.jumpTo(scrollController.position.maxScrollExtent);
+        scrollController.animateTo(
+          previousPosition,
+          duration: Duration(milliseconds: 300), // 이동 시간을 설정
+          curve: Curves.easeInOut, // 애니메이션의 곡선을 설정
+        );
       }
     });
   }
 
 
-
-  void scrollToLoadChat(bool isScrollMove) {
+  void scrollToLoadChat(bool isScrollMove, int loadChatListCnt) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
-
       if(isScrollMove){
-        scrollController.jumpTo(previousPosition);
+        scrollController.jumpTo(scrollController.position.pixels + (8.h * loadChatListCnt));
       } else {
         scrollController.jumpTo(0);
       }
-
     });
-
   }
   bool isAtBottom() {
     double threshold = 50.0; //허용 범위
@@ -196,11 +212,17 @@ class ChatController extends GetxController{
     // 디코딩된 문자열을 JSON 객체로 변환
     try {
       Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
-      DateTime dateTime = DateTime.now();
 
+      var matchedMember = matchMemberModel.firstWhere(
+            (member) => member.userId == jsonMessage['senderId'],
+      );
+
+      DateTime dateTime = DateTime.now();
       ChatModel chatModel = ChatModel();
       chatModel.senderId = jsonMessage['senderId'];
       chatModel.message = jsonMessage['message'];
+      chatModel.username = matchedMember.username;
+      chatModel.profileImage = matchedMember.profileImage;
       chatModel.createdAt = _formatMessageTime(dateTime);
       chatModel.unreadMemberCnt = 5;
       chatModel.isMyChat = false;
@@ -208,10 +230,11 @@ class ChatController extends GetxController{
       chatModelList.add(chatModel);
 
       ///현재 스크롤 위치 검사
-      if (isAtBottom()) {
-        scrollToBottom();
+      if (scrollController.hasClients) {
+        if (isAtBottom()) {
+          scrollToBottom();
+        }
       }
-
 
       print('Decoded JSON: $jsonMessage');
     } catch (e) {
@@ -239,7 +262,7 @@ class ChatController extends GetxController{
     return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
   }
 
-  void _createNewSendMessage(String message) async {
+  Future<void> _createNewSendMessage(String message) async {
 
     DateTime dateTime = DateTime.now();
     int loginMemberId = await Helpers.getMemberId();
@@ -252,6 +275,8 @@ class ChatController extends GetxController{
     chatModel.isMyChat = true;
 
     chatModelList.add(chatModel);
+
+    scrollToBottom();
   }
 
   // 메시지 전송
@@ -268,7 +293,7 @@ class ChatController extends GetxController{
       body: body,
     );
 
-    _createNewSendMessage(message);
+    await _createNewSendMessage(message);
 
   }
 

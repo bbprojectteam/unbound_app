@@ -27,22 +27,24 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
   void initState() {
     // TODO: implement initState
     super.initState();
-    matchController = Get.put(MatchController());
-    matchController.fnMatchInfo(widget.chatRoomId);
-  }
+    Get.lazyPut<MatchController>(() => MatchController());
+    matchController = Get.find<MatchController>();
 
+    if (!matchController.isApiCalled.value) {  // 아직 호출되지 않았다면
+      matchController.isApiCalled.value = true;
+      matchController.fnMatchInfo(widget.chatRoomId);
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Obx((){
-
       var matchModel = matchController.matchModel.value;
 
       return SingleChildScrollView(
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.center,
           children: [
-
             Container(
               width: 90.w,
               decoration: BoxDecoration(

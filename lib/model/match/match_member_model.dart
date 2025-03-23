@@ -12,6 +12,8 @@ class MatchMemberModel {
 
   String? profileImage;
 
+  int? mmr;
+
   String? lastReadMessageId;
 
   MatchMemberModel();

@@ -57,8 +57,6 @@ class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
                 children: [
                   for(int i = 0; i< matchModel.matchMemberModel.length; i++)
                     TeamPlayerListItem(matchMemberModel : matchModel.matchMemberModel[i]),
-
-
                 ],
               ),
             ),

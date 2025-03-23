@@ -9,6 +9,7 @@ part of 'match_member_model.dart';
 MatchMemberModel _$MatchMemberModelFromJson(Map<String, dynamic> json) =>
     MatchMemberModel()
       ..userId = (json['userId'] as num?)?.toInt()
+      ..mmr = (json['mmr'] as num?)?.toInt()
       ..username = json['username'] as String?
       ..profileImage = json['profileImage'] as String?
       ..lastReadMessageId = json['lastReadMessageId'] as String?;
@@ -16,6 +17,7 @@ MatchMemberModel _$MatchMemberModelFromJson(Map<String, dynamic> json) =>
 Map<String, dynamic> _$MatchMemberModelToJson(MatchMemberModel instance) =>
     <String, dynamic>{
       'userId': instance.userId,
+      'mmr': instance.mmr,
       'username': instance.username,
       'profileImage': instance.profileImage,
       'lastReadMessageId': instance.lastReadMessageId,

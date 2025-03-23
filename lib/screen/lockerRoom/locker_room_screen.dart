@@ -1,3 +1,4 @@
+import 'package:badboys/controller/chat_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/screen/comn/custom_match_appbar_Screen.dart';
@@ -24,6 +25,8 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
   late TabController _tabController;
   late PageController _pageController;
+  late ChatController chatController;
+  late MatchController matchController;
   late String matchingRoomId;
 
   @override
@@ -31,12 +34,20 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
     super.initState();
     // TabController 초기화 (탭의 개수는 2로 설정)
     matchingRoomId = Get.arguments['matchingRoomId'];
+
+    chatController = Get.find<ChatController>();
+    matchController = Get.find<MatchController>();
+
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
   }
 
   @override
   void dispose() {
+    chatController.isApiCalled = false.obs;
+    chatController.disconnect();
+    matchController.isApiCalled = false.obs;
+
     _tabController.dispose();
     _pageController.dispose();
     super.dispose();

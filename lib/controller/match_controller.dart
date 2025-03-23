@@ -17,11 +17,11 @@ class MatchController extends GetxController {
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   var isMatch = false.obs;
   var isMatching = false.obs;
+  var isApiCalled = false.obs;
 
   void clear() {
     matchModel.value = MatchModel(); // 상태 초기화
   }
-
 
   Future<void> fnMatchStart(int? limitRegionId) async {
     try {
