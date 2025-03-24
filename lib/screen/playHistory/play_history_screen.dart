@@ -68,7 +68,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Center(
-                            child: Text('2 / 3'),
+                            child: Text('2 / 3',style: TextStyle(fontFamily: 'EHSMB'),),
                           ),
                         ),
                       ),
@@ -99,7 +99,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                             borderRadius: BorderRadius.circular(100),
                           ),
                           child: Center(
-                            child: Text('1 / 3'),
+                            child: Text('1 / 3',style: TextStyle(fontFamily: 'EHSMB'),),
                           ),
                         ),
                       ),
@@ -116,8 +116,8 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
               child: Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('1월 9일 목요일 12:00',style: TextStyle(fontWeight: FontWeight.w800,letterSpacing: -0.3,color: Colors.white),),
-                  Text('대전 서구 아크 실내 농구장',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white),),
+                  Text('1월 9일 목요일 12:00',style: TextStyle(fontWeight: FontWeight.w800,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
+                  Text('대전 서구 아크 실내 농구장',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
 
                   Row(
                     children: [

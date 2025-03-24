@@ -9,7 +9,7 @@ import 'package:badboys/screen/comn/custom_calender_screen.dart';
 import 'package:badboys/screen/comn/select_match_info_btn.dart';
 import 'package:badboys/screen/comn/user_profile_container.dart';
 import 'package:badboys/subScreen/home/event_list_item.dart';
-import 'package:badboys/subScreen/home/home_match_btn.dart';
+import 'package:badboys/subScreen/match/matching_button.dart';
 import 'package:badboys/subScreen/home/home_menu_list.dart';
 import 'package:badboys/subScreen/home/match_list_item.dart';
 import 'package:badboys/screen/info/member_page_screen.dart';
@@ -113,18 +113,20 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                             Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                Text('양산시',
+                                Text('경상남도 양산시',
                                   style: TextStyle(
                                     color: Colors.white,
                                     fontWeight: FontWeight.w700,
-                                    fontSize: 15
+                                    fontSize: 18,
+                                      fontFamily: 'EHSMB'
                                   ),
                                 ),
                                 Text('물금읍',
                                   style: TextStyle(
                                       color: Colors.grey,
                                       fontWeight: FontWeight.w700,
-                                      fontSize: 12
+                                      fontSize: 15,
+                                      fontFamily: 'EHSMB'
                                   ),
                                 ),
                               ],
@@ -137,7 +139,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 20
+                                      fontSize: 20,
+                                      fontFamily: 'EHSMB'
                                   ),
                                 ),
                                 SizedBox(
@@ -149,7 +152,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   style: TextStyle(
                                       color: Colors.white,
                                       fontWeight: FontWeight.w600,
-                                      fontSize: 14
+                                      fontSize: 14,
+                                      fontFamily: 'EHSMB'
                                   ),
                                 ),
                               ],
@@ -176,7 +180,8 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               style: TextStyle(
                                   color: Colors.white,
                                   fontWeight: FontWeight.w700,
-                                  fontSize: 20
+                                  fontSize: 20,
+                                  fontFamily: 'EHSMB'
                               ),
                             ),
                           ],
@@ -248,7 +253,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                               tabs: [
                                 Tab(
                                   child: Text(
-                                    '경기 정보',
+                                    '라커룸',
                                     style: TextStyle(
                                         color: Colors.white,
                                         fontSize: 16,
@@ -277,28 +282,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                     crossAxisAlignment:
                                     CrossAxisAlignment.center,
                                     children: [
-                                      // Padding(
-                                      //   padding: const EdgeInsets.all(15.0),
-                                      //   child: Text(
-                                      //     '최근 진행된 경기',
-                                      //     style: TextStyle(
-                                      //         fontWeight: FontWeight.w700,
-                                      //         fontSize: 17,
-                                      //         color: Colors.white
-                                      //     ),
-                                      //   ),
-                                      // ),
-                                      //
-                                      // Container(
-                                      //   decoration: BoxDecoration(
-                                      //       borderRadius: BorderRadius.circular(
-                                      //           10),
-                                      //       border: Border.all(
-                                      //           width: 3, color: Colors.white)
-                                      //   ),
-                                      //   child: PlayHistoryResultItem(
-                                      //     pageCnt: 3,),
-                                      // ),
 
                                       SizedBox(
                                         height: 20,

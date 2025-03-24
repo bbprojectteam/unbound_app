@@ -36,11 +36,11 @@ class AuthService {
 
 
     // print(idToken!.length);
-    print(idToken!.substring(0,1000));
-    print( idToken!.substring(1000,idToken.length));
-    print('----');
+    // print(idToken!.substring(0,1000));
+    // print( idToken!.substring(1000,idToken.length));
+    // print('----');
     final String? deviceToken = await FcmNotifications.getMyDeviceToken();
-    print(deviceToken);
+    // print(deviceToken);
     http.Response response = await Helpers.apiCall(
         '/auth/login',
         method: "POST",
@@ -54,8 +54,7 @@ class AuthService {
       }
     );
 
-    print('tt11');
-    print(response);
+
     if(response.statusCode == 204) {
       print('회원가입 화면으로 이동');
 
@@ -69,7 +68,6 @@ class AuthService {
       );
 
 
-      print(response);
       if(response.statusCode == 201) {
 
         print("jwt토큰 저장" + response.statusCode.toString());
@@ -106,9 +104,6 @@ class AuthService {
         'Authorization' : 'Bearer ${await user!.getIdToken()}'
       },
     );
-
-    print('회원가입시도 결과');
-    print(response);
 
   }
 

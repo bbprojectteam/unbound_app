@@ -5,8 +5,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
-class HomeMatchBtn extends StatefulWidget {
-  const HomeMatchBtn({
+class MatchingButton extends StatefulWidget {
+  const MatchingButton({
     super.key,
     required this.regionId,
   });
@@ -14,10 +14,10 @@ class HomeMatchBtn extends StatefulWidget {
   final int? regionId;
 
   @override
-  State<HomeMatchBtn> createState() => _HomeMatchBtnState();
+  State<MatchingButton> createState() => _MatchingButtonState();
 }
 
-class _HomeMatchBtnState extends State<HomeMatchBtn> {
+class _MatchingButtonState extends State<MatchingButton> {
   MatchController matchController = Get.put(MatchController());
   late SharedPreferences prefs;
   Timer? timer = null;
@@ -84,39 +84,44 @@ class _HomeMatchBtnState extends State<HomeMatchBtn> {
   @override
   Widget build(BuildContext context) {
     return Obx(() {
-      return ElevatedButton(
-        style: ButtonStyle(
-          backgroundColor: WidgetStateProperty.all(Colors.orange),
-          shadowColor: WidgetStateProperty.all(Colors.transparent),
-          shape: WidgetStateProperty.all(
-            RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(50),
-            ),
+      return GestureDetector(
+        onTap: (){
+          _handleMatchButtonPress();
+        },
+        child: Container(
+          decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(width: 1.5,color: Colors.orange),
+              borderRadius: BorderRadius.circular(10)
           ),
-        ),
-        onPressed: _handleMatchButtonPress,
-        child: matchController.isMatching.value
-            ? Container(
-              child: Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                children: [
-                  CircularProgressIndicator(
-                    color: Colors.black,
-                  ),
-                ],
-              ),
-            )
-            : Container(
-              child: Text(
-                matchController.isMatch.value
-                    ? '라커룸 이동'
-                    : '매칭하기',
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 18,
-                  fontWeight: FontWeight.w700,
+          child: matchController.isMatching.value
+              ? Container(
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    CircularProgressIndicator(
+                      color: Colors.orange,
+                      strokeWidth: 2.5,
+                    ),
+                  ],
                 ),
-              ),
+              )
+              : Container(
+                child: Center(
+                  child: Text(
+                    matchController.isMatch.value
+                        ? '라커룸 이동'
+                        : '매칭하기',
+                    style: TextStyle(
+                      color: Colors.orange,
+                      fontSize: 19,
+                        fontWeight: FontWeight.w700,
+                        fontFamily: 'EHSMB'
+                  
+                    ),
+                  ),
+                ),
+          ),
         ),
       );
     });

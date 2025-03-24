@@ -12,14 +12,13 @@ class TeamPlayerListModalPop extends StatefulWidget {
     required this.chatRoomId,
   });
 
-  final String chatRoomId;
+  final String? chatRoomId;
 
   @override
   State<TeamPlayerListModalPop> createState() => _TeamPlayerListModalPopState();
 }
 
 class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
-
 
   late MatchController matchController;
 
@@ -28,7 +27,7 @@ class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
     // TODO: implement initState
     super.initState();
     matchController = Get.put(MatchController());
-    matchController.fnMatchInfo(widget.chatRoomId);
+    matchController.fnMatchInfo(widget.chatRoomId.toString());
   }
 
 
@@ -43,44 +42,46 @@ class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
       height: 47.h,
       decoration: BoxDecoration(
           color: Colors.black,
-          borderRadius: BorderRadius.circular(15)
       ),
-      child: Column(
-        mainAxisAlignment: MainAxisAlignment.start,
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: [
-          CustomAppbarScreen(isNotification: false, ),
+      child: Padding(
+        padding: const EdgeInsets.all(3.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.start,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            CustomAppbarScreen(isNotification: false, ),
 
-          Expanded(
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  for(int i = 0; i< matchModel.matchMemberModel.length; i++)
-                    TeamPlayerListItem(matchMemberModel : matchModel.matchMemberModel[i]),
-                ],
-              ),
-            ),
-          ),
-
-
-
-          GestureDetector(
-            onTap: ()=>{
-              Navigator.pop(context)
-            },
-            child: Container(
-              width: 100.w,
-              height: 8.h,
-              color: Colors.black,
-              child: Center(
-                child: Text(
-                  '닫기',
-                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17),
+            Expanded(
+              child: SingleChildScrollView(
+                child: Column(
+                  children: [
+                    for(int i = 0; i< matchModel.matchMemberModel.length; i++)
+                      TeamPlayerListItem(matchMemberModel : matchModel.matchMemberModel[i]),
+                  ],
                 ),
               ),
             ),
-          ),
-        ],
+
+
+
+            GestureDetector(
+              onTap: ()=>{
+                Navigator.pop(context)
+              },
+              child: Container(
+                width: 100.w,
+                height: 8.h,
+                color: Colors.black,
+                child: Center(
+                  child: Text(
+                    '닫기',
+                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
       ),
     );
   }

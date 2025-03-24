@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MemberPlayRecordItem extends StatefulWidget {
   const MemberPlayRecordItem({
@@ -18,17 +19,13 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
   @override
   Widget build(BuildContext context) {
 
-    double maxWidth = MediaQuery.of(context).size.width;
-    double maxHeight = MediaQuery.of(context).size.height;
-
-
 
 
     return Column(
       children: [
         Container(
-          width: maxWidth * 0.95,
-          height: maxHeight * 0.12,
+          width: 95.w,
+          height: 12.h,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
@@ -45,7 +42,8 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                     widget.isWin ? "+26" : "-13",
                     style: TextStyle(
                       color: widget.isWin ? Colors.red : Colors.blueAccent,
-                      fontSize: 25
+                      fontSize: 25,
+                      fontFamily: 'EHSMB',
                     ),
                   ),
                   SizedBox(width: 10,),
@@ -60,7 +58,8 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,
-                            fontWeight: FontWeight.w700
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'EHSMB',
                           ),
                         ),
 
@@ -84,7 +83,7 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                           style: TextStyle(
                               color: Colors.grey,
                               fontSize: 13,
-                              fontWeight: FontWeight.w700
+                              fontWeight: FontWeight.w700,
                           ),
                         ),
                       ],
@@ -102,10 +101,16 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(10),
-                      border: Border.all(width: 1,color: Colors.white),
-                      color: Colors.white
+                      border: Border.all(width: 1,color: Colors.orange),
+                      color: Colors.orange
                   ),
-                  child: Text('상세보기',style: TextStyle(color: Colors.black,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3),),
+                  child: Text('상세보기',
+                    style: TextStyle(color: Colors.white,
+                        fontWeight: FontWeight.w800,
+                        fontSize: 15,
+
+                      fontFamily: 'EHSMB',
+                    ),),
                 ),
               ),
 
@@ -117,7 +122,7 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
             border: Border(
               bottom: BorderSide(
                 width: 1.5, // 선의 두께
-                color: Colors.white, // 선의 색상
+                color: Colors.orange, // 선의 색상
               ),
             ),
           ),

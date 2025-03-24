@@ -83,6 +83,7 @@ class _CountDownScreenState extends State<CountDownScreen> {
                   fontSize: 100, // 숫자 크기
                   color: Colors.white,
                   fontWeight: FontWeight.bold,
+                    fontFamily: 'EHSMB'
                 ),
               ),
             ),

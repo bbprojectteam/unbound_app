@@ -58,7 +58,9 @@ class HomeMenuBtn extends StatelessWidget {
               title,
               style: TextStyle(
                   color: Colors.white,
-                  fontWeight: FontWeight.w700
+                  fontSize: 15,
+                  fontWeight: FontWeight.w700,
+                  fontFamily: 'EHSMB'
               ),
             ),
           ],

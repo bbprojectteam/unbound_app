@@ -22,9 +22,6 @@ class _LoginScreenState extends State<LoginScreen> {
   @override
   Widget build(BuildContext context) {
 
-    final AuthController authController = Get.find<AuthController>();
-    final MemberController memberController = Get.find<MemberController>();
-
     return
       Scaffold(
       body: Container(
@@ -44,7 +41,7 @@ class _LoginScreenState extends State<LoginScreen> {
         child: Stack(
           children: [
             Image.asset(
-              'assets/images/intro.png',
+              'assets/images/rank_bg.jpg',
               width: 100.w,
               height: 70.h,
               fit: BoxFit.cover,
@@ -58,10 +55,10 @@ class _LoginScreenState extends State<LoginScreen> {
                 mainAxisAlignment: MainAxisAlignment.start,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  Text('Unbound',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w900),),
+                  Text('Unbound',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w900,fontFamily: 'EHSMB'),),
                   SizedBox(height: 10,),
-                  Text('listen to your favorite music for',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700),),
-                  Text('free, anywhere',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700),),
+                  Text('listen to your favorite music for',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontFamily: 'EHSMB'),),
+                  Text('free, anywhere',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontFamily: 'EHSMB'),),
                   SizedBox(height: 30,),
 
                   Container(
@@ -88,7 +85,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           decoration: BoxDecoration(
                             border: Border.all(width: 3,color: Colors.black12),
                             gradient: LinearGradient(
-                              colors: [Color(0xff200f2), Color(0xff8515e7)], // 그라데이션 색상
+                              colors: [Colors.orange, Colors.black87], // 그라데이션 색상
                               begin: Alignment.topLeft,  // 그라데이션 시작 방향
                               end: Alignment.bottomRight, // 그라데이션 끝 방향
                             ),
@@ -101,7 +98,9 @@ class _LoginScreenState extends State<LoginScreen> {
                                   color: Colors.white,
                                   fontSize: 16,
                                   fontWeight: FontWeight.w700,
-                                  letterSpacing: 0.5),
+                                  letterSpacing: 0.5,
+                                  fontFamily: 'EHSMB'
+                              ),
                             ),
                           ),
                         )

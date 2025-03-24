@@ -51,6 +51,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                             '오민규',
                             style: TextStyle(
                               color: Colors.white,
+                                fontFamily: 'EHSMB'
 
                             ),
                           ),
@@ -61,6 +62,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                               SizedBox(width: 3,),
@@ -69,6 +71,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   fontSize: 13.5,
                                   color: Colors.red,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                             ],
@@ -94,6 +97,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                             '오민규',
                             style: TextStyle(
                               color: Colors.white,
+                                fontFamily: 'EHSMB'
 
                             ),
                           ),
@@ -104,6 +108,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                               SizedBox(width: 3,),
@@ -112,6 +117,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   fontSize: 13.5,
                                   color: Colors.red,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                             ],
@@ -137,6 +143,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                             '오민규',
                             style: TextStyle(
                               color: Colors.white,
+                                fontFamily: 'EHSMB'
 
                             ),
                           ),
@@ -147,6 +154,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                               SizedBox(width: 3,),
@@ -155,6 +163,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   fontSize: 13.5,
                                   color: Colors.red,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                             ],
@@ -184,7 +193,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                             '오민규',
                             style: TextStyle(
                               color: Colors.white,
-
+                                fontFamily: 'EHSMB'
                             ),
                           ),
                           Row(
@@ -194,6 +203,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                               SizedBox(width: 3,),
@@ -202,6 +212,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   fontSize: 13.5,
                                   color: Colors.blue,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                             ],
@@ -227,7 +238,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                             '오민규',
                             style: TextStyle(
                               color: Colors.white,
-
+                                fontFamily: 'EHSMB'
                             ),
                           ),
                           Row(
@@ -237,6 +248,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                               SizedBox(width: 3,),
@@ -245,6 +257,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   fontSize: 13.5,
                                   color: Colors.blue,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                             ],
@@ -270,6 +283,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                             '오민규',
                             style: TextStyle(
                               color: Colors.white,
+                                fontFamily: 'EHSMB'
 
                             ),
                           ),
@@ -280,6 +294,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 15,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                               SizedBox(width: 3,),
@@ -288,6 +303,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                                 style: TextStyle(
                                   fontSize: 13.5,
                                   color: Colors.blue,
+                                    fontFamily: 'EHSMB'
                                 ),
                               ),
                             ],
@@ -317,7 +333,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                     (index) => Center(
                       child: Text(
                         '$index', // 위에서 아래로 스크롤하면 점수가 올라가도록 표시
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white,fontFamily: 'EHSMB'),
                       ),
                     ),
                   ),
@@ -337,7 +353,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                     (index) => Center(
                       child: Text(
                         '$index',
-                        style: TextStyle(fontSize: 18, color: Colors.white),
+                        style: TextStyle(fontSize: 18, color: Colors.white,fontFamily: 'EHSMB'),
                       ),
                     ),
                   ),
@@ -364,7 +380,8 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
                   style: TextStyle(
                       color: Colors.black,
                     fontSize: 15,
-                    fontWeight: FontWeight.w700
+                    fontWeight: FontWeight.w700,
+                      fontFamily: 'EHSMB'
                   ),
                 ),
               ),

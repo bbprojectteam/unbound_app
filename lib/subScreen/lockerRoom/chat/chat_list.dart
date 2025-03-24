@@ -71,7 +71,7 @@ class _ChatListState extends State<ChatList> {
               width: 100.w,
               height: 72.h,
               decoration: BoxDecoration(
-                color: Colors.white,
+                color: Colors.black26,
               ),
               child: Stack(
                 children: [
@@ -107,7 +107,7 @@ class _ChatListState extends State<ChatList> {
             Container(
               width: 100.w,  // maxWidth는 부모 위젯에서 제공된 최대 너비
               height: 8.h,  // maxHeight * 0.1은 컨테이너의 높이 비율
-              color: Colors.white,  // 배경색
+              color: Colors.black12,  // 배경색
               child: Row(
                 children: [
                   // 텍스트 입력 필드

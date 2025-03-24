@@ -1,6 +1,8 @@
 import 'package:badboys/firebase/auth_service.dart';
+import 'package:badboys/modal/locker_room_setting_modal_pop.dart';
 import 'package:badboys/modal/team_chng_modal_pop.dart';
 import 'package:badboys/modal/team_player_list_modal_pop.dart';
+import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -45,7 +47,7 @@ class _CustomMatchAppbarScreenState extends State<CustomMatchAppbarScreen> {
                   color: Colors.white,
                   fontWeight: FontWeight.w900,
                   fontSize: 20,
-                  fontStyle: FontStyle.italic
+                  fontFamily: 'EHSMB',
               ),
             ),
           ),
@@ -60,12 +62,12 @@ class _CustomMatchAppbarScreenState extends State<CustomMatchAppbarScreen> {
                   child: Container(
                     padding: EdgeInsets.all(3),
                     decoration: BoxDecoration(
-                      color: Colors.white,
+                      color: Colors.black,
                       borderRadius: BorderRadius.circular(100),
                     ),
                     child: Icon(
-                      Icons.menu_outlined,
-                      color: Colors.black,
+                      Icons.menu ,
+                      color: Colors.white,
                       size: 25,
                     ),
                   ),
@@ -97,38 +99,32 @@ class _CustomMatchAppbarScreenState extends State<CustomMatchAppbarScreen> {
           child: Text('경기시작'),
         ),
         PopupMenuItem<int>(
-          value: 1,
+          value: 400,
           child: Text('대기실 나가기'),
         ),
+        PopupMenuItem<int>(
+          value: 500,
+          child: Text('방 설정'),
+        ),
+
+
+
+
       ],
       elevation: 8.0,
     ).then((value) {
       if (value != null) {
 
         if(value == 100) {
-          showDialog<void>(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return Dialog(
-                child: TeamPlayerListModalPop(chatRoomId: widget.chatRoomId,),
-              );
-            },
-          );
+          AppBottomModalRouter.fnModalRouter(context,0,chatRoomId: widget.chatRoomId );
         } else if (value == 200) {
-          showDialog<void>(
-            context: context,
-            barrierDismissible: true,
-            builder: (BuildContext context) {
-              return Dialog(
-                child: TeamChngModalPop(),
-              );
-            },
-          );
+          AppBottomModalRouter.fnModalRouter(context,1 );
         } else if(value == 300){
-
           Get.toNamed('/countDownScreen');
+        } else if (value == 400 ){
 
+        } else if (value == 500){
+          AppBottomModalRouter.fnModalRouter(context,2, chatRoomId: widget.chatRoomId );
         }
 
 

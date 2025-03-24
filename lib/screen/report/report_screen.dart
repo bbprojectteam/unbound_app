@@ -106,7 +106,7 @@ class _ReportScreenState extends State<ReportScreen> {
                         }
                       },
                       child:
-                          Text('신고하기', style: TextStyle(color: Colors.black)),
+                          Text('신고하기', style: TextStyle(color: Colors.black,fontFamily: 'EHSMB')),
                       // 버튼 텍스트 흰색
                       style: ElevatedButton.styleFrom(
                         backgroundColor: Colors.white, // 버튼 배경색을 파란색으로 설정

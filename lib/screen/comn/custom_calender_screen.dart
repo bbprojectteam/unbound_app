@@ -56,6 +56,7 @@ class _CustomCalenderScreenState extends State<CustomCalenderScreen> {
                           ? Colors.white
                           : Colors.white, // 평일은 기본 흰색
                       fontWeight: FontWeight.w800,
+                        fontFamily: 'EHSMB'
                     ),
                   ),
                   // 요일 표시
@@ -70,6 +71,7 @@ class _CustomCalenderScreenState extends State<CustomCalenderScreen> {
                           ? Colors.white
                           : Colors.white, // 평일은 기본 흰색
                       fontWeight: FontWeight.w800,
+                        fontFamily: 'EHSMB'
                     ),
                   ),
                 ],

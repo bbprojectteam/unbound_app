@@ -39,6 +39,7 @@ class CustomBottomNavScreen extends StatelessWidget {
                 fontSize: 12,
                 fontWeight: FontWeight.bold,
                 color: isSelected ? Colors.white : Colors.grey,
+                  fontFamily: 'EHSMB'
               ),
             ),
           ],

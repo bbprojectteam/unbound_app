@@ -74,6 +74,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                       color: Colors.white,
                                       fontWeight: FontWeight.w800,
                                       fontSize: 23,
+                                        fontFamily: 'EHSMB'
                                     ),
                                   ),
                                   Row(
@@ -96,6 +97,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                               color: Colors.white,
                                               fontWeight: FontWeight.w900,
                                               fontSize: 18,
+                                                fontFamily: 'EHSMB'
                                             ),
                                           ),
                                           SizedBox(width: 5,),
@@ -104,6 +106,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                               color: Colors.white,
                                               fontWeight: FontWeight.w900,
                                               fontSize: 25,
+                                                fontFamily: 'EHSMB'
                                             ),
                                           ),
                                           Text('위',
@@ -111,6 +114,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                               color: Colors.white,
                                               fontWeight: FontWeight.w900,
                                               fontSize: 16,
+                                                fontFamily: 'EHSMB'
                                             ),
                                           ),
                                         ],
@@ -138,6 +142,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 13,
+                                                  fontFamily: 'EHSMB'
                                               ),
                                             ),
                                             Icon(
@@ -167,6 +172,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                               style: TextStyle(
                                                 color: Colors.white,
                                                 fontSize: 13,
+                                                  fontFamily: 'EHSMB'
                                               ),
                                             ),
                                             Icon(
@@ -242,8 +248,8 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                   ),
                                   indicatorColor: Colors.white,  // 선택된 탭 밑줄 색
                                   tabs: [
-                                    Center(child: Text('2025', style: TextStyle(color: Colors.white),)),
-                                    Center(child: Text('2024', style: TextStyle(color: Colors.white),)),
+                                    Center(child: Text('2025', style: TextStyle(color: Colors.white,fontFamily: 'EHSMB'),)),
+                                    Center(child: Text('2024', style: TextStyle(color: Colors.white,fontFamily: 'EHSMB'),)),
                                   ],
                                 )
                               ),
@@ -258,7 +264,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                   color: Colors.black,
                                   child: Center(
                                     child: Text( '경기 수',
-                                      style: TextStyle(color: Colors.grey.withOpacity(0.7),fontWeight: FontWeight.w900),
+                                      style: TextStyle(color: Colors.grey.withOpacity(0.7),fontWeight: FontWeight.w900,fontFamily: 'EHSMB'),
                                     ),
                                   ),
                                 ),
@@ -269,7 +275,7 @@ class _RankScreenState extends State<RankScreen> with TickerProviderStateMixin {
                                 color: Colors.black,
                                 child: Center(
                                   child: Text( '승률',
-                                    style: TextStyle(color: Colors.grey.withOpacity(0.7),fontWeight: FontWeight.w900),
+                                    style: TextStyle(color: Colors.grey.withOpacity(0.7),fontWeight: FontWeight.w900,fontFamily: 'EHSMB'),
                                   ),
                                 ),
                               ),

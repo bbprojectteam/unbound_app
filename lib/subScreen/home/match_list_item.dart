@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class MatchListItem extends StatefulWidget {
@@ -15,8 +16,7 @@ class MatchListItem extends StatefulWidget {
 class _MatchListItemState extends State<MatchListItem> {
   @override
   Widget build(BuildContext context) {
-    double maxWidth = MediaQuery.of(context).size.width;
-    double maxHeight = MediaQuery.of(context).size.height;
+
 
     return Container(
       padding: EdgeInsets.all(10),
@@ -34,14 +34,14 @@ class _MatchListItemState extends State<MatchListItem> {
         children: [
           Row(
             children: [
-              Text('12:00',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17,letterSpacing: -0.3,color: Colors.white),),
-              SizedBox(width: maxWidth * 0.05,),
+              Text('03/18',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
+              SizedBox(width: 5.w,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('지금 신청하면 5,000원 할인',style: TextStyle(color: Colors.white,),),
-                  Text('대전 서구 실내 농구장',style: TextStyle(fontWeight: FontWeight.w800,color: Colors.white),),
-                  Text('남녀 모두 - 3vs3',style: TextStyle(fontSize: 14,color: Colors.white.withOpacity(0.8)),),
+                  Text('대전 서구 실내 농구장',style: TextStyle(fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'EHSMB'),),
+                  Text('평균 pts - 2304 ',style: TextStyle(color: Colors.white,fontFamily: 'EHSMB'),),
+                  Text('남녀 모두 - 3 vs 3',style: TextStyle(fontSize: 14,color: Colors.white.withOpacity(0.8),fontFamily: 'EHSMB'),),
                 ],
               ),
             ],
@@ -60,7 +60,7 @@ class _MatchListItemState extends State<MatchListItem> {
                 border: Border.all(width: 1,color: Colors.orange),
                 color: Colors.orange
               ),
-              child: Text('자세히 보기',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 13,letterSpacing: -0.3),),
+              child: Text('자세히 보기',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,fontFamily: 'EHSMB'),),
             ),
           ),
 

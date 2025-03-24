@@ -62,6 +62,7 @@ class _SelectBottomModalListState extends State<SelectBottomModalList> {
               style: TextStyle(
                 fontSize: 19, // 텍스트 크기를 조금 더 크게
                 fontWeight: FontWeight.w700,
+                fontFamily: 'EHSMB',
                 color: selectedItemIdx == index
                     ? Colors.white // 선택된 항목은 흰색 텍스트
                     : Colors.white, // 선택되지 않은 항목은 검정색 텍스트

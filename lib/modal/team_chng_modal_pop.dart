@@ -117,7 +117,7 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
               child: Center(
                 child: Text(
                   '변경 완료',
-                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17),
+                  style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),
                 ),
               ),
             ),

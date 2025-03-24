@@ -1,6 +1,6 @@
 import 'package:badboys/screen/comn/custom_appbar_screen.dart';
 import 'package:badboys/screen/comn/select_match_info_btn.dart';
-import 'package:badboys/subScreen/home/home_match_btn.dart';
+import 'package:badboys/subScreen/match/matching_button.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,8 +13,6 @@ class MatchScreen extends StatefulWidget {
 }
 
 class _MatchScreenState extends State<MatchScreen> {
-  String defaultMatchSelText = '지역 선택';
-  String defaultMatchSelText2 = '동네 선택';
 
   @override
   Widget build(BuildContext context) {
@@ -52,7 +50,7 @@ class _MatchScreenState extends State<MatchScreen> {
                       ),
                     ],
                   )),
-              
+
               Positioned(
                 right: 15,
                 left: 15,
@@ -73,29 +71,17 @@ class _MatchScreenState extends State<MatchScreen> {
                             ),
                           ),
                         ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            SelectMatchInfoBtn(title: defaultMatchSelText,listId: 1,callBack : (int? id, String text)=>{
-                              defaultMatchSelText= text,
-                              setState(() {}),
-                            }),
-                            SelectMatchInfoBtn(title: defaultMatchSelText2,listId: 2,callBack : (int? id, String text)=>{
-                              defaultMatchSelText2= text,
-                              setState(() {}),
-                            }),
-                          ],
-                        ),
+
                         SizedBox(height: 10,),
 
                         Container(
                           width: 100.w,
-                          height: 6.5.h,
+                          height: 7.5.h,
                           decoration: BoxDecoration(
-                            color: Colors.white.withOpacity(0.9),
-                            borderRadius: BorderRadius.circular(30),
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(10),
                           ),
-                          child: HomeMatchBtn(regionId : 1),
+                          child: MatchingButton(regionId : 1),
                         ),
                       ],
                     ),

@@ -56,7 +56,7 @@ class _SplashScreenState extends State<SplashScreen> {
           child: Stack(
             children: [
               Image.asset(
-                'assets/images/intro.png',
+                'assets/images/rank_bg.jpg',
                 width: 100.w,
                 height: 70.h,
                 fit: BoxFit.cover,
@@ -70,10 +70,10 @@ class _SplashScreenState extends State<SplashScreen> {
                   mainAxisAlignment: MainAxisAlignment.start,
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Text('Unbound',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w900),),
+                    Text('Unbound',style: TextStyle(color: Colors.white,fontSize: 30,fontWeight: FontWeight.w900,fontFamily: 'EHSMB'),),
                     SizedBox(height: 10,),
-                    Text('listen to your favorite music for',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700),),
-                    Text('free, anywhere',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700),),
+                    Text('listen to your favorite music for',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontFamily: 'EHSMB'),),
+                    Text('free, anywhere',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontFamily: 'EHSMB'),),
                     SizedBox(height: 30,),
 
                   ],

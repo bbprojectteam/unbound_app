@@ -413,7 +413,10 @@ class _PlayingScreenState extends State<PlayingScreen> {
                           color: Colors.white,
                           fontWeight: FontWeight.w900,
                           fontSize: 16,
-                          letterSpacing: -0.3),
+                          letterSpacing: -0.3,
+                          fontFamily: 'EHSMB'
+                      ),
+
                     ),
                   ),
                 ),
@@ -447,7 +450,9 @@ class _PlayingScreenState extends State<PlayingScreen> {
                           color: Colors.white,
                           fontWeight: FontWeight.w900,
                           fontSize: 16,
-                          letterSpacing: -0.3),
+                          letterSpacing: -0.3,
+                          fontFamily: 'EHSMB'
+                      ),
                     ),
                   ),
                 ),

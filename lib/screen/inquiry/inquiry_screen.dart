@@ -55,9 +55,9 @@ class _InquiryScreenState extends State<InquiryScreen> with TickerProviderStateM
             ),
             indicatorColor: Colors.white,
             tabs: [
-              Tab(child: Text('자주 하는 문의',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),),),
-              Tab(child: Text('내 문의',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),),),
-              Tab(child: Text('문의하기',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800),),),
+              Tab(child: Text('자주 하는 문의',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,fontFamily: 'EHSMB'),),),
+              Tab(child: Text('내 문의',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,fontFamily: 'EHSMB'),),),
+              Tab(child: Text('문의하기',style: TextStyle(fontSize: 15,fontWeight: FontWeight.w800,fontFamily: 'EHSMB'),),),
 
             ],
           ),

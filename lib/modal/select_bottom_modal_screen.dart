@@ -62,6 +62,7 @@ class _SelectBottomModalScreenState
                 color: Colors.white,
                 fontSize: 19,
                 fontWeight: FontWeight.w700,
+                  fontFamily: 'EHSMB'
               ),
             ),
           ),
@@ -85,8 +86,7 @@ class _SelectBottomModalScreenState
           ),
           GestureDetector(
             onTap: ()=>{
-              print(itemIdx),
-              print(widget.selectItemList[itemIdx!]),
+
               widget.callBack(itemIdx,widget.selectItemList[itemIdx!]),
               Navigator.pop(context),
             },

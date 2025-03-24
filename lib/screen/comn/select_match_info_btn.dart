@@ -1,5 +1,6 @@
 import 'package:badboys/modal/select_bottom_modal_screen.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class SelectMatchInfoBtn extends StatefulWidget {
@@ -8,11 +9,15 @@ class SelectMatchInfoBtn extends StatefulWidget {
     required this.title,
     required this.listId,
     required this.callBack,
+    required this.isSelected,
+    required this.containerWidth,
   });
 
   final String? title;
   final int? listId;
   final Function callBack;
+  final bool isSelected;
+  final double containerWidth;
 
   @override
   State<SelectMatchInfoBtn> createState() => _SelectMatchInfoBtnState();
@@ -21,6 +26,7 @@ class SelectMatchInfoBtn extends StatefulWidget {
 class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         showModalBottomSheet(
@@ -53,9 +59,10 @@ class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
 
               return Container(
                 height: 40.h,
-                  child: SelectBottomModalScreen(selectItemIdx : 1, selectItemList : selectItemList, callBack : (int? id, String text)=>{
+                  child: SelectBottomModalScreen(selectItemIdx : 1, selectItemList : selectItemList, callBack : (int? id, String? text)=>{
                     widget.callBack(id,text),
                   }));
+
             } else if(widget.listId == 2) {
               List<String> selectItemList = [
                 '강남구', '강동구', '강북구', '강서구', '관악구',
@@ -63,7 +70,6 @@ class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
                 '동대문구', '동작구', '마포구', '서대문구', '서초구',
                 '성동구', '성북구', '송파구', '양천구', '영등포구'
               ];
-
 
               return Container(
                   height: 40.h,
@@ -74,26 +80,29 @@ class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
 
             return SelectBottomModalScreen(selectItemIdx : null, selectItemList: [], callBack : (int? id, String text)=>{
 
-            });
+            },);
           },
         );
       },
       child: Container(
-        width: 45.w,
-        padding: EdgeInsets.all(15),
-        decoration: BoxDecoration(
-          color: Colors.white.withOpacity(0.9),
-          borderRadius: BorderRadius.circular(30),
-        ),
-        child: Center(
-          child: Text('${widget.title}',
-            style: TextStyle(
-                fontSize: 18,
-                fontWeight: FontWeight.w700
+            width: widget.containerWidth,
+            height: 6.h,
+            decoration: BoxDecoration(
+              color: Colors.black,
+              border: Border.all(color: widget.isSelected ? Colors.orange : Colors.grey, width: 1.5),
+              borderRadius: BorderRadius.circular(10),
+            ),
+            child: Center(
+              child: Text('${widget.title}',
+                style: TextStyle(
+                    fontSize: 16.5,
+                    color: widget.isSelected ? Colors.orange : Colors.grey,
+                    fontFamily: 'EHSMB'
+                ),
+              ),
             ),
           ),
-        ),
-      ),
-    );
+      );
+
   }
 }
