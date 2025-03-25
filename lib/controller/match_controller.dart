@@ -14,10 +14,13 @@ import 'package:http/http.dart' as http;
 class MatchController extends GetxController {
 
   var matchModel = MatchModel().obs;
+  // var matchUpdateModel = MatchInfoModel();
+
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   var isMatch = false.obs;
   var isMatching = false.obs;
   var isApiCalled = false.obs;
+
 
   void clear() {
     matchModel.value = MatchModel(); // 상태 초기화

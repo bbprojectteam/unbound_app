@@ -1,7 +1,7 @@
-import 'package:badboys/modal/locker_room_setting_modal_pop.dart';
-import 'package:badboys/modal/select_locale_bottom_modal.dart';
-import 'package:badboys/modal/team_chng_modal_pop.dart';
-import 'package:badboys/modal/team_player_list_modal_pop.dart';
+import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_bottom_modal.dart';
+import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart';
+import 'package:badboys/screen/modal/lockerRoom/team_chng_modal_pop.dart';
+import 'package:badboys/screen/modal/lockerRoom/team_player_list_modal_pop.dart';
 import 'package:flutter/material.dart';
 
 
@@ -25,7 +25,7 @@ class AppBottomModalRouter {
         return TeamChngModalPop();
       },
       2: () async {
-        return LockerRoomSettingModalPop(chatRoomId : chatRoomId);
+        return LockerRoomSettingBottomModal(chatRoomId : chatRoomId);
       },
       3: () async {
         return SelectLocaleBottomModal();

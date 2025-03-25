@@ -1,20 +1,16 @@
-import 'package:badboys/screen/comn/custom_appbar_screen.dart';
-import 'package:badboys/screen/comn/splash_screen.dart';
-import 'package:badboys/screen/game/count_down_screen.dart';
-import 'package:badboys/screen/game/playing_screen.dart';
-import 'package:badboys/screen/home/home_screen.dart';
-import 'package:badboys/screen/info/member_page_screen.dart';
-import 'package:badboys/screen/lockerRoom/locker_room_screen.dart';
-import 'package:badboys/screen/match/match_screen.dart';
-import 'package:badboys/screen/rank/rank_screen.dart';
-import 'package:badboys/screen/register/login.dart';
-import 'package:badboys/screen/register/profile_setting_screen.dart';
-import 'package:badboys/subScreen/comn/custom_bottom_navigatoion_bar.dart';
+import 'package:badboys/screen/appScreen/splash/splash_screen.dart';
+import 'package:badboys/screen/appScreen/game/count_down_screen.dart';
+import 'package:badboys/screen/appScreen/game/playing_screen.dart';
+import 'package:badboys/screen/appScreen/home/home_screen.dart';
+import 'package:badboys/screen/appScreen/match/match_screen.dart';
+import 'package:badboys/screen/appScreen/rank/rank_screen.dart';
+import 'package:badboys/screen/appScreen/login/login_screen.dart';
+import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
+import 'package:badboys/screen/subScreen/comn/bottomNavigatorBar/custom_bottom_navigatoion_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
-import 'package:go_router/go_router.dart';
-import 'package:responsive_sizer/responsive_sizer.dart';
+
 
 class AppScreen extends StatefulWidget {
   final Widget child;
