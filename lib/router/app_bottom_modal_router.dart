@@ -1,3 +1,4 @@
+import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
 import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_bottom_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/team_chng_modal_pop.dart';
@@ -8,7 +9,7 @@ import 'package:flutter/material.dart';
 // AppBottomRouter 클래스 정의
 class AppBottomModalRouter {
 
-  static void fnModalRouter(
+  static Future<void> fnModalRouter(
       BuildContext context,
       int modalIndex,
       {
@@ -29,6 +30,9 @@ class AppBottomModalRouter {
       },
       3: () async {
         return SelectLocaleBottomModal();
+      },
+      4: () async{
+        return ProfileSettingScreen();
       }
 
     };

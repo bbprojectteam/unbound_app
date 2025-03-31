@@ -16,6 +16,8 @@ class MatchInfoModel {
 
   String? desciption;
 
+  String? matchDt;
+
   MatchInfoModel();
 
   factory MatchInfoModel.fromJson(Map<String, dynamic> json) => _$MatchInfoModelFromJson(json);

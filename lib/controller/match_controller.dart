@@ -26,6 +26,8 @@ class MatchController extends GetxController {
     matchModel.value = MatchModel(); // 상태 초기화
   }
 
+
+
   Future<void> fnMatchStart(int? limitRegionId) async {
     try {
       // POST 요청 보내기
@@ -59,6 +61,75 @@ class MatchController extends GetxController {
   }
 
 
+
+
+  Future<void> fnMatchExit(String chatRoomId) async {
+
+
+    try {
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+          '/service/chatRoom/${chatRoomId}/exit',
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json', // JSON 형식
+          },
+      );
+
+      if (response.statusCode == 200) {
+
+      } else {
+        // 오류 처리
+        throw Exception('fnMatchExit Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnMatchExit Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+
+
+  Future<void> fnMatchRoomInfoUpdate(Map<String, String> requestMap) async {
+    try {
+
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+          '/service/chatRoom/${requestMap['chatRoomId']}/update',
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json', // JSON 형식
+          },
+          body: {
+            'name' : requestMap['matchName'],
+            'matchDt' : requestMap['matchDt'],
+            'location' : '대전테스트',
+            'description' : 'test'
+          }
+      );
+
+
+      if (response.statusCode == 200) {
+
+      } else {
+        // 오류 처리
+        throw Exception('fnMatchRoomInfoUpdate Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnMatchRoomInfoUpdate Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+
   Future<void> fnMatchInfo(String matchInfoId ) async {
 
     try {
@@ -74,7 +145,7 @@ class MatchController extends GetxController {
       if (response.statusCode == 200) {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
-
+        print(jsonResponse);
         clear();
 
         matchModel.value.matchInfoModel = MatchInfoModel.fromJson(jsonResponse['chatRoomInfo']);

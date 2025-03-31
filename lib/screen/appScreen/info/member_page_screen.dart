@@ -1,6 +1,9 @@
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
+import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/info/member_play_record_item.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -8,7 +11,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MemberPageScreen extends StatefulWidget {
-  const MemberPageScreen({super.key});
+  const MemberPageScreen({super.key,});
+
 
   @override
   State<MemberPageScreen> createState() => _MemberPageScreenState();
@@ -22,17 +26,23 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
   void initState() {
     // TODO: implement initState
     super.initState();
-    memberController = Get.put(MemberController());
-    memberController.fnGetMemberInfo();
-
     _tabController = TabController(length: 2, vsync: this);
-
     dynamic args = Get.arguments ?? {};
+
+    memberController = Get.put(MemberController());
+    memberController.fnGetMemberInfo(args['memberId']);
+
     if (args == null || args['tab'] == null){
       args['tab'] = 0;
     }
 
     _tabController.index = args['tab'];
+    _isAuth(args['memberId']);
+
+  }
+
+  void _isAuth(int memberId) async {
+    memberController.isAuth.value = await Helpers.getMemberId() == memberId;
   }
 
   @override
@@ -52,7 +62,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
           if (memberController.isLoading.value) {
             return CircularProgressIndicator();
           }
-          var model = memberController.model.value;
+          var model = memberController.memberInfoModel.value;
 
 
           return Container(
@@ -63,21 +73,24 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
               child: Column(
                 children: [
                   SizedBox(height: 40,),
-                  CustomAppbar(isNotification: true, ),
+                  CustomAppbar(isNotification: true),
 
                   Column(
                     crossAxisAlignment: CrossAxisAlignment.center,
                     children: [
+
                       ClipOval(
-                        child: Image.asset(
-                          'assets/images/intro.png',
-                          // width: 100, // 원래 크기 유지
-                          height: 100, // 원래 크기 유지
-                          fit: BoxFit.cover, // 이미지가 잘리거나 확대되면서 원형을 유지
+                        child: CustomCachedNetworkImage(
+                            imagePath: model.profileImage.toString(),
+                            imageWidth: 27.w,
+                            imageHeight: null
                         ),
                       ),
+
+
                       SizedBox(height: 6,),
-                      Text('스꺼러',style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                      Text(model.username ?? "null" ,style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+
                       SizedBox(height: 6,),
                       Row(
                         mainAxisAlignment: MainAxisAlignment.center,
@@ -86,7 +99,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                           SizedBox(width: 5,),
                           Text('여자',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                           SizedBox(width: 5,),
-                          Text('서울 강서구',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                          Text(model.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                         ],
                       ),
                     ],
@@ -105,16 +118,32 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                       SizedBox(width: 15,),
                       Row(
                         children: [
-                          Text('2403',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
+                          Text((model.mmr ?? 1000).toString() ,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
                           SizedBox(width: 3,),
                           Text('pts',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
                         ],
                       ),
                     ],
                   ),
+                  SizedBox(height: 5),
 
+                  if(memberController.isAuth.value)
+                    GestureDetector(
+                      onTap :() async {
+                        await AppBottomModalRouter.fnModalRouter(context, 4);
+                        await memberController.fnGetMemberInfo(model.userId);
+                      },
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Icon(Icons.edit_outlined,color: Colors.orange,size: 17,),
+                          SizedBox(width: 5,),
+                          Text('프로필 수정' ,style: TextStyle(fontSize: 13, color: Colors.orange,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
 
-                  SizedBox(height: 10),
+                        ],
+                      ),
+                    ),
+
                   TabBar(
                     controller: _tabController,
                     labelColor: Colors.white,
@@ -166,26 +195,13 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               Text(
-                                '안녕하세요.',
+                                model.introduction ?? "",
                                 style: TextStyle(
                                   color: Colors.white,
                                   fontSize: 17,
                                 ),
                               ),
-                              Text(
-                                '저는 길거리 농구 시작한지 10년차 입니다..',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                              ),
-                              Text(
-                                '같이 하실 분은 용병신청 해주세요.',
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                              ),
+
 
 
                             ],

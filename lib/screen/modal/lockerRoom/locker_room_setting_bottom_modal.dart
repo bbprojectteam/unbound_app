@@ -85,7 +85,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
             CustomAppbar(isNotification: false, ),
             SizedBox(height: 40,),
 
-            ProfileSettingTextField(labelText: "방 제목",textEditingController: lockerRoomTitleEditController),
+            ProfileSettingTextField(labelText: "방 제목",textEditingController: lockerRoomTitleEditController,maxLines: 1,),
 
             SizedBox(height: 35,),
 
@@ -217,8 +217,8 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
             SizedBox(height: 10,),
             GestureDetector(
-              onTap: (){
-                AppBottomModalRouter.fnModalRouter(context,3);
+              onTap: () async {
+                await AppBottomModalRouter.fnModalRouter(context,3);
               },
               child: Container(
                 width: 100.w,
@@ -353,9 +353,21 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
             SizedBox(height: 30,),
             GestureDetector(
-              onTap: (){
-                print(lockerRoomTitleEditController.text);
-              },
+              onTap: () async {
+
+                  String matchName = lockerRoomTitleEditController.text;
+                  String matchDt = "$selectedYear-$selectedMonth-$selectedDay $selectedHour:$selectedMinute";
+
+                  Map<String, String> requestMap = {
+                    'chatRoomId' : widget.chatRoomId!,
+                    'matchName': matchName,
+                    'matchDt': matchDt,
+                  };
+
+                  await matchController.fnMatchRoomInfoUpdate(requestMap);
+                  matchController.fnMatchInfo(widget.chatRoomId!);
+                  Get.back();
+                },
               child: Container(
                 width: 100.w,
                 height: 5.h,

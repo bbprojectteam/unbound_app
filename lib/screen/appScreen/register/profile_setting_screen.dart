@@ -15,7 +15,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
-  const ProfileSettingScreen({super.key});
+  const ProfileSettingScreen({super.key,});
+
 
   @override
   State<ProfileSettingScreen> createState() => _ProfileSettingScreenState();
@@ -35,10 +36,15 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
     memberController = Get.find<MemberController>();
   }
 
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    memberController.clear();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
-
 
     Future<void> _pickImage() async {
 
@@ -132,41 +138,51 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           child: Column(
                             children: [
 
-                              ProfileSettingTextField(labelText: "닉네임",textEditingController: memberController.nickNmTextEdController),
-                              ProfileSettingTextField(labelText: "생년월일",textEditingController: memberController.birthTextEdController),
+                              ProfileSettingTextField(labelText: "닉네임",textEditingController: memberController.nickNmTextEdController,maxLines: 1,),
+                              ProfileSettingTextField(labelText: "생년월일",textEditingController: memberController.birthTextEdController,maxLines: 1,),
+                              ProfileSettingTextField(labelText: "소개",textEditingController: memberController.introductionTextEdController,maxLines: 4,),
+
+
+
 
                               SizedBox(height: 10,),
-                              Center(
-                                child: SelectMatchInfoBtn(
-                                  title: memberController.reginonNm.value,
-                                  listId: 1,
-                                  callBack : (int? id, String? text) {
-                                      memberController.reginonNm.value = text ?? "지역 선택";
-                                      memberController.isReginonSelected.value = true;
-                                    },isSelected : memberController.isReginonSelected.value,
-                                  containerWidth: 100.w,
+                              Row(
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                                children: [
+                                  Center(
+                                    child: SelectMatchInfoBtn(
+                                      title: memberController.reginonNm.value,
+                                      listId: 1,
+                                      callBack : (int? id, String? text) {
+                                        memberController.reginonNm.value = text ?? "지역 선택";
+                                        memberController.isReginonSelected.value = true;
+                                      },isSelected : memberController.isReginonSelected.value,
+                                      containerWidth: 45.w,
 
-                                ),
+                                    ),
+                                  ),
+                                  SizedBox(height: 20,),
+                                  Center(
+                                    child: SelectMatchInfoBtn(
+                                      title: memberController.villageNm.value,
+                                      listId: 2,
+                                      callBack : (int? id, String? text){
+                                        memberController.villageNm.value = text ?? "동네 선택";
+                                        memberController.isVillageSelected.value = true;
+                                      },isSelected : memberController.isVillageSelected.value
+                                      ,containerWidth: 45.w,
+                                    ),
+                                  ),
+                                ],
                               ),
-                              SizedBox(height: 20,),
-                              Center(
-                                child: SelectMatchInfoBtn(
-                                  title: memberController.villageNm.value,
-                                  listId: 2,
-                                    callBack : (int? id, String? text){
-                                      memberController.villageNm.value = text ?? "동네 선택";
-                                      memberController.isVillageSelected.value = true;
-                                    },isSelected : memberController.isVillageSelected.value
-                                ,containerWidth: 100.w,
-                                ),
-                              ),
+
 
 
                               SizedBox(height: 20,),
                               Row(
-                                mainAxisAlignment: MainAxisAlignment.spaceAround,
+                                mainAxisAlignment: MainAxisAlignment.spaceBetween,
                                 children: [
-                                  // 남자 버튼
+
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
@@ -196,7 +212,7 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                                     ),
                                   ),
 
-                                  // 여자 버튼
+
                                   GestureDetector(
                                     onTap: () {
                                       setState(() {
@@ -236,14 +252,25 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           onTap: () async {
                             String memberNickName = memberController.nickNmTextEdController.text;
                             String memberBirth = memberController.birthTextEdController.text;
+                            String introduction = memberController.introductionTextEdController.text;
                             String memberGender = selectedGender == 0? "M" : "F";
 
-                            bool isUpdate = await memberController.fnSetMemberInfo(memberNickName,memberBirth,memberGender);
-                            bool isInsert = await memberController.fnSetMemberProfileImg(filePickerResult,_imageBytes!);
-                            if(isUpdate && isInsert) {
-                              Get.toNamed('/');
+                            Map<String, String> requestMap = {
+                              'memberNickName' : memberNickName,
+                              'memberBirth': memberBirth,
+                              'memberIntroduction': introduction,
+                              'memberGender': memberGender,
+                            };
+
+                            bool isUpdate = await memberController.fnSetMemberInfo(requestMap);
+                            if (_imageBytes != null ){
+                              isUpdate = await memberController.fnSetMemberProfileImg(filePickerResult,_imageBytes!);
+                            }
+
+                            if(isUpdate) {
+                              Get.back();
                             } else {
-                              print('토스트 생성할 곳');
+                              print('경고 토스트 생성할 곳');
                             }
                           },
                           child: Container(

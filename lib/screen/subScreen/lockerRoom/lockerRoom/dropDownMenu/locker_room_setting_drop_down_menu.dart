@@ -1,7 +1,9 @@
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LockerRoomSettingDropDownMenu {
 
@@ -57,17 +59,26 @@ class LockerRoomSettingDropDownMenu {
     );
   }
 
-  static void _handleMenuSelection(int value, BuildContext context, String chatRoomId) {
+  static void _handleMenuSelection(int value, BuildContext context, String chatRoomId) async {
     if (value == 100) {
-      AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId);
+      await AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId);
     } else if (value == 200) {
-      AppBottomModalRouter.fnModalRouter(context, 1);
+      await AppBottomModalRouter.fnModalRouter(context, 1);
     } else if (value == 300) {
       Get.toNamed('/countDownScreen');
     } else if (value == 400) {
+
+      /// 매칭 나가기 api 후 데이터 지우고 홈으로 이동
+      MatchController matchController = Get.find<MatchController>();
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+
+      await prefs.setBool("isMatching", false);
+      await matchController.fnMatchExit(chatRoomId);
+      Get.toNamed('/');
+
       // 대기실 나가기 관련 처리
     } else if (value == 500) {
-      AppBottomModalRouter.fnModalRouter(context, 2, chatRoomId: chatRoomId);
+      await AppBottomModalRouter.fnModalRouter(context, 2, chatRoomId: chatRoomId);
     }
   }
 }

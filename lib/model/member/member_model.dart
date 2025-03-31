@@ -16,6 +16,7 @@ class MemberModel {
   String? username;
   int? regionId;
   String? regionNm;
+  String? introduction;
 
 
   MemberModel();

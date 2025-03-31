@@ -20,9 +20,8 @@ class _UserProfileContainerState extends State<UserProfileContainer> {
     // TODO: implement initState
     super.initState();
     memberController = Get.put(MemberController());
-    memberController.fnGetMemberInfo();
+    memberController.fnGetProfileInfo();
   }
-
 
   @override
   Widget build(BuildContext context) {

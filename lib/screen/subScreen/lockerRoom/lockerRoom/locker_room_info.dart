@@ -2,6 +2,7 @@ import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_info_model.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
+import 'package:badboys/screen/appScreen/info/member_page_screen.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/match_point_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
@@ -39,6 +40,7 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
       matchController.fnMatchInfo(widget.chatRoomId);
     }
   }
+
 
   @override
   Widget build(BuildContext context) {
@@ -80,7 +82,7 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
-                        Text('선택된 날짜가 없습니다.',style: TextStyle(fontWeight: FontWeight.w800,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
+                        Text(matchModel.matchInfoModel?.matchDt ?? '선택된 날짜가 없습니다.',style: TextStyle(fontWeight: FontWeight.w800,letterSpacing: -0.3,color: Colors.orange,fontFamily: 'EHSMB'),),
                         Text(matchModel.matchInfoModel?.name ?? "새 라커룸",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
 
                         Row(
@@ -119,11 +121,19 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                               children: [
                                 for (int i = 0; i < matchModel.matchMemberModel.length; i++)...[
                                   if(matchModel.matchMemberModel[i].profileImage != null)
-                                    ClipOval(
-                                      child: CustomCachedNetworkImage(
-                                          imagePath: matchModel.matchMemberModel[i].profileImage.toString(),
-                                          imageWidth: 10.w,
-                                          imageHeight: null
+                                    GestureDetector(
+                                      onTap: (){
+                                        Get.toNamed(
+                                            '/memberPageScreen',
+                                            arguments: {'tab' : 0, 'memberId' : matchModel.matchMemberModel[i].userId }
+                                        );
+                                      },
+                                      child: ClipOval(
+                                        child: CustomCachedNetworkImage(
+                                            imagePath: matchModel.matchMemberModel[i].profileImage.toString(),
+                                            imageWidth: 10.w,
+                                            imageHeight: null
+                                        ),
                                       ),
                                     ),
 

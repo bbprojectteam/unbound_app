@@ -6,10 +6,12 @@ class ProfileSettingTextField extends StatefulWidget {
     super.key,
     required this.labelText,
     required this.textEditingController,
+    required this.maxLines,
   });
 
   final TextEditingController textEditingController;
   final String labelText;
+  final int maxLines;
 
   @override
   State<ProfileSettingTextField> createState() => _ProfileSettingTextFieldState();
@@ -44,6 +46,7 @@ class _ProfileSettingTextFieldState extends State<ProfileSettingTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
+        maxLines : widget.maxLines,
         controller: widget.textEditingController,
         focusNode: _focusNode, // FocusNode 연결
         style: TextStyle(color: Colors.white),
