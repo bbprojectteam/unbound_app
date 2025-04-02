@@ -1,4 +1,5 @@
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
@@ -21,6 +22,7 @@ class MemberPageScreen extends StatefulWidget {
 class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late MemberController memberController;
+  late MemberModel memberInfoModel;
 
   @override
   void initState() {
@@ -57,188 +59,188 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
 
 
     return Scaffold(
-      body: Obx((){
+      body: GetBuilder<MemberController>(
+        init: memberController,
+        builder: (memberControllerContext) {
 
-          if (memberController.isLoading.value) {
-            return CircularProgressIndicator();
-          }
-          var model = memberController.memberInfoModel.value;
-
+          memberInfoModel = memberController.memberInfoModel;
 
           return Container(
-            color: Colors.black,
-            width: 100.w,
-            height: 100.h,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  SizedBox(height: 40,),
-                  CustomAppbar(isNotification: true),
-
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.center,
+                color: Colors.black,
+                width: 100.w,
+                height: 100.h,
+                child: SingleChildScrollView(
+                  child: Column(
                     children: [
+                      SizedBox(height: 40,),
+                      CustomAppbar(isNotification: true),
 
-                      ClipOval(
-                        child: CustomCachedNetworkImage(
-                            imagePath: model.profileImage.toString(),
-                            imageWidth: 27.w,
-                            imageHeight: null
-                        ),
-                      ),
-
-
-                      SizedBox(height: 6,),
-                      Text(model.username ?? "null" ,style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
-
-                      SizedBox(height: 6,),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
+                      Column(
+                        crossAxisAlignment: CrossAxisAlignment.center,
                         children: [
-                          Text('20대',style: TextStyle(fontSize: 13, color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
-                          SizedBox(width: 5,),
-                          Text('여자',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
-                          SizedBox(width: 5,),
-                          Text(model.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
-                  Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: [
-                      Row(
-                        children: [
-                          Text('24회',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
-                          SizedBox(width: 2,),
-                          Text('참여',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
-                        ],
-                      ),
-                      SizedBox(width: 15,),
-                      Row(
-                        children: [
-                          Text((model.mmr ?? 1000).toString() ,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
-                          SizedBox(width: 3,),
-                          Text('pts',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
-                        ],
-                      ),
-                    ],
-                  ),
-                  SizedBox(height: 5),
 
-                  if(memberController.isAuth.value)
-                    GestureDetector(
-                      onTap :() async {
-                        await AppBottomModalRouter.fnModalRouter(context, 4);
-                        await memberController.fnGetMemberInfo(model.userId);
-                      },
-                      child: Row(
-                        mainAxisAlignment: MainAxisAlignment.center,
-                        children: [
-                          Icon(Icons.edit_outlined,color: Colors.orange,size: 17,),
-                          SizedBox(width: 5,),
-                          Text('프로필 수정' ,style: TextStyle(fontSize: 13, color: Colors.orange,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                          ClipOval(
+                            child: CustomCachedNetworkImage(
+                                imagePath: memberInfoModel.profileImage.toString(),
+                                imageWidth: 27.w,
+                                imageHeight: null
+                            ),
+                          ),
 
-                        ],
-                      ),
-                    ),
 
-                  TabBar(
-                    controller: _tabController,
-                    labelColor: Colors.white,
-                    unselectedLabelColor: Colors.white,
-                    tabAlignment: TabAlignment.center,
-                    isScrollable: true,
-                    indicatorColor: Colors.orange,
-                    indicatorSize: TabBarIndicatorSize.label,
-                    onTap: (index){
-                      _tabController.index = index;
-                      setState(() {});
-                    },
-                    tabs: [
-                      Tab(child: Text('   소개   ',
-                        style: TextStyle(
-                            color: _tabController.index == 0 ? Colors.white : Colors.grey,
-                            fontSize: 16,
-                            fontWeight:
-                            FontWeight.w700,
-                          fontFamily: 'EHSMB',
-                        ),
-                        ),
-                      ),
+                          SizedBox(height: 6,),
+                          Text(memberInfoModel.username ?? "null" ,style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
 
-                      Tab(child: Text(' 경기기록  ',
-                        style: TextStyle(
-                            color: _tabController.index == 1 ? Colors.white : Colors.grey,
-                            fontSize: 16,
-                            fontWeight:
-                            FontWeight.w700,
-                          fontFamily: 'EHSMB',
-                        ),
-                        ),
-                      ),
-                    ],
-                  ),
-
-                  // Tab view content
-                  Container(
-                    height: 60.h,
-                    child: TabBarView(
-                      controller: _tabController,
-                      children: [
-                        Container(
-                          width : 100.w,
-                          height: 100,
-                          padding: EdgeInsets.all(15),
-                          child: Column(
-                            crossAxisAlignment: CrossAxisAlignment.start,
+                          SizedBox(height: 6,),
+                          Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text(
-                                model.introduction ?? "",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 17,
-                                ),
-                              ),
+                              Text('20대',style: TextStyle(fontSize: 13, color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              SizedBox(width: 5,),
+                              Text('여자',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              SizedBox(width: 5,),
+                              Text(memberInfoModel.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Row(
+                            children: [
+                              Text('24회',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
+                              SizedBox(width: 2,),
+                              Text('참여',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
+                            ],
+                          ),
+                          SizedBox(width: 15,),
+                          Row(
+                            children: [
+                              Text((memberInfoModel.mmr ?? 1000).toString() ,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
+                              SizedBox(width: 3,),
+                              Text('pts',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
+                            ],
+                          ),
+                        ],
+                      ),
+                      SizedBox(height: 5),
 
-
+                      if(memberController.isAuth.value)
+                        GestureDetector(
+                          onTap :() async {
+                            await AppBottomModalRouter.fnModalRouter(context, 4);
+                            await memberController.fnGetMemberInfo(memberInfoModel.userId);
+                          },
+                          child: Row(
+                            mainAxisAlignment: MainAxisAlignment.center,
+                            children: [
+                              Icon(Icons.edit_outlined,color: Colors.orange,size: 17,),
+                              SizedBox(width: 5,),
+                              Text('프로필 수정' ,style: TextStyle(fontSize: 13, color: Colors.orange,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
 
                             ],
                           ),
                         ),
 
-                        ///두번째 탭
-                        Container(
-                          child: SingleChildScrollView(
-                            child: Padding(
-                              padding: const EdgeInsets.all(8.0),
+                      TabBar(
+                        controller: _tabController,
+                        labelColor: Colors.white,
+                        unselectedLabelColor: Colors.white,
+                        tabAlignment: TabAlignment.center,
+                        isScrollable: true,
+                        indicatorColor: Colors.orange,
+                        indicatorSize: TabBarIndicatorSize.label,
+                        onTap: (index){
+                          _tabController.index = index;
+                          setState(() {});
+                        },
+                        tabs: [
+                          Tab(child: Text('   소개   ',
+                            style: TextStyle(
+                                color: _tabController.index == 0 ? Colors.white : Colors.grey,
+                                fontSize: 16,
+                                fontWeight:
+                                FontWeight.w700,
+                              fontFamily: 'EHSMB',
+                            ),
+                            ),
+                          ),
+
+                          Tab(child: Text(' 경기기록  ',
+                            style: TextStyle(
+                                color: _tabController.index == 1 ? Colors.white : Colors.grey,
+                                fontSize: 16,
+                                fontWeight:
+                                FontWeight.w700,
+                              fontFamily: 'EHSMB',
+                            ),
+                            ),
+                          ),
+                        ],
+                      ),
+
+                      // Tab view content
+                      Container(
+                        height: 60.h,
+                        child: TabBarView(
+                          controller: _tabController,
+                          children: [
+                            Container(
+                              width : 100.w,
+                              height: 100,
+                              padding: EdgeInsets.all(15),
                               child: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
-                                  MemberPlayRecordItem(isWin: true,),
-                                  MemberPlayRecordItem(isWin: false,),
-                                  MemberPlayRecordItem(isWin: true,),
-                                  MemberPlayRecordItem(isWin: false,),
-                                  MemberPlayRecordItem(isWin: true,),
+                                  Text(
+                                    memberInfoModel.introduction ?? "",
+                                    style: TextStyle(
+                                      color: Colors.white,
+                                      fontSize: 17,
+                                    ),
+                                  ),
+
+
+
                                 ],
                               ),
                             ),
-                          ),
+
+                            ///두번째 탭
+                            Container(
+                              child: SingleChildScrollView(
+                                child: Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Column(
+                                    children: [
+                                      MemberPlayRecordItem(isWin: true,),
+                                      MemberPlayRecordItem(isWin: false,),
+                                      MemberPlayRecordItem(isWin: true,),
+                                      MemberPlayRecordItem(isWin: false,),
+                                      MemberPlayRecordItem(isWin: true,),
+                                    ],
+                                  ),
+                                ),
+                              ),
+                            ),
+
+                          ],
                         ),
+                      ),
 
-                      ],
-                    ),
+
+
+
+                    ],
                   ),
-
-
-
-
-                ],
-              ),
-            ),
-          );
+                ),
+              );
         }
       ),
+
+
 
     );
   }

@@ -1,4 +1,5 @@
 import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/modal/lockerRoom/team_player_list_item.dart';
 import 'package:flutter/material.dart';
@@ -21,6 +22,7 @@ class TeamPlayerListModalPop extends StatefulWidget {
 class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
 
   late MatchController matchController;
+  late MatchModel matchModel;
 
   @override
   void initState() {
@@ -34,55 +36,61 @@ class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
   @override
   Widget build(BuildContext context) {
 
-    var matchModel = matchController.matchModel.value;
 
+    return GetBuilder<MatchController>(
+      init: matchController,
+      builder: (matchControllerContext) {
 
-    return Container(
-      width: 100.w,
-      height: 47.h,
-      decoration: BoxDecoration(
-          color: Colors.black,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(3.0),
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            CustomAppbar(isNotification: false, ),
+        matchModel = matchController.matchModel;
 
-            Expanded(
-              child: SingleChildScrollView(
-                child: Column(
-                  children: [
-                    for(int i = 0; i< matchModel.matchMemberModel.length; i++)
-                      TeamPlayerListItem(matchMemberModel : matchModel.matchMemberModel[i]),
-                  ],
-                ),
-              ),
-            ),
+        return Container(
+          width: 100.w,
+          height: 47.h,
+          decoration: BoxDecoration(
+              color: Colors.black,
+          ),
+          child: Padding(
+            padding: const EdgeInsets.all(3.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.start,
+              children: [
+                CustomAppbar(isNotification: false, ),
 
-
-
-            GestureDetector(
-              onTap: ()=>{
-                Navigator.pop(context)
-              },
-              child: Container(
-                width: 100.w,
-                height: 8.h,
-                color: Colors.black,
-                child: Center(
-                  child: Text(
-                    '닫기',
-                    style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),
+                Expanded(
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        for(int i = 0; i< matchModel.matchMemberModel.length; i++)
+                          TeamPlayerListItem(matchMemberModel : matchModel.matchMemberModel[i]),
+                      ],
+                    ),
                   ),
                 ),
-              ),
+
+
+
+                GestureDetector(
+                  onTap: ()=>{
+                    Navigator.pop(context)
+                  },
+                  child: Container(
+                    width: 100.w,
+                    height: 8.h,
+                    color: Colors.black,
+                    child: Center(
+                      child: Text(
+                        '닫기',
+                        style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),
+                      ),
+                    ),
+                  ),
+                ),
+              ],
             ),
-          ],
-        ),
-      ),
+          ),
+        );
+      }
     );
   }
 }

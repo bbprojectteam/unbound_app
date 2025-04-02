@@ -1,3 +1,5 @@
+import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/model/match/match_info_model.dart';
 import 'package:badboys/screen/subScreen/home/lockerRoom/locker_room_list_Item.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -12,8 +14,24 @@ class MatchingHistoryModal extends StatefulWidget {
 }
 
 class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
+
+  late MatchController matchController;
+  late List<MatchInfoModel> joinMatchModelList;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    matchController = Get.put(MatchController());
+    matchController.fnGetJoinLockerRoomList();
+
+  }
+
+
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
       width: 100.w,
       height: 90.h,
@@ -45,23 +63,32 @@ class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
           SizedBox(height: 20,),
 
 
-          SizedBox(
-            height: 79.h,
-            child: SingleChildScrollView(
-              child: Column(
-                children: [
-                  for(int i = 0; i <15; i++)
-                    LockerRoomListItem(
-                      matchingRoomId: 70,
-                      isExitButton: true,
-                      isModalScreen: true,
-                      callBack: () {
-                        Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : "70"});
-                      },
-                    )
-                ],
-              ),
-            ),
+          GetBuilder<MatchController>(
+            init: matchController,
+            builder: (context) {
+
+              joinMatchModelList = matchController.joinMatchModelList;
+
+              return SizedBox(
+                height: 79.h,
+                child: SingleChildScrollView(
+                  child: Column(
+                    children: [
+                      for(int i = 0; i < joinMatchModelList.length; i++)
+                        LockerRoomListItem(
+                          matchItem: joinMatchModelList[i],
+                          matchingRoomId: 70,
+                          isExitButton: true,
+                          isModalScreen: true,
+                          callBack: () {
+                            Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : joinMatchModelList[i].chatRoomId.toString()});
+                          },
+                        )
+                    ],
+                  ),
+                ),
+              );
+            }
           )
 
         ],

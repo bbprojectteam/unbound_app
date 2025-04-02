@@ -5,16 +5,14 @@ import 'package:badboys/model/match/match_member_model.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
-import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:get/get.dart';
-import 'package:shared_preferences/shared_preferences.dart';
 import 'package:http/http.dart' as http;
 
 class MatchController extends GetxController {
 
-  var matchModel = MatchModel().obs;
-  var standByMatchModelList = <MatchModel>[].obs;
+  MatchModel matchModel = MatchModel();
+  List<MatchInfoModel> standByMatchModelList = <MatchInfoModel>[];
+  List<MatchInfoModel> joinMatchModelList = <MatchInfoModel>[];
 
   // var matchUpdateModel = MatchInfoModel();
 
@@ -25,7 +23,7 @@ class MatchController extends GetxController {
 
 
   void clear() {
-    matchModel.value = MatchModel(); // 상태 초기화
+    matchModel = MatchModel(); // 상태 초기화
   }
 
 
@@ -115,15 +113,24 @@ class MatchController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
+        print(jsonResponse);
+        standByMatchModelList = [];
+
+        for(var item in jsonResponse['chatRoomList']){
+          standByMatchModelList.add(MatchInfoModel.fromJson(item));
+        }
+
+
+        update();
 
       } else {
         // 오류 처리
-        throw Exception('fnMatchExit Failed');
+        throw Exception('fnGetStandByLockerRoomList Failed');
       }
 
     } catch (error) {
       // 오류 처리
-      print('fnMatchExit Error: $error');
+      print('fnGetStandByLockerRoomList Error: $error');
 
     } finally {
       isLoading.value = false;
@@ -131,6 +138,48 @@ class MatchController extends GetxController {
 
   }
 
+
+  Future<void> fnGetJoinLockerRoomList() async {
+
+    try {
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+        '/service/chatRoom/list/joined',
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json', // JSON 형식
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final decodedBody = utf8.decode(response.bodyBytes);
+        var jsonResponse = jsonDecode(decodedBody);
+
+        print(jsonResponse);
+        joinMatchModelList = [];
+
+        for(var item in jsonResponse['chatRoomList']){
+          joinMatchModelList.add(MatchInfoModel.fromJson(item));
+        }
+
+
+
+
+
+      } else {
+        // 오류 처리
+        throw Exception('fnGetStandByLockerRoomList Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnGetStandByLockerRoomList Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
 
 
 
@@ -185,16 +234,16 @@ class MatchController extends GetxController {
       if (response.statusCode == 200) {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
-        print(jsonResponse);
+
         clear();
 
-        matchModel.value.matchInfoModel = MatchInfoModel.fromJson(jsonResponse['chatRoomInfo']);
+        matchModel.matchInfoModel = MatchInfoModel.fromJson(jsonResponse['chatRoomInfo']);
 
         for (var item in jsonResponse['memberList']) {
-          print(item);
-
-          matchModel.value.matchMemberModel.add(MatchMemberModel.fromJson(item));
+          matchModel.matchMemberModel.add(MatchMemberModel.fromJson(item));
         }
+
+        update();
 
       } else {
         // 오류 처리

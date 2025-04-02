@@ -53,13 +53,10 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
   @override
   Widget build(BuildContext context) {
 
-    double maxWidth = MediaQuery.of(context).size.width;
-    double maxHeight = MediaQuery.of(context).size.height;
-
 
     return Container(
-      width: maxWidth,
-      height: maxHeight * 0.47,
+      width: 100.w,
+      height: 47.h,
       decoration: BoxDecoration(
         color: Colors.black,
         borderRadius: BorderRadius.circular(15)

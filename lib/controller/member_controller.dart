@@ -15,8 +15,8 @@ import 'package:http_parser/http_parser.dart';
 
 class MemberController extends GetxController {
 
-  var model = MemberModel().obs;
-  var memberInfoModel = MemberModel().obs;
+  MemberModel memberModel = MemberModel();
+  MemberModel memberInfoModel = MemberModel();
 
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   var reginonNm = "지역 선택".obs;
@@ -60,9 +60,10 @@ class MemberController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
-        memberInfoModel.value = MemberModel();
-        memberInfoModel.value = MemberModel.fromJson(jsonResponse);
-        isLoading.value = false;
+        memberInfoModel = MemberModel();
+        memberInfoModel = MemberModel.fromJson(jsonResponse['userInfo']);
+
+        update();
 
       } else{
         // 오류 처리
@@ -84,7 +85,7 @@ class MemberController extends GetxController {
     try {
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
-          '/service/main/info',
+          '/service/user/my/info',
           headers: {
             'Content-Type': 'application/json', // JSON 형식
           },
@@ -97,12 +98,13 @@ class MemberController extends GetxController {
         var jsonResponse = jsonDecode(decodedBody);
         print(jsonResponse);
 
-        model.value = MemberModel();
-        model.value = MemberModel.fromJson(jsonResponse['userInfo']);
+        memberModel = MemberModel();
+        memberModel = MemberModel.fromJson(jsonResponse['userInfo']);
 
-        Helpers.setMemberId(model.value.userId.toString());
-        Helpers.setRegionId(model.value.regionId.toString());
-        isLoading.value = false;
+        Helpers.setMemberId(memberModel.userId.toString());
+        Helpers.setRegionId(memberModel.regionId.toString());
+
+        update();
 
       } else if (response.statusCode == 404 || response.statusCode == 500 ) {
         Get.toNamed("/profileSettingScreen");

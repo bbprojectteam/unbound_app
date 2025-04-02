@@ -18,10 +18,10 @@ class ChatController extends GetxController{
   late StompClient stompClient;
   var chatModelList = <ChatModel>[].obs;
   List<MatchMemberModel> matchMemberModel = [];
-  var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   ScrollController scrollController = ScrollController();
   double previousPosition = 0.0;
   var isApiCalled = false.obs;
+  var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
 
   void clear() {
     // scrollController.dispose();

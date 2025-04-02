@@ -1,4 +1,5 @@
 import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/model/match/match_info_model.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -8,12 +9,14 @@ import 'package:shared_preferences/shared_preferences.dart';
 class LockerRoomListItem extends StatefulWidget {
   const LockerRoomListItem({
     super.key,
+    required this.matchItem,
     required this.matchingRoomId,
     required this.isExitButton,
     required this.isModalScreen,
     required this.callBack,
   });
 
+  final MatchInfoModel matchItem;
   final int matchingRoomId;
   final bool isExitButton;
   final bool isModalScreen;
@@ -55,14 +58,18 @@ class _LockerRoomListItemState extends State<LockerRoomListItem> {
         children: [
           Row(
             children: [
-              Text('03/18',style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
+              Text(widget.matchItem.matchDt ?? "00/00",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
               SizedBox(width: 5.w,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('대전 서구 실내 농구장',style: TextStyle(fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'EHSMB'),),
-                  Text('평균 pts - 2304 ',style: TextStyle(color: Colors.white,fontFamily: 'EHSMB'),),
-                  Text('남녀 모두 - 3 vs 3',style: TextStyle(fontSize: 14,color: Colors.white.withOpacity(0.8),fontFamily: 'EHSMB'),),
+                  Text(widget.matchItem.name.toString(),
+                    style: TextStyle(fontWeight: FontWeight.w800,color: Colors.white,fontFamily: 'EHSMB'),),
+                  SizedBox(height: 2,),
+                  Text('평균 pts - ${widget.matchItem.averageMmr.toString().split(".")[0]} ',style: TextStyle(color: Colors.white,fontFamily: 'EHSMB'),),
+                  SizedBox(height: 2,),
+                  Text('${widget.matchItem.memberCnt}명 / 6명',style: TextStyle(fontSize: 14,color: Colors.white.withOpacity(0.8),fontFamily: 'EHSMB'),),
+
                 ],
               ),
             ],

@@ -1,5 +1,6 @@
 import 'package:badboys/controller/chat_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/model/match/match_info_model.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/screen/subScreen/home/lockerRoom/locker_room_list_Item.dart';
 import 'package:flutter/material.dart';
@@ -16,7 +17,7 @@ class StandByLockerRoomList extends StatefulWidget {
 class _StandByLockerRoomListState extends State<StandByLockerRoomList> {
 
   late MatchController matchController;
-  late List<MatchModel> standByMatchModel;
+  late List<MatchInfoModel> standByMatchModelList;
 
   @override
   void initState() {
@@ -24,36 +25,42 @@ class _StandByLockerRoomListState extends State<StandByLockerRoomList> {
     super.initState();
     matchController = Get.put(MatchController());
     matchController.fnGetStandByLockerRoomList();
+
   }
-
-
 
 
   @override
   Widget build(BuildContext context) {
 
+    return GetBuilder<MatchController>(
+        init: matchController,  // 초기화
+        builder: (context) {
 
+        standByMatchModelList = matchController.standByMatchModelList;
 
-    return Column(
-      crossAxisAlignment:
-      CrossAxisAlignment.center,
-      children: [
+        return Column(
+          crossAxisAlignment:
+          CrossAxisAlignment.center,
+          children: [
 
-        SizedBox(
-          height: 20,
-        ),
+            SizedBox(
+              height: 20,
+            ),
 
-        for (int i = 0; i < 6; i++)
-          LockerRoomListItem(
-            matchingRoomId: 70,
-            isExitButton: false,
-            isModalScreen: false,
-            callBack: () {
-              Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : "70"});
-            },
-          )
+            for (int i = 0; i < standByMatchModelList.length; i++)
+              LockerRoomListItem(
+                matchItem : standByMatchModelList[i],
+                matchingRoomId: 70,
+                isExitButton: false,
+                isModalScreen: false,
+                callBack: () {
+                  Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : standByMatchModelList[i].chatRoomId.toString()});
+                },
+              )
 
-      ],
+          ],
+        );
+      }
     );
   }
 }

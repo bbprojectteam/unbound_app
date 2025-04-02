@@ -8,13 +8,19 @@ class MatchInfoModel {
 
   int? id;
 
+  int? chatRoomId;
+
   String? name;
 
   int? regionId;
 
   String? location;
 
+  double? averageMmr;
+
   String? desciption;
+
+  int? memberCnt;
 
   String? matchDt;
 

@@ -70,7 +70,6 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
           CustomMatchAppbar(chatRoomId: matchingRoomId,),
 
 
-
           TabBar(
             tabAlignment : TabAlignment.start,
             isScrollable : true,
