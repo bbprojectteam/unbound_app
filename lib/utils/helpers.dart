@@ -25,11 +25,22 @@ class Helpers {
     await prefs.setString('memberId', userId);
   }
 
+  static Future<void> setRegionId(String regionId) async {
+    // SharedPreferences에 저장
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setString('regionId', regionId);
+  }
 
   static Future<int> getMemberId() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     return int.parse(prefs.getString("memberId").toString());
+  }
+
+  static Future<int> getRegionId() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    return int.parse(prefs.getString("regionId").toString());
   }
 
 

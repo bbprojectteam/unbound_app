@@ -14,6 +14,8 @@ import 'package:http/http.dart' as http;
 class MatchController extends GetxController {
 
   var matchModel = MatchModel().obs;
+  var standByMatchModelList = <MatchModel>[].obs;
+
   // var matchUpdateModel = MatchInfoModel();
 
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
@@ -28,7 +30,10 @@ class MatchController extends GetxController {
 
 
 
-  Future<void> fnMatchStart(int? limitRegionId) async {
+  Future<void> fnMatchStart() async {
+
+    int regionId = await Helpers.getRegionId();
+
     try {
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
@@ -38,7 +43,7 @@ class MatchController extends GetxController {
             'Content-Type': 'application/json', // JSON 형식
           },
           body: {
-            'limitRegionId' : limitRegionId,
+            'limitRegionId' : regionId,
           }
       );
 
@@ -59,8 +64,6 @@ class MatchController extends GetxController {
     }
 
   }
-
-
 
 
   Future<void> fnMatchExit(String chatRoomId) async {
@@ -92,6 +95,43 @@ class MatchController extends GetxController {
     }
 
   }
+
+
+  Future<void> fnGetStandByLockerRoomList() async {
+
+    int regionId = await Helpers.getRegionId();
+
+    try {
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+        '/service/chatRoom/list/unJoined/${regionId}',
+        method: "GET",
+        headers: {
+          'Content-Type': 'application/json', // JSON 형식
+        },
+      );
+
+      if (response.statusCode == 200) {
+        final decodedBody = utf8.decode(response.bodyBytes);
+        var jsonResponse = jsonDecode(decodedBody);
+
+
+      } else {
+        // 오류 처리
+        throw Exception('fnMatchExit Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnMatchExit Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+
+
 
 
   Future<void> fnMatchRoomInfoUpdate(Map<String, String> requestMap) async {

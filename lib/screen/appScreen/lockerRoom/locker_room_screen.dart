@@ -3,7 +3,6 @@ import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_match_appbar.dart';
 
-import 'package:badboys/screen/subScreen/home/match_list_item.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/chat/chat_list.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/locker_room_info.dart';
 import 'package:flutter/material.dart';
@@ -43,8 +42,11 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
   @override
   void dispose() {
+    if(chatController.isApiCalled.value) {
+      chatController.disconnect();
+    }
     chatController.isApiCalled = false.obs;
-    chatController.disconnect();
+
     matchController.isApiCalled = false.obs;
 
     _tabController.dispose();

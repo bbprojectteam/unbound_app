@@ -312,4 +312,5 @@ class ChatController extends GetxController{
     stompClient.deactivate();
     print('Disconnected');
   }
+
 }

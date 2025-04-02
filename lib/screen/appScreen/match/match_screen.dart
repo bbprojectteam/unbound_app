@@ -1,6 +1,8 @@
 
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/match/matching_button.dart';
+import 'package:badboys/screen/subScreen/match/matching_history_button.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +15,12 @@ class MatchScreen extends StatefulWidget {
 }
 
 class _MatchScreenState extends State<MatchScreen> {
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -71,6 +79,15 @@ class _MatchScreenState extends State<MatchScreen> {
                             ),
                           ),
                         ),
+                        Container(
+                          width: 100.w,
+                          height: 7.5.h,
+                          decoration: BoxDecoration(
+                            color: Colors.orange,
+                            borderRadius: BorderRadius.circular(10),
+                          ),
+                          child: MatchingHistoryButton(),
+                        ),
 
                         SizedBox(height: 10,),
 
@@ -81,7 +98,7 @@ class _MatchScreenState extends State<MatchScreen> {
                             color: Colors.orange,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: MatchingButton(regionId : 1),
+                          child: MatchingButton(),
                         ),
                       ],
                     ),

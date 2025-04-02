@@ -7,11 +7,9 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MatchingButton extends StatefulWidget {
   const MatchingButton({
-    super.key,
-    required this.regionId,
-  });
+    super.key});
 
-  final int? regionId;
+
 
   @override
   State<MatchingButton> createState() => _MatchingButtonState();
@@ -45,7 +43,7 @@ class _MatchingButtonState extends State<MatchingButton> {
   Future<void> _handleMatchButtonPress() async {
     if (!matchController.isMatch.value) {
       matchController.isMatching.value = true;
-      await matchController.fnMatchStart(widget.regionId);
+      await matchController.fnMatchStart();
       matchController.isMatch.value = true;
 
       // 타이머로 매칭 완료 여부 확인

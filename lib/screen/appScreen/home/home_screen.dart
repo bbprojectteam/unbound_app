@@ -4,7 +4,7 @@ import 'package:badboys/screen/subScreen/comn/custom_calender_screen.dart';
 import 'package:badboys/screen/subScreen/comn/user_profile_container.dart';
 import 'package:badboys/screen/subScreen/home/event_list_item.dart';
 import 'package:badboys/screen/subScreen/home/home_menu_list.dart';
-import 'package:badboys/screen/subScreen/home/match_list_item.dart';
+import 'package:badboys/screen/subScreen/home/lockerRoom/stand_by_locker_room_List.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -258,27 +258,15 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                 ),
                               ],
                             ),
-                            // TabBarView를 사용하여 탭에 따라 다른 내용을 표시
+
+
                             Container(
                               height: 100.h,
                               child: TabBarView(
                                 controller: _tabController,
                                 children: [
                                   // 첫 번째 탭 (새로운 사람들)
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: [
-
-                                      SizedBox(
-                                        height: 20,
-                                      ),
-
-                                      for (int i = 0; i < 6; i++)
-                                        MatchListItem()
-
-                                    ],
-                                  ),
+                                  StandByLockerRoomList(),
 
 
                                   // 두 번째 탭 (주변의 코트)

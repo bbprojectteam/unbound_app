@@ -3,6 +3,7 @@ import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_bottom_modal
 import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/team_chng_modal_pop.dart';
 import 'package:badboys/screen/modal/lockerRoom/team_player_list_modal_pop.dart';
+import 'package:badboys/screen/modal/match/matching_history_modal.dart';
 import 'package:flutter/material.dart';
 
 
@@ -33,6 +34,9 @@ class AppBottomModalRouter {
       },
       4: () async{
         return ProfileSettingScreen();
+      },
+      5: () async{
+        return MatchingHistoryModal();
       }
 
     };

@@ -101,6 +101,7 @@ class MemberController extends GetxController {
         model.value = MemberModel.fromJson(jsonResponse['userInfo']);
 
         Helpers.setMemberId(model.value.userId.toString());
+        Helpers.setRegionId(model.value.regionId.toString());
         isLoading.value = false;
 
       } else if (response.statusCode == 404 || response.statusCode == 500 ) {
