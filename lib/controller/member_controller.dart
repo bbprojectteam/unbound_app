@@ -96,7 +96,6 @@ class MemberController extends GetxController {
 
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
-        print(jsonResponse);
 
         memberModel = MemberModel();
         memberModel = MemberModel.fromJson(jsonResponse['userInfo']);

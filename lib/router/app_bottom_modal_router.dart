@@ -1,4 +1,5 @@
 import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
+import 'package:badboys/screen/modal/game/playing_result_modal_pop.dart';
 import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_bottom_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/team_chng_modal_pop.dart';
@@ -37,7 +38,12 @@ class AppBottomModalRouter {
       },
       5: () async{
         return MatchingHistoryModal();
+      },
+      6: () async{
+        return PlayingResultModalPop();
       }
+
+
 
     };
 

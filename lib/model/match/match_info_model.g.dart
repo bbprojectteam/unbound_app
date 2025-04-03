@@ -15,7 +15,7 @@ MatchInfoModel _$MatchInfoModelFromJson(Map<String, dynamic> json) =>
       ..name = json['name'] as String?
       ..regionId = (json['regionId'] as num?)?.toInt()
       ..location = json['location'] as String?
-      ..desciption = json['desciption'] as String?
+      ..description = json['description'] as String?
       ..matchDt = json['matchDt'] as String?;
 
 Map<String, dynamic> _$MatchInfoModelToJson(MatchInfoModel instance) =>
@@ -27,6 +27,6 @@ Map<String, dynamic> _$MatchInfoModelToJson(MatchInfoModel instance) =>
       'name': instance.name,
       'regionId': instance.regionId,
       'location': instance.location,
-      'desciption': instance.desciption,
+      'description': instance.description,
       'matchDt': instance.matchDt,
     };

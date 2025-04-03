@@ -65,14 +65,23 @@ class LockerRoomSettingDropDownMenu {
     } else if (value == 200) {
       await AppBottomModalRouter.fnModalRouter(context, 1);
     } else if (value == 300) {
-      Get.toNamed('/countDownScreen');
+
+      // 멤버정보
+      MatchController matchController = Get.find<MatchController>();
+
+      if(matchController.matchModel.matchMemberModel.length == 6){
+        Get.toNamed('/countDownScreen');
+      }else {
+        print('6명 아닌데 경기시작 오류 발생');
+
+        Get.toNamed('/countDownScreen');
+      }
+
+
     } else if (value == 400) {
 
       /// 매칭 나가기 api 후 데이터 지우고 홈으로 이동
       MatchController matchController = Get.find<MatchController>();
-      SharedPreferences prefs = await SharedPreferences.getInstance();
-
-      await prefs.setBool("isMatching", false);
       await matchController.fnMatchExit(chatRoomId);
       Get.toNamed('/');
 

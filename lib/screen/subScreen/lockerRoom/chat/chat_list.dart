@@ -23,6 +23,7 @@ class ChatList extends StatefulWidget {
 class _ChatListState extends State<ChatList> {
   final TextEditingController textController = TextEditingController();
   late ChatController chatController;
+  late MatchController matchController;
 
   @override
   void initState() {
@@ -30,10 +31,14 @@ class _ChatListState extends State<ChatList> {
     super.initState();
     Get.lazyPut<ChatController>(() => ChatController());
     chatController = Get.find<ChatController>();
+    matchController = Get.find<MatchController>();
 
     if (!chatController.isApiCalled.value) {  // 아직 호출되지 않았다면
       chatController.isApiCalled.value = true;
       chatController.fnChatList(widget.chatRoomId);
+
+      /* 채팅 시 유저 정보 위함 */
+      chatController.matchMemberModel = matchController.matchModel.matchMemberModel;
     }
 
     chatController.fnConnectToStompServer();

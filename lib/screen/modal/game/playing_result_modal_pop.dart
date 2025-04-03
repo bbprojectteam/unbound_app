@@ -19,21 +19,23 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
   @override
   Widget build(BuildContext context) {
     return Container(
-      width: 90.w,
-      height: 60.h,
+      width: 100.w,
+      height: 90.h,
       color: Colors.black,
+      padding: EdgeInsets.all(10),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.center,
         children: [
           CustomAppbar(isNotification: false, ),
-
-
+          SizedBox(height: 40,),
           Row(
             mainAxisAlignment: MainAxisAlignment.spaceAround,
             children: [
               Column(
                 children: [
+
+
                   Row(
                     children: [
                       ClipOval(

@@ -1,10 +1,21 @@
 
+import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/model/match/match_member_model.dart';
+import 'package:badboys/model/match/match_member_position_model.dart';
+import 'package:badboys/model/match/match_model.dart';
+import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/modal/game/playing_result_modal_pop.dart';
+import 'package:badboys/screen/modal/lockerRoom/team_chng_modal_pop.dart';
+import 'package:badboys/screen/subScreen/game/member_icon_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'dart:async';
 
 import 'package:responsive_sizer/responsive_sizer.dart'; // 타이머를 사용하기 위한 패키지
+
+
 
 class PlayingScreen extends StatefulWidget {
   const PlayingScreen({
@@ -16,18 +27,35 @@ class PlayingScreen extends StatefulWidget {
 }
 
 class _PlayingScreenState extends State<PlayingScreen> {
+  late MatchController matchController;
+  late MatchModel matchModel;
+
   late Timer _timer; // 타이머 객체
   int _milliseconds = 0; // 밀리세컨드
   int _seconds = 0; // 초
   int _minutes = 0; // 분
   bool _isRunning = false; // 타이머가 실행 중인지 여부 (초기 값은 false)
+  int aTeamValue = 0;
+  int bTeamValue = 0;
+
+  List<MatchMemberPositionModel> matchMemberPositionModel = [
+    MatchMemberPositionModel(top: 5.h, left: 15.w, right: 0),
+    MatchMemberPositionModel(top: 16.5.h, left: 30.w, right: 0),
+    MatchMemberPositionModel(top: 28.h, left: 15.w, right: 0),
+
+    MatchMemberPositionModel(top: 5.h, left: 70.w, right: 0 ),
+    MatchMemberPositionModel(top: 16.5.h, left:55.w, right: 0),
+    MatchMemberPositionModel(top: 28.h, left: 70.w, right: 0),
+  ];
+
 
   // 화면이 처음 로드될 때 타이머를 시작
   @override
   void initState() {
     super.initState();
-    // 타이머는 initState에서 바로 시작하지 않도록 변경
-    // 버튼이 눌리면 시작하도록 로직을 변경
+     matchController = Get.find<MatchController>();
+     matchModel = matchController.matchModel;
+
     _startTimer();
   }
 
@@ -92,8 +120,6 @@ class _PlayingScreenState extends State<PlayingScreen> {
 
   @override
   Widget build(BuildContext context) {
-    double maxWidth = MediaQuery.of(context).size.width;
-    double maxHeight = MediaQuery.of(context).size.height;
 
     return Container(
       color: Colors.black87,
@@ -107,7 +133,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
           Container(
             child: Center(
               child: Text(
-                '00 : 00',
+                _formatTime(_minutes, _seconds, _milliseconds),
                 style: TextStyle(
                   color: Colors.black,
                   fontSize: 80,
@@ -200,26 +226,40 @@ class _PlayingScreenState extends State<PlayingScreen> {
                         Container(
                           width: 35.w,
                           height: 13.5.h,
+                          padding: EdgeInsets.only(bottom: 20),
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Align(
-                            alignment: Alignment.topCenter,  // Centers text both vertically and horizontally
-                            child: Text(
-                              '00',
-                              style: TextStyle(
-                                color: Colors.white10,
-                                fontSize: 98, // Increased font size
-                                fontFamily: 'EHSMB',
-                                letterSpacing: 0,
+                          child: ListWheelScrollView.useDelegate(
+                              physics: FixedExtentScrollPhysics(),
+                              itemExtent: 98,
+                              onSelectedItemChanged: (index) {
+                                setState(() {
+                                  aTeamValue = index;
+                                });
+                              },
+                              childDelegate: ListWheelChildBuilderDelegate(
+                                builder: (context, index) {
+                                  return Align(
+                                    alignment: Alignment.topCenter,
+                                    child: Text(
+                                      index.toString().padLeft(2, '0'),
+                                      style: TextStyle(
+                                        color: Colors.white10,
+                                        fontSize: 98,
+                                        fontFamily: 'EHSMB',
+                                        letterSpacing: 0,
+                                      ),
+                                    ),
+                                  );
+                                },
+                                childCount: 31, // Specifies numbers from 0 to 30
                               ),
                             ),
                           ),
-                        ),
                       ],
                     ),
-
 
 
                     Stack(
@@ -227,20 +267,32 @@ class _PlayingScreenState extends State<PlayingScreen> {
                         Container(
                           width: 35.w,
                           height: 13.5.h,
+                          padding: EdgeInsets.only(bottom: 20),
                           decoration: BoxDecoration(
                             color: Colors.black,
                             borderRadius: BorderRadius.circular(5),
                           ),
-                          child: Align(
-                            alignment: Alignment.topCenter,  // Centers text both vertically and horizontally
-                            child: Text(
-                              '00',
-                              style: TextStyle(
-                                color: Colors.white10,
-                                fontSize: 98, // Increased font size
-                                fontFamily: 'EHSMB',
-                                letterSpacing: 0,
-                              ),
+                          child: ListWheelScrollView.useDelegate(
+                            physics: const FixedExtentScrollPhysics(),
+                            itemExtent: 98,
+                            onSelectedItemChanged: (index) {
+                              setState(() {
+                                bTeamValue = index;
+                              });
+                            },
+                            childDelegate: ListWheelChildBuilderDelegate(
+                              builder: (context, index) {
+                                return Text(
+                                  index.toString().padLeft(2, '0'),
+                                  style: TextStyle(
+                                    color: Colors.white10,
+                                    fontSize: 98,
+                                    fontFamily: 'EHSMB',
+                                    letterSpacing: 0,
+                                  ),
+                                );
+                              },
+                              childCount: 31,
                             ),
                           ),
                         ),
@@ -377,11 +429,29 @@ class _PlayingScreenState extends State<PlayingScreen> {
 
             ],
           ),
-          Image.asset(
-            'assets/images/court2.jpg',
-            width: 100.w,
-            height: 40.h,
-            fit: BoxFit.cover,
+          
+          
+          Stack(
+            children: [
+              Image.asset(
+                'assets/images/court2.jpg',
+                width: 100.w,
+                height: 40.h,
+                fit: BoxFit.cover,
+              ),
+
+
+            for(int i= 0; i < matchModel.matchMemberModel.length; i++)
+              MemberIconItem(
+                  memberNickName: matchModel.matchMemberModel[i].username.toString(),
+                  memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
+                  topHeight: matchMemberPositionModel[i].top,
+                  leftWidth: matchMemberPositionModel[i].left
+              ),
+
+
+
+            ],
           ),
 
 
@@ -400,7 +470,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                   }
                 },
                 child: Container(
-                  width: maxWidth * 0.55,
+                  width: 55.w,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),
@@ -426,18 +496,10 @@ class _PlayingScreenState extends State<PlayingScreen> {
               GestureDetector(
                 onTap: () async {
                   ///경기 결과 팝업 생성
-                  dynamic result = await showDialog(
-                    context: context,
-                    builder: (BuildContext context) {
-                      return AlertDialog(
-                        contentPadding: EdgeInsets.zero,
-                        content: PlayingResultModalPop(),
-                      );
-                    },
-                  );
+                  AppBottomModalRouter.fnModalRouter(context, 6);
                 },
                 child: Container(
-                  width: maxWidth * 0.35,
+                  width: 35.w,
                   padding: EdgeInsets.all(10),
                   decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(50),

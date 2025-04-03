@@ -7,6 +7,7 @@ import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 
 class MatchController extends GetxController {
 
@@ -63,9 +64,40 @@ class MatchController extends GetxController {
 
   }
 
+  Future<void> fnMatchJoin(String chatRoomId) async {
+
+    try {
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+        '/service/chatRoom/${chatRoomId}/join',
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json', // JSON 형식
+        },
+      );
+
+      if (response.statusCode == 200) {
+
+      } else {
+        // 오류 처리
+        throw Exception('fnMatchExit Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnMatchExit Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+
 
   Future<void> fnMatchExit(String chatRoomId) async {
 
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    await prefs.setBool("isMatching", false);
 
     try {
       // POST 요청 보내기
@@ -155,16 +187,13 @@ class MatchController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
-        print(jsonResponse);
         joinMatchModelList = [];
 
         for(var item in jsonResponse['chatRoomList']){
           joinMatchModelList.add(MatchInfoModel.fromJson(item));
         }
 
-
-
-
+        update();
 
       } else {
         // 오류 처리
@@ -197,7 +226,7 @@ class MatchController extends GetxController {
             'name' : requestMap['matchName'],
             'matchDt' : requestMap['matchDt'],
             'location' : '대전테스트',
-            'description' : 'test'
+            'description' : requestMap['matchDescription']
           }
       );
 

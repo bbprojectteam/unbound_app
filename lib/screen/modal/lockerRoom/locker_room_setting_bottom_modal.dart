@@ -41,6 +41,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
 
   TextEditingController lockerRoomTitleEditController = TextEditingController();
+  TextEditingController lockerRoomDescriptionEditController = TextEditingController();
   TextEditingController localeEditController = TextEditingController();
 
   bool chk1 = true;
@@ -83,11 +84,13 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomAppbar(isNotification: false, ),
-            SizedBox(height: 40,),
+            SizedBox(height: 15,),
 
             ProfileSettingTextField(labelText: "방 제목",textEditingController: lockerRoomTitleEditController,maxLines: 1,),
+            SizedBox(height: 5),
+            ProfileSettingTextField(labelText: "메모",textEditingController: lockerRoomDescriptionEditController,maxLines: 1,),
 
-            SizedBox(height: 35,),
+            SizedBox(height: 10,),
 
             Text("경기 날짜 선택",
               style: TextStyle(
@@ -145,7 +148,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
               ],
             ),
 
-            SizedBox(height: 30,),
+            SizedBox(height: 15,),
 
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -184,7 +187,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
               ],
             ),
 
-            SizedBox(height: 35,),
+            SizedBox(height: 20,),
 
 
             Text("경기장 선택",
@@ -250,7 +253,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
               ),
             ),
-            SizedBox(height: 10,),
+            SizedBox(height: 15,),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
@@ -356,11 +359,13 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
               onTap: () async {
 
                   String matchName = lockerRoomTitleEditController.text;
+                  String matchDescription = lockerRoomDescriptionEditController.text;
                   String matchDt = "$selectedYear-$selectedMonth-$selectedDay $selectedHour:$selectedMinute";
 
                   Map<String, String> requestMap = {
                     'chatRoomId' : widget.chatRoomId!,
                     'matchName': matchName,
+                    'matchDescription': matchDescription,
                     'matchDt': matchDt,
                   };
 

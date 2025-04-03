@@ -106,9 +106,32 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                           ],
                         ),
                       ),
+                      SizedBox(height: 5,),
 
                       Container(
+                        width: 95.w,
+                        height: 4.7.h,
+                        margin: EdgeInsets.only(left: 10,),
+                        padding: EdgeInsets.all(7),
+                        decoration: BoxDecoration(
+                            color: Colors.black87,
+                            borderRadius: BorderRadius.circular(10),
+                            border: Border.all(width: 2.3,color: Colors.orange)
+                        ),
+                        child: Text(
+                          matchModel.matchInfoModel?.description ?? "메모가 없습니다.",
+                          style: TextStyle(
+                              color: Colors.orange,
+                              fontWeight: FontWeight.w700,
+                              fontFamily: 'EHSMB'
 
+                          ),
+                        ),
+                      ),
+
+                      SizedBox(height: 5,),
+
+                      Container(
                         padding: EdgeInsets.all(10),
                         child: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -144,9 +167,10 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                                   ],
                                 ),
                                 GestureDetector(
-                                  onTap: ()=>{
+                                  onTap: () async {
+                                      await matchController.fnMatchJoin(widget.chatRoomId);
 
-                                  },
+                                    },
                                   child: Container(
                                     padding: EdgeInsets.all(10),
                                     decoration: BoxDecoration(
@@ -154,15 +178,33 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                                         border: Border.all(width: 1,color: Colors.orange),
                                         color: Colors.orange
                                     ),
-                                    child: Text('참여중',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3,fontFamily: 'EHSMB'),),
+                                    child: Text('참여',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3,fontFamily: 'EHSMB'),),
                                   ),
                                 ),
+
+                                GestureDetector(
+                                  onTap: () async {
+                                    await matchController.fnMatchExit(widget.chatRoomId);
+                                    Get.toNamed('/');
+                                  },
+                                  child: Container(
+                                    padding: EdgeInsets.all(10),
+                                    decoration: BoxDecoration(
+                                        borderRadius: BorderRadius.circular(10),
+                                        border: Border.all(width: 1,color: Colors.grey),
+                                        color: Colors.grey
+                                    ),
+                                    child: Text('나가기',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3,fontFamily: 'EHSMB'),),
+                                  ),
+                                ),
+                                
                               ],
                             ),
 
                           ],
                         ),
                       ),
+
 
                       Container(
                         child: Column(

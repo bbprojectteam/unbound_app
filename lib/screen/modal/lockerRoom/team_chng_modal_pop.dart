@@ -1,14 +1,9 @@
+import 'package:badboys/model/match/match_member_position_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class Item {
-  double top;
-  double left;
-  double right;
 
-  Item({required this.top, required this.left, required this.right});
-}
 
 class TeamChngModalPop extends StatefulWidget {
   const TeamChngModalPop({super.key});
@@ -18,21 +13,21 @@ class TeamChngModalPop extends StatefulWidget {
 }
 
 class _TeamChngModalPopState extends State<TeamChngModalPop> {
-  List<Item> items = [
-    Item(top: 70, left: 40, right: 0),
-    Item(top: 120, left: 80, right: 0),
-    Item(top: 180, left: 40, right: 0),
+  List<MatchMemberPositionModel> items = [
+    MatchMemberPositionModel(top: 70, left: 40, right: 0),
+    MatchMemberPositionModel(top: 120, left: 80, right: 0),
+    MatchMemberPositionModel(top: 180, left: 40, right: 0),
 
-    Item(top: 70, left: 230, right: 0),
-    Item(top: 120, left: 180, right: 0),
-    Item(top: 180, left: 230, right: 0),
+    MatchMemberPositionModel(top: 70, left: 230, right: 0),
+    MatchMemberPositionModel(top: 120, left: 180, right: 0),
+    MatchMemberPositionModel(top: 180, left: 230, right: 0),
   ];
 
   int? selectedItemIndex;
 
   void _swapPositions(int firstIndex, int secondIndex) {
     setState(() {
-      Item temp = items[firstIndex - 1];
+      MatchMemberPositionModel temp = items[firstIndex - 1];
       items[firstIndex - 1] = items[secondIndex - 1];
       items[secondIndex - 1] = temp;
     });

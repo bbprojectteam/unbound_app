@@ -18,7 +18,7 @@ class MatchInfoModel {
 
   double? averageMmr;
 
-  String? desciption;
+  String? description;
 
   int? memberCnt;
 
