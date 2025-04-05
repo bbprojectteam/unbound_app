@@ -94,6 +94,83 @@ class MatchController extends GetxController {
   }
 
 
+
+  Future<void> fnGameStart(Map<String,dynamic> arguments) async {
+
+
+    try {
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+        '/service/match/game/start',
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json', // JSON 형식
+        },
+        body: {
+          "regionId": arguments['regionId'],
+          "ateamIdList": arguments['aTeamIdList'] ,
+          "bteamIdList": arguments['bTeamIdList'] ,
+        }
+      );
+
+      if (response.statusCode == 200) {
+
+      } else {
+        // 오류 처리
+        throw Exception('fnGameStart Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnGameStart Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+  Future<void> fnGameEnd() async {
+
+
+    try {
+      // POST 요청 보내기
+      http.Response response = await Helpers.apiCall(
+          '/service/match/game/end',
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json', // JSON 형식
+          },
+          body: {
+            "matchInfoId": 4,
+            "winnerTeamId": 8,
+            "ateamResult": {
+              "teamId": 7,
+              "score": 53
+            },
+            "bteamResult": {
+              "teamId": 8,
+              "score": 12
+            }
+          }
+      );
+
+      if (response.statusCode == 200) {
+
+      } else {
+        // 오류 처리
+        throw Exception('fnGameEnd Failed');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnGameEnd Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+
   Future<void> fnMatchExit(String chatRoomId) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -149,7 +226,22 @@ class MatchController extends GetxController {
         standByMatchModelList = [];
 
         for(var item in jsonResponse['chatRoomList']){
+
+          if(item['matchDt'] != null) {
+            String dateString = item['matchDt'];
+            DateTime date = DateTime.parse(dateString);
+
+            item['matchDt'] =
+            "${date.month.toString().padLeft(2, '0')}/${date.day.toString()
+                .padLeft(2, '0')}";
+          }
+
           standByMatchModelList.add(MatchInfoModel.fromJson(item));
+
+
+
+
+
         }
 
 

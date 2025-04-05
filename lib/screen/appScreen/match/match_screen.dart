@@ -1,4 +1,5 @@
 
+import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/match/matching_button.dart';
 import 'package:badboys/screen/subScreen/match/matching_history_button.dart';
@@ -86,7 +87,7 @@ class _MatchScreenState extends State<MatchScreen> {
                             color: Colors.orange,
                             borderRadius: BorderRadius.circular(10),
                           ),
-                          child: MatchingHistoryButton(),
+                          child: MatchingHistoryButton()
                         ),
 
                         SizedBox(height: 10,),

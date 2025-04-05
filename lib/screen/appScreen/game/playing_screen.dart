@@ -232,32 +232,50 @@ class _PlayingScreenState extends State<PlayingScreen> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: ListWheelScrollView.useDelegate(
-                              physics: FixedExtentScrollPhysics(),
-                              itemExtent: 98,
-                              onSelectedItemChanged: (index) {
-                                setState(() {
-                                  aTeamValue = index;
-                                });
-                              },
-                              childDelegate: ListWheelChildBuilderDelegate(
-                                builder: (context, index) {
-                                  return Align(
-                                    alignment: Alignment.topCenter,
-                                    child: Text(
-                                      index.toString().padLeft(2, '0'),
-                                      style: TextStyle(
-                                        color: Colors.white10,
-                                        fontSize: 98,
-                                        fontFamily: 'EHSMB',
-                                        letterSpacing: 0,
-                                      ),
+                            physics: FixedExtentScrollPhysics(),
+                            itemExtent: 98,
+                            onSelectedItemChanged: (index) {
+                              setState(() {
+                                aTeamValue = index;
+                              });
+                            },
+                            childDelegate: ListWheelChildBuilderDelegate(
+                              builder: (context, index) {
+                                String currentItem = index.toString().padLeft(2, '0'); // "00", "01", "02" 형식
+                                return Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: currentItem[0], // 첫 번째 문자
+                                          style: TextStyle(
+                                            color: aTeamValue >= 10
+                                                ? Colors.white
+                                                : Colors.white10,
+                                            fontSize: 98,
+                                            fontFamily: 'EHSMB',
+                                            letterSpacing: 0,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: currentItem[1], // 두 번째 문자
+                                          style: TextStyle(
+                                            color: aTeamValue != 0 ? Colors.white : Colors.white10,
+                                            fontSize: 98,
+                                            fontFamily: 'EHSMB',
+                                            letterSpacing: 0,
+                                          ),
+                                        ),
+                                      ],
                                     ),
-                                  );
-                                },
-                                childCount: 31, // Specifies numbers from 0 to 30
-                              ),
+                                  ),
+                                );
+                              },
+                              childCount: 31, // 0부터 30까지
                             ),
                           ),
+                        ),
                       ],
                     ),
 
@@ -273,7 +291,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                             borderRadius: BorderRadius.circular(5),
                           ),
                           child: ListWheelScrollView.useDelegate(
-                            physics: const FixedExtentScrollPhysics(),
+                            physics: FixedExtentScrollPhysics(),
                             itemExtent: 98,
                             onSelectedItemChanged: (index) {
                               setState(() {
@@ -282,17 +300,38 @@ class _PlayingScreenState extends State<PlayingScreen> {
                             },
                             childDelegate: ListWheelChildBuilderDelegate(
                               builder: (context, index) {
-                                return Text(
-                                  index.toString().padLeft(2, '0'),
-                                  style: TextStyle(
-                                    color: Colors.white10,
-                                    fontSize: 98,
-                                    fontFamily: 'EHSMB',
-                                    letterSpacing: 0,
+                                String currentItem = index.toString().padLeft(2, '0'); // "00", "01", "02" 형식
+                                return Align(
+                                  alignment: Alignment.topCenter,
+                                  child: Text.rich(
+                                    TextSpan(
+                                      children: [
+                                        TextSpan(
+                                          text: currentItem[0], // 첫 번째 문자
+                                          style: TextStyle(
+                                            color: bTeamValue >= 10
+                                                ? Colors.white
+                                                : Colors.white10,
+                                            fontSize: 98,
+                                            fontFamily: 'EHSMB',
+                                            letterSpacing: 0,
+                                          ),
+                                        ),
+                                        TextSpan(
+                                          text: currentItem[1], // 두 번째 문자
+                                          style: TextStyle(
+                                            color: bTeamValue != 0 ? Colors.white : Colors.white10,
+                                            fontSize: 98,
+                                            fontFamily: 'EHSMB',
+                                            letterSpacing: 0,
+                                          ),
+                                        ),
+                                      ],
+                                    ),
                                   ),
                                 );
                               },
-                              childCount: 31,
+                              childCount: 31, // 0부터 30까지
                             ),
                           ),
                         ),
@@ -441,10 +480,16 @@ class _PlayingScreenState extends State<PlayingScreen> {
               ),
 
 
-            for(int i= 0; i < matchModel.matchMemberModel.length; i++)
+            for(int i= 0; i < 6; i++)
+              // MemberIconItem(
+              //     memberNickName: matchModel.matchMemberModel[i].username.toString(),
+              //     memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
+              //     topHeight: matchMemberPositionModel[i].top,
+              //     leftWidth: matchMemberPositionModel[i].left
+              // ),
               MemberIconItem(
-                  memberNickName: matchModel.matchMemberModel[i].username.toString(),
-                  memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
+                  memberNickName: "test",
+                  memberProfileImage: "https://unboundprofile.s3.amazonaws.com/1ad0753f-9d4c-496b-a417-383fda54b8b0-image.jpg}",
                   topHeight: matchMemberPositionModel[i].top,
                   leftWidth: matchMemberPositionModel[i].left
               ),

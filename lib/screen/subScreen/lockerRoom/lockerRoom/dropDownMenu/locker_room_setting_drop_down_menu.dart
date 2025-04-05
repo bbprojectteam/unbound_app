@@ -17,10 +17,10 @@ class LockerRoomSettingDropDownMenu {
           value: 100,
           text: '참여자 확인',
         ),
-        showDropdownMenuItem(
-          value: 200,
-          text: '팀 변경',
-        ),
+        // showDropdownMenuItem(
+        //   value: 200,
+        //   text: '팀 변경',
+        // ),
         showDropdownMenuItem(
           value: 300,
           text: '경기 시작',
@@ -63,19 +63,37 @@ class LockerRoomSettingDropDownMenu {
     if (value == 100) {
       await AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId);
     } else if (value == 200) {
-      await AppBottomModalRouter.fnModalRouter(context, 1);
+      // await AppBottomModalRouter.fnModalRouter(context, 1);
     } else if (value == 300) {
 
       // 멤버정보
       MatchController matchController = Get.find<MatchController>();
 
-      if(matchController.matchModel.matchMemberModel.length == 6){
-        Get.toNamed('/countDownScreen');
-      }else {
-        print('6명 아닌데 경기시작 오류 발생');
+      await AppBottomModalRouter.fnModalRouter(context, 1);
 
-        Get.toNamed('/countDownScreen');
-      }
+      Get.toNamed('/countDownScreen');
+
+      // if(matchController.matchModel.matchMemberModel.length == 6){
+      // if(true){
+      //
+      //   Map<String,dynamic> arguments = {};
+      //   arguments['regionId'] = 1;
+      //
+      //   /// a팀
+      //   arguments['aTeamIdList'] = [1,2,3,];
+      //
+      //   /// b 팀
+      //   arguments['bTeamIdList'] = [4,5,8];
+      //
+      //   await matchController.fnGameStart(arguments);
+      //
+      //   Get.toNamed('/countDownScreen');
+      //
+      // }else {
+      //   print('6명 아닌데 경기시작 오류 발생');
+      //
+      //   Get.toNamed('/countDownScreen');
+      // }
 
 
     } else if (value == 400) {

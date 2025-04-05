@@ -14,14 +14,17 @@ class TeamChngModalPop extends StatefulWidget {
 
 class _TeamChngModalPopState extends State<TeamChngModalPop> {
   List<MatchMemberPositionModel> items = [
-    MatchMemberPositionModel(top: 70, left: 40, right: 0),
-    MatchMemberPositionModel(top: 120, left: 80, right: 0),
-    MatchMemberPositionModel(top: 180, left: 40, right: 0),
+    MatchMemberPositionModel(top: 5.h, left: 15.w, right: 0),
+    MatchMemberPositionModel(top: 16.5.h, left: 30.w, right: 0),
+    MatchMemberPositionModel(top: 28.h, left: 15.w, right: 0),
 
-    MatchMemberPositionModel(top: 70, left: 230, right: 0),
-    MatchMemberPositionModel(top: 120, left: 180, right: 0),
-    MatchMemberPositionModel(top: 180, left: 230, right: 0),
+    MatchMemberPositionModel(top: 5.h, left: 70.w, right: 0 ),
+    MatchMemberPositionModel(top: 16.5.h, left:55.w, right: 0),
+    MatchMemberPositionModel(top: 28.h, left: 70.w, right: 0),
   ];
+
+
+
 
   int? selectedItemIndex;
 
@@ -37,7 +40,6 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
     setState(() {
       if (selectedItemIndex == null) {
         selectedItemIndex = itemIndex;
-        print(selectedItemIndex);
       } else if (selectedItemIndex != itemIndex) {
         _swapPositions(selectedItemIndex!, itemIndex);
         selectedItemIndex = null;
@@ -51,24 +53,218 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
 
     return Container(
       width: 100.w,
-      height: 47.h,
+      height: 100.h,
       decoration: BoxDecoration(
         color: Colors.black,
-        borderRadius: BorderRadius.circular(15)
     ),
       child: Column(
         mainAxisAlignment: MainAxisAlignment.start,
         crossAxisAlignment: CrossAxisAlignment.start,
         children: [
+          SizedBox(height: 50,),
           CustomAppbar(isNotification: false, ),
+
+          Container(
+            padding: EdgeInsets.only(left: 25, right: 25),
+            child: Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Stack(
+                  children: [
+                    // 테두리 텍스트
+                    Text(
+                      'HOME',
+                      style: TextStyle(
+                        color: Colors.white,
+                        // 테두리 색상
+                        fontSize: 65,
+                        // fontWeight: FontWeight.w600,
+                        fontFamily: 'backToSchool',
+                        shadows: [
+                          Shadow(
+                            blurRadius: 3.0,
+                            color: Colors.white, // 테두리 색상
+                            offset: Offset(1.0, 1.0), // 테두리의 위치
+                          ),
+                        ],
+                      ),
+                    ),
+                    // 실제 텍스트
+                    Text(
+                      'HOME',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 65,
+                        // fontWeight: FontWeight.w600,
+                        fontFamily: 'backToSchool',
+                      ),
+                    ),
+                  ],
+                ),
+
+                Stack(
+                  children: [
+                    // 테두리 텍스트
+                    Text(
+                      'AWAY',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        // 테두리 색상
+                        fontSize: 60,
+                        // fontWeight: FontWeight.w600,
+                        fontFamily: 'backToSchool',
+
+                      ),
+                    ),
+                    // 실제 텍스트
+                    Text(
+                      'AWAY',
+                      style: TextStyle(
+                        color: Colors.orange,
+                        fontSize: 60,
+                        // fontWeight: FontWeight.w600,
+                        fontFamily: 'backToSchool',
+                      ),
+                    ),
+                  ],
+                ),
+              ],
+            ),
+          ),
+
+          SizedBox(height: 150,),
+
+          Row(
+            mainAxisAlignment: MainAxisAlignment.spaceBetween,
+            children: [
+              Container(
+                width: 40.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 1",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 2",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 3",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+              Container(
+                width: 40.w,
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  children: [
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 1",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 2",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+
+                    Container(
+                      width: 10.w,
+                      height: 5.h,
+                      color: Colors.red,
+                      child: Center(
+                        child: Text("+ 3",
+                          style: TextStyle(
+                            color: Colors.black54,
+                            fontSize: 25,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'roboto',
+
+                          ),
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+
+            ],
+          ),
           Stack(
             children: [
+
               Image.asset(
-                'assets/images/court.png',
-                // fit: BoxFit.fill,
+                'assets/images/court2.jpg',
                 width: 100.w,
-                height: 34.h,
+                height: 40.h,
+                fit: BoxFit.cover,
               ),
+
               for (int i = 0; i < items.length; i++)
                 AnimatedPositioned(
                   top: items[i].top,
