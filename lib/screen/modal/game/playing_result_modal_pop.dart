@@ -1,5 +1,7 @@
+import 'package:badboys/controller/chat_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_member_position_model.dart';
+import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/game/member_icon_item.dart';
 import 'package:badboys/screen/subScreen/match/matching_button.dart';
@@ -17,8 +19,7 @@ class PlayingResultModalPop extends StatefulWidget {
 }
 
 class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
-  int _aTeamScore = 0; // A팀 점수
-  int _bTeamScore = 0; // B팀 점수
+
   late MatchController matchController;
 
   List<MatchMemberPositionModel> matchMemberPositionModel = [
@@ -35,14 +36,23 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
   void initState() {
     // TODO: implement initState
     super.initState();
-
     matchController = Get.find<MatchController>();
-
   }
-
 
   @override
   Widget build(BuildContext context) {
+
+    MatchModel matchModel = matchController.matchModel;
+
+    if (int.parse(matchModel.aTeamValue!) > int.parse(matchModel.bTeamValue!)) {
+      matchModel.winTeam = 'a';
+    } else if (int.parse(matchModel.aTeamValue!) < int.parse(matchModel.bTeamValue!)) {
+      matchModel.winTeam = 'b';
+    } else {
+      matchModel.winTeam = 'ab';
+    }
+
+
     return Container(
       width: 100.w,
       height: 90.h,
@@ -71,26 +81,22 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
                           'HOME',
                           style: TextStyle(
                             color: Colors.white,
-                            // 테두리 색상
                             fontSize: 65,
-                            // fontWeight: FontWeight.w600,
                             fontFamily: 'backToSchool',
                             shadows: [
                               Shadow(
                                 blurRadius: 3.0,
-                                color: Colors.white, // 테두리 색상
+                                color: matchModel.winTeam.contains('a') ? Colors.white : Colors.grey, // 테두리 색상
                                 offset: Offset(1.0, 1.0), // 테두리의 위치
                               ),
                             ],
                           ),
                         ),
-                        // 실제 텍스트
                         Text(
                           'HOME',
                           style: TextStyle(
-                            color: Colors.orange,
+                            color: matchModel.winTeam.contains('a') ? Colors.orange : Colors.grey,
                             fontSize: 65,
-                            // fontWeight: FontWeight.w600,
                             fontFamily: 'backToSchool',
                           ),
                         ),
@@ -103,10 +109,9 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
                         Text(
                           'AWAY',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: matchModel.winTeam.contains('b') ? Colors.white : Colors.grey,
                             // 테두리 색상
                             fontSize: 60,
-                            // fontWeight: FontWeight.w600,
                             fontFamily: 'backToSchool',
 
                           ),
@@ -115,7 +120,7 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
                         Text(
                           'AWAY',
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: matchModel.winTeam.contains('b') ? Colors.orange : Colors.grey,
                             fontSize: 60,
                             // fontWeight: FontWeight.w600,
                             fontFamily: 'backToSchool',
@@ -148,20 +153,22 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 1.toString(), // 첫 번째 문자
+                                      text: matchModel.aTeamValue.toString()[0], // 첫 번째 문자
                                       style: TextStyle(
-                                        color: 13 >= 10
-                                            ? Colors.white
-                                            : Colors.white10,
+                                        color: int.parse(matchModel.aTeamValue.toString()) <= 10 || !matchModel.winTeam.contains('a')
+                                            ? Colors.white10
+                                            : Colors.white,
                                         fontSize: 98,
                                         fontFamily: 'EHSMB',
                                         letterSpacing: 0,
                                       ),
                                     ),
                                     TextSpan(
-                                      text: 3.toString(), // 두 번째 문자
+                                      text: matchModel.aTeamValue.toString()[1], // 두 번째 문자
                                       style: TextStyle(
-                                        color: 13 != 0 ? Colors.white : Colors.white10,
+                                        color: int.parse(matchModel.aTeamValue.toString()) == 0 || !matchModel.winTeam.contains('a')
+                                            ? Colors.white10
+                                            : Colors.white,
                                         fontSize: 98,
                                         fontFamily: 'EHSMB',
                                         letterSpacing: 0,
@@ -192,20 +199,22 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
                                 TextSpan(
                                   children: [
                                     TextSpan(
-                                      text: 2.toString(), // 첫 번째 문자
+                                      text: matchModel.bTeamValue.toString()[0], // 두 번째 문자
                                       style: TextStyle(
-                                        color: 23 >= 10
-                                            ? Colors.grey
-                                            : Colors.grey,
+                                        color: int.parse(matchModel.bTeamValue.toString()) <= 10 || !matchModel.winTeam.contains('b')
+                                            ? Colors.white10
+                                            : Colors.white,
                                         fontSize: 98,
                                         fontFamily: 'EHSMB',
                                         letterSpacing: 0,
                                       ),
                                     ),
                                     TextSpan(
-                                      text: 3.toString(), // 두 번째 문자
+                                      text: matchModel.bTeamValue.toString()[1], // 두 번째 문자
                                       style: TextStyle(
-                                        color: 23 != 0 ? Colors.grey : Colors.grey,
+                                        color:  int.parse(matchModel.bTeamValue.toString()) == 0 || !matchModel.winTeam.contains('b')
+                                            ? Colors.white10
+                                            : Colors.white,
                                         fontSize: 98,
                                         fontFamily: 'EHSMB',
                                         letterSpacing: 0,
@@ -360,15 +369,9 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
 
 
               for(int i= 0; i < 6; i++)
-                // MemberIconItem(
-                //     memberNickName: matchModel.matchMemberModel[i].username.toString(),
-                //     memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
-                //     topHeight: matchMemberPositionModel[i].top,
-                //     leftWidth: matchMemberPositionModel[i].left
-                // ),
                 MemberIconItem(
-                    memberNickName: "test",
-                    memberProfileImage: "https://unboundprofile.s3.amazonaws.com/1ad0753f-9d4c-496b-a417-383fda54b8b0-image.jpg}",
+                    memberNickName: matchModel.matchMemberModel[i].username.toString(),
+                    memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
                     topHeight: matchMemberPositionModel[i].top,
                     leftWidth: matchMemberPositionModel[i].left
                 ),
@@ -378,9 +381,12 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
           SizedBox(height: 30,),
           GestureDetector(
             onTap: () async{
-              // await matchController.fnGameEnd();
+              await matchController.fnGameEnd();
+              matchController.clear();
+              Get.delete<MatchController>();
+              Navigator.pop(context);
               Get.toNamed("/");
-              },
+            },
             child: Container(
               width: 80.w,
               padding: EdgeInsets.all(10),

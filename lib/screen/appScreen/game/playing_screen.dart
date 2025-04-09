@@ -1,6 +1,6 @@
 
 import 'package:badboys/controller/match_controller.dart';
-import 'package:badboys/model/match/match_member_model.dart';
+
 import 'package:badboys/model/match/match_member_position_model.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
@@ -35,8 +35,6 @@ class _PlayingScreenState extends State<PlayingScreen> {
   int _seconds = 0; // 초
   int _minutes = 0; // 분
   bool _isRunning = false; // 타이머가 실행 중인지 여부 (초기 값은 false)
-  int aTeamValue = 0;
-  int bTeamValue = 0;
 
   List<MatchMemberPositionModel> matchMemberPositionModel = [
     MatchMemberPositionModel(top: 5.h, left: 15.w, right: 0),
@@ -235,13 +233,12 @@ class _PlayingScreenState extends State<PlayingScreen> {
                             physics: FixedExtentScrollPhysics(),
                             itemExtent: 98,
                             onSelectedItemChanged: (index) {
-                              setState(() {
-                                aTeamValue = index;
-                              });
+                              matchModel.aTeamValue = index.toString().padLeft(2, '0');
+                              setState(() {});
                             },
                             childDelegate: ListWheelChildBuilderDelegate(
                               builder: (context, index) {
-                                String currentItem = index.toString().padLeft(2, '0'); // "00", "01", "02" 형식
+                                String currentItem = index.toString().padLeft(2, '0');
                                 return Align(
                                   alignment: Alignment.topCenter,
                                   child: Text.rich(
@@ -250,9 +247,9 @@ class _PlayingScreenState extends State<PlayingScreen> {
                                         TextSpan(
                                           text: currentItem[0], // 첫 번째 문자
                                           style: TextStyle(
-                                            color: aTeamValue >= 10
+                                            color: int.parse(matchModel.aTeamValue.toString()) >= 10
                                                 ? Colors.white
-                                                : Colors.white10,
+                                                : Colors.white10 ,
                                             fontSize: 98,
                                             fontFamily: 'EHSMB',
                                             letterSpacing: 0,
@@ -261,7 +258,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                                         TextSpan(
                                           text: currentItem[1], // 두 번째 문자
                                           style: TextStyle(
-                                            color: aTeamValue != 0 ? Colors.white : Colors.white10,
+                                            color: int.parse(matchModel.aTeamValue.toString()) != 0 ? Colors.white : Colors.white10,
                                             fontSize: 98,
                                             fontFamily: 'EHSMB',
                                             letterSpacing: 0,
@@ -294,9 +291,8 @@ class _PlayingScreenState extends State<PlayingScreen> {
                             physics: FixedExtentScrollPhysics(),
                             itemExtent: 98,
                             onSelectedItemChanged: (index) {
-                              setState(() {
-                                bTeamValue = index;
-                              });
+                              matchModel.bTeamValue = index.toString().padLeft(2, '0');
+                              setState(() {});
                             },
                             childDelegate: ListWheelChildBuilderDelegate(
                               builder: (context, index) {
@@ -309,7 +305,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                                         TextSpan(
                                           text: currentItem[0], // 첫 번째 문자
                                           style: TextStyle(
-                                            color: bTeamValue >= 10
+                                            color: int.parse(matchModel.bTeamValue.toString()) >= 10
                                                 ? Colors.white
                                                 : Colors.white10,
                                             fontSize: 98,
@@ -320,7 +316,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
                                         TextSpan(
                                           text: currentItem[1], // 두 번째 문자
                                           style: TextStyle(
-                                            color: bTeamValue != 0 ? Colors.white : Colors.white10,
+                                            color: int.parse(matchModel.bTeamValue.toString()) != 0 ? Colors.white : Colors.white10,
                                             fontSize: 98,
                                             fontFamily: 'EHSMB',
                                             letterSpacing: 0,
@@ -481,15 +477,9 @@ class _PlayingScreenState extends State<PlayingScreen> {
 
 
             for(int i= 0; i < 6; i++)
-              // MemberIconItem(
-              //     memberNickName: matchModel.matchMemberModel[i].username.toString(),
-              //     memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
-              //     topHeight: matchMemberPositionModel[i].top,
-              //     leftWidth: matchMemberPositionModel[i].left
-              // ),
               MemberIconItem(
-                  memberNickName: "test",
-                  memberProfileImage: "https://unboundprofile.s3.amazonaws.com/1ad0753f-9d4c-496b-a417-383fda54b8b0-image.jpg}",
+                  memberNickName: matchModel.matchMemberModel[i].username.toString(),
+                  memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
                   topHeight: matchMemberPositionModel[i].top,
                   leftWidth: matchMemberPositionModel[i].left
               ),
@@ -540,6 +530,8 @@ class _PlayingScreenState extends State<PlayingScreen> {
               // 경기 종료 버튼
               GestureDetector(
                 onTap: () async {
+
+                  _stopTimer();
                   ///경기 결과 팝업 생성
                   AppBottomModalRouter.fnModalRouter(context, 6);
                 },

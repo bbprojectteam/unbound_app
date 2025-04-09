@@ -56,9 +56,20 @@ class AppBottomModalRouter {
         Widget? modalContent = await modalFunction();
 
         if (modalContent != null) {
+
+          bool canBeDragged = true;
+
+          if(modalIndex == 1 || modalIndex == 4 ){
+            canBeDragged = false;
+          }
+
+
+
           await showModalBottomSheet(
             context: context,
             isScrollControlled: true,
+            isDismissible: canBeDragged,
+            enableDrag: canBeDragged,
             builder: (BuildContext context) {
               return modalContent;
             },

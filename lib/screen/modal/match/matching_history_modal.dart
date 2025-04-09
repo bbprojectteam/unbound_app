@@ -32,67 +32,73 @@ class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
   Widget build(BuildContext context) {
 
 
-    return Container(
-      width: 100.w,
-      height: 90.h,
-      color: Colors.black,
-      child: Column(
-        children: [
-          Container(
-            width: 100.w,
-            padding: EdgeInsets.all(14),
-            decoration: BoxDecoration(
-              border: Border(
-                bottom: BorderSide(
-                  color: Colors.grey, // Set the border color
-                  width: 1, // Set the border width
-                ),
-              ),
-            ),
-            child: Text(
-              'Unbound',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 19,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'EHSMB'
-              ),
-            ),
-          ),
+    return GetBuilder<MatchController>(
+        init: matchController,  // 초기화
+        builder: (context) {
 
-          SizedBox(height: 20,),
-
-
-          GetBuilder<MatchController>(
-            init: matchController,
-            builder: (context) {
-
-              joinMatchModelList = matchController.joinMatchModelList;
-
-              return SizedBox(
-                height: 79.h,
-                child: SingleChildScrollView(
-                  child: Column(
-                    children: [
-                      for(int i = 0; i < joinMatchModelList.length; i++)
-                        LockerRoomListItem(
-                          matchItem: joinMatchModelList[i],
-                          matchingRoomId: 70,
-                          isExitButton: true,
-                          isModalScreen: true,
-                          callBack: () {
-                            Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : joinMatchModelList[i].chatRoomId.toString()});
-                          },
-                        )
-                    ],
+        return Container(
+          width: 100.w,
+          height: 90.h,
+          color: Colors.black,
+          child: Column(
+            children: [
+              Container(
+                width: 100.w,
+                padding: EdgeInsets.all(14),
+                decoration: BoxDecoration(
+                  border: Border(
+                    bottom: BorderSide(
+                      color: Colors.grey, // Set the border color
+                      width: 1, // Set the border width
+                    ),
                   ),
                 ),
-              );
-            }
-          )
+                child: Text(
+                  'Unbound',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontSize: 19,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'EHSMB'
+                  ),
+                ),
+              ),
 
-        ],
-      ),
+              SizedBox(height: 20,),
+
+
+              GetBuilder<MatchController>(
+                init: matchController,
+                builder: (context) {
+
+                  joinMatchModelList = matchController.joinMatchModelList;
+
+                  return SizedBox(
+                    height: 79.h,
+                    child: SingleChildScrollView(
+                      child: Column(
+                        children: [
+                          for(int i = 0; i < joinMatchModelList.length; i++)
+                            LockerRoomListItem(
+                              matchItem: joinMatchModelList[i],
+                              matchingRoomId: joinMatchModelList[i].chatRoomId!,
+                              isExitButton: true,
+                              isModalScreen: true,
+                              callBack: () {
+                                Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : joinMatchModelList[i].chatRoomId.toString()});
+                              },
+                            )
+                        ],
+                      ),
+                    ),
+                  );
+                }
+              )
+
+            ],
+          ),
+        );
+      }
     );
   }
 }

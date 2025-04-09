@@ -1,13 +1,17 @@
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class LockerRoomSettingDropDownMenu {
 
-  static Future<void> showDropdownMenu(BuildContext context, String chatRoomId) async {
+  static Future<void> showDropdownMenu(BuildContext context, String chatRoomId, bool isJoinLockerRoom) async {
+
+    print(isJoinLockerRoom);
+
     await showMenu(
       context: context,
       color: Colors.black,
@@ -21,18 +25,22 @@ class LockerRoomSettingDropDownMenu {
         //   value: 200,
         //   text: '팀 변경',
         // ),
-        showDropdownMenuItem(
-          value: 300,
-          text: '경기 시작',
-        ),
-        showDropdownMenuItem(
-          value: 400,
-          text: '대기실 나가기',
-        ),
-        showDropdownMenuItem(
-          value: 500,
-          text: '설정',
-        ),
+
+        if(isJoinLockerRoom)...[
+          showDropdownMenuItem(
+            value: 300,
+            text: '경기 시작',
+          ),
+          showDropdownMenuItem(
+            value: 400,
+            text: '대기실 나가기',
+          ),
+          showDropdownMenuItem(
+            value: 500,
+            text: '설정',
+          ),
+        ]
+
       ],
       elevation: 8.0,
     ).then((value) {
@@ -69,31 +77,22 @@ class LockerRoomSettingDropDownMenu {
       // 멤버정보
       MatchController matchController = Get.find<MatchController>();
 
-      await AppBottomModalRouter.fnModalRouter(context, 1);
+      if (matchController.matchModel.matchMemberModel.length == 6){
+        await AppBottomModalRouter.fnModalRouter(context, 1);
 
-      Get.toNamed('/countDownScreen');
+        Get.toNamed('/countDownScreen');
+      } else {
+        Fluttertoast.showToast(
+          msg: "인원이 부족합니다.",
+          toastLength: Toast.LENGTH_SHORT, // 토스트의 길이 (짧거나 길게 설정)
+          gravity: ToastGravity.BOTTOM,  // 토스트 위치 (BOTTOM, CENTER, TOP)
+          timeInSecForIosWeb: 1,         // iOS/Web에서의 지속 시간 설정
+          backgroundColor: Colors.black, // 배경색
+          textColor: Colors.white,       // 텍스트 색
+          fontSize: 16.0,                // 폰트 크기
+        );
+      }
 
-      // if(matchController.matchModel.matchMemberModel.length == 6){
-      // if(true){
-      //
-      //   Map<String,dynamic> arguments = {};
-      //   arguments['regionId'] = 1;
-      //
-      //   /// a팀
-      //   arguments['aTeamIdList'] = [1,2,3,];
-      //
-      //   /// b 팀
-      //   arguments['bTeamIdList'] = [4,5,8];
-      //
-      //   await matchController.fnGameStart(arguments);
-      //
-      //   Get.toNamed('/countDownScreen');
-      //
-      // }else {
-      //   print('6명 아닌데 경기시작 오류 발생');
-      //
-      //   Get.toNamed('/countDownScreen');
-      // }
 
 
     } else if (value == 400) {

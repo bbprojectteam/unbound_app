@@ -60,8 +60,12 @@ class MemberController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
+
+
         memberInfoModel = MemberModel();
         memberInfoModel = MemberModel.fromJson(jsonResponse['userInfo']);
+
+
 
         update();
 
@@ -100,6 +104,7 @@ class MemberController extends GetxController {
         memberModel = MemberModel();
         memberModel = MemberModel.fromJson(jsonResponse['userInfo']);
 
+        Helpers.setMember(memberModel);
         Helpers.setMemberId(memberModel.userId.toString());
         Helpers.setRegionId(memberModel.regionId.toString());
 
@@ -153,7 +158,6 @@ class MemberController extends GetxController {
 
   Future<bool> fnSetMemberInfo(Map<String, String> requestMap) async {
 
-    print(requestMap['memberIntroduction']);
 
     try {
 
@@ -174,7 +178,7 @@ class MemberController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        print(response);
+
         return true;
       } else {
         // 오류 처리

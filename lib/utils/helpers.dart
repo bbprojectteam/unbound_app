@@ -18,6 +18,28 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Helpers {
 
+  static Future<void> setMember(MemberModel memberModel) async {
+    // SharedPreferences에 저장
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String memberJson = jsonEncode(memberModel.toJson());
+
+    await prefs.setString('member', memberJson);
+  }
+
+  static Future<MemberModel> getMember() async {
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+
+    String? member = prefs.getString('member');
+
+    if (member != null) {
+      Map<String, dynamic> memberMap = jsonDecode(member);
+
+      return MemberModel.fromJson(memberMap);
+    } else {
+      throw Exception('No member data found');
+    }
+  }
+
 
   static Future<void> setMemberId(String userId) async {
     // SharedPreferences에 저장
@@ -30,6 +52,7 @@ class Helpers {
 
     return int.parse(prefs.getString("memberId").toString());
   }
+
 
   static Future<void> setRegionId(String regionId) async {
     // SharedPreferences에 저장

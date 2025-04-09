@@ -17,7 +17,7 @@ class MemberModel {
   int? regionId;
   String? regionNm;
   String? introduction;
-
+  String? lastReadMessageId;
 
   MemberModel();
 

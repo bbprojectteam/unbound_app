@@ -2,7 +2,7 @@ import 'dart:convert';
 
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/chat/chat_model.dart';
-import 'package:badboys/model/match/match_member_model.dart';
+
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/cupertino.dart';
@@ -17,7 +17,7 @@ import 'package:http/http.dart' as http;
 class ChatController extends GetxController{
   late StompClient stompClient;
   var chatModelList = <ChatModel>[].obs;
-  List<MatchMemberModel> matchMemberModel = [];
+  List<MemberModel> matchMemberModel = [];
   ScrollController scrollController = ScrollController();
   double previousPosition = 0.0;
   var isApiCalled = false.obs;

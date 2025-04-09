@@ -58,7 +58,8 @@ class _LockerRoomListItemState extends State<LockerRoomListItem> {
         children: [
           Row(
             children: [
-              Text(widget.matchItem.matchDt ?? "00/00",style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
+              Text(widget.matchItem.matchDt ?? "00/00",
+                style: TextStyle(fontWeight: FontWeight.w900,fontSize: 17,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
               SizedBox(width: 5.w,),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.start,
@@ -101,8 +102,9 @@ class _LockerRoomListItemState extends State<LockerRoomListItem> {
 
                 GestureDetector(
                   onTap: () async {
+                    print('나가기 클릭');
+                    print(widget.matchingRoomId);
                     await matchController.fnMatchExit(widget.matchingRoomId.toString());
-
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),

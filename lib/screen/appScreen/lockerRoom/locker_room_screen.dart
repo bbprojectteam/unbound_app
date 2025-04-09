@@ -6,6 +6,7 @@ import 'package:badboys/screen/subScreen/comn/appbar/custom_match_appbar.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/chat/chat_list.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/locker_room_info.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -33,8 +34,8 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
     // TabController 초기화 (탭의 개수는 2로 설정)
     matchingRoomId = Get.arguments['matchingRoomId'];
 
-    chatController = Get.find<ChatController>();
-    matchController = Get.find<MatchController>();
+    chatController = Get.put(ChatController());
+    matchController = Get.put(MatchController());
 
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
@@ -46,19 +47,18 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
       chatController.disconnect();
     }
     chatController.isApiCalled = false.obs;
-
     matchController.isApiCalled = false.obs;
 
     _tabController.dispose();
     _pageController.dispose();
+    Get.delete<MatchController>();
+    Get.delete<ChatController>();
     super.dispose();
   }
 
 
-
   @override
   Widget build(BuildContext context) {
-
 
     return Container(
       color: Colors.black,
@@ -87,7 +87,21 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
             indicatorColor: Colors.white,
             onTap: (index){
 
-              print('참가자인지 확인 로직 필요');
+              if (!matchController.matchModel.isJoinLockerRoom!) {
+                _tabController.index = 0;
+
+                Fluttertoast.showToast(
+                  msg: "라커룸 참여를 해주세요.", // 메시지 내용
+                  toastLength: Toast.LENGTH_SHORT, // 토스트의 길이 (짧거나 길게 설정)
+                  gravity: ToastGravity.BOTTOM,  // 토스트 위치 (BOTTOM, CENTER, TOP)
+                  timeInSecForIosWeb: 1,         // iOS/Web에서의 지속 시간 설정
+                  backgroundColor: Colors.black, // 배경색
+                  textColor: Colors.white,       // 텍스트 색
+                  fontSize: 16.0,                // 폰트 크기
+                );
+              }
+
+
             },
             tabs: [
               Tab(child: Text('정보',style: TextStyle(fontSize: 16,fontWeight: FontWeight.w800,fontFamily: 'EHSMB'),),),

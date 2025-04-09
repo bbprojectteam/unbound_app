@@ -1,10 +1,12 @@
 import 'dart:convert';
 
 import 'package:badboys/model/match/match_info_model.dart';
-import 'package:badboys/model/match/match_member_model.dart';
+
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/utils/helpers.dart';
+import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
@@ -15,8 +17,6 @@ class MatchController extends GetxController {
   List<MatchInfoModel> standByMatchModelList = <MatchInfoModel>[];
   List<MatchInfoModel> joinMatchModelList = <MatchInfoModel>[];
 
-  // var matchUpdateModel = MatchInfoModel();
-
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   var isMatch = false.obs;
   var isMatching = false.obs;
@@ -24,6 +24,7 @@ class MatchController extends GetxController {
 
 
   void clear() {
+    isApiCalled = false.obs;
     matchModel = MatchModel(); // 상태 초기화
   }
 
@@ -78,14 +79,31 @@ class MatchController extends GetxController {
 
       if (response.statusCode == 200) {
 
+        MemberModel memberModel = await Helpers.getMember();
+
+        matchModel.matchMemberModel.add(memberModel);
+
+        matchModel.isJoinLockerRoom = true;
+
+        Fluttertoast.showToast(
+          msg: "참여 되었습니다.",
+          toastLength: Toast.LENGTH_SHORT, // 토스트의 길이 (짧거나 길게 설정)
+          gravity: ToastGravity.BOTTOM,  // 토스트 위치 (BOTTOM, CENTER, TOP)
+          timeInSecForIosWeb: 1,         // iOS/Web에서의 지속 시간 설정
+          backgroundColor: Colors.black, // 배경색
+          textColor: Colors.white,       // 텍스트 색
+          fontSize: 16.0,                // 폰트 크기
+        );
+
+        update();
       } else {
         // 오류 처리
-        throw Exception('fnMatchExit Failed');
+        throw Exception('fnMatchJoin Failed');
       }
 
     } catch (error) {
       // 오류 처리
-      print('fnMatchExit Error: $error');
+      print('fnMatchJoin Error: $error');
 
     } finally {
       isLoading.value = false;
@@ -95,8 +113,18 @@ class MatchController extends GetxController {
 
 
 
-  Future<void> fnGameStart(Map<String,dynamic> arguments) async {
+  Future<void> fnGameStart() async {
 
+    List<int> aTeamList = [];
+    List<int> bTeamList = [];
+
+    for(var item in matchModel.matchMemberModel.sublist(0,3)){
+      aTeamList.add(item.userId!);
+    }
+
+    for(var item in matchModel.matchMemberModel.sublist(3,6)){
+      bTeamList.add(item.userId!);
+    }
 
     try {
       // POST 요청 보내기
@@ -107,13 +135,19 @@ class MatchController extends GetxController {
           'Content-Type': 'application/json', // JSON 형식
         },
         body: {
-          "regionId": arguments['regionId'],
-          "ateamIdList": arguments['aTeamIdList'] ,
-          "bteamIdList": arguments['bTeamIdList'] ,
+          "regionId": matchModel.matchInfoModel!.regionId,
+          "ateamIdList": aTeamList,
+          "bteamIdList": bTeamList,
         }
       );
 
       if (response.statusCode == 200) {
+        final decodedBody = utf8.decode(response.bodyBytes);
+        var jsonResponse = jsonDecode(decodedBody);
+
+        matchModel.matchInfoModel!.id = jsonResponse['matchInfoId'];
+        matchModel.aTeamId = jsonResponse['ateamId'].toString();
+        matchModel.bTeamId = jsonResponse['bteamId'].toString();
 
       } else {
         // 오류 처리
@@ -131,8 +165,23 @@ class MatchController extends GetxController {
   }
   Future<void> fnGameEnd() async {
 
-
     try {
+
+      String aTeamResult = "";
+      String bTeamResult = "";
+
+      if (int.parse(matchModel.aTeamValue!) > int.parse(matchModel.bTeamValue!)) {
+        aTeamResult = "WIN";
+        bTeamResult = "LOSE";
+      } else if (int.parse(matchModel.aTeamValue!) < int.parse(matchModel.bTeamValue!)) {
+        aTeamResult = "LOSE";
+        bTeamResult = "WIN";
+      } else {
+        aTeamResult = "DRAW";
+        bTeamResult = "DRAW";
+      }
+
+
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
           '/service/match/game/end',
@@ -141,15 +190,16 @@ class MatchController extends GetxController {
             'Content-Type': 'application/json', // JSON 형식
           },
           body: {
-            "matchInfoId": 4,
-            "winnerTeamId": 8,
+            "matchInfoId": matchModel.matchInfoModel!.id,
             "ateamResult": {
-              "teamId": 7,
-              "score": 53
+              "teamId": matchModel.aTeamId,
+              "score": matchModel.aTeamValue,
+              "result" : aTeamResult,
             },
             "bteamResult": {
-              "teamId": 8,
-              "score": 12
+              "teamId": matchModel.bTeamId,
+              "score": matchModel.bTeamValue,
+              "result" : bTeamResult,
             }
           }
       );
@@ -187,7 +237,12 @@ class MatchController extends GetxController {
       );
 
       if (response.statusCode == 200) {
+        matchModel.isJoinLockerRoom = false;
+        int loginMemberId = await Helpers.getMemberId();
+        int index = matchModel.matchMemberModel.indexWhere((item) => item.userId == loginMemberId);
+        matchModel.matchMemberModel.removeAt(index);
 
+        update();
       } else {
         // 오류 처리
         throw Exception('fnMatchExit Failed');
@@ -222,7 +277,6 @@ class MatchController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
-        print(jsonResponse);
         standByMatchModelList = [];
 
         for(var item in jsonResponse['chatRoomList']){
@@ -282,6 +336,15 @@ class MatchController extends GetxController {
         joinMatchModelList = [];
 
         for(var item in jsonResponse['chatRoomList']){
+
+          if(item['matchDt'] != null) {
+            String dateString = item['matchDt'];
+            DateTime date = DateTime.parse(dateString);
+
+            item['matchDt'] =
+            "${date.month.toString().padLeft(2, '0')}/${date.day.toString()
+                .padLeft(2, '0')}";
+          }
           joinMatchModelList.add(MatchInfoModel.fromJson(item));
         }
 
@@ -356,12 +419,18 @@ class MatchController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
+        int loginMemberId = await Helpers.getMemberId();
+
         clear();
 
         matchModel.matchInfoModel = MatchInfoModel.fromJson(jsonResponse['chatRoomInfo']);
 
         for (var item in jsonResponse['memberList']) {
-          matchModel.matchMemberModel.add(MatchMemberModel.fromJson(item));
+          matchModel.matchMemberModel.add(MemberModel.fromJson(item));
+
+          if (item['userId'] == loginMemberId) {
+            matchModel.isJoinLockerRoom = true;
+          }
         }
 
         update();

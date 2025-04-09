@@ -7,9 +7,8 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class MatchingButton extends StatefulWidget {
   const MatchingButton({
-    super.key});
-
-
+    super.key
+  });
 
   @override
   State<MatchingButton> createState() => _MatchingButtonState();

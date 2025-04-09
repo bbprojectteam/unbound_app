@@ -1,4 +1,5 @@
-import 'package:badboys/model/match/match_member_model.dart';
+
+import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -10,7 +11,7 @@ class TeamPlayerListItem extends StatefulWidget {
     required this.matchMemberModel,
   });
 
-  final MatchMemberModel matchMemberModel;
+  final MemberModel matchMemberModel;
 
   @override
   State<TeamPlayerListItem> createState() => _TeamPlayerListItemState();

@@ -24,6 +24,24 @@ class MatchInfoModel {
 
   String? matchDt;
 
+
+
+  String? backBoardYn;
+
+  String? ballYn;
+
+  String? halfCourtYn;
+
+  String? refereeYn;
+
+  String? threeOnThreeYn;
+
+  String? threePointLimitYn;
+
+
+
+
+
   MatchInfoModel();
 
   factory MatchInfoModel.fromJson(Map<String, dynamic> json) => _$MatchInfoModelFromJson(json);

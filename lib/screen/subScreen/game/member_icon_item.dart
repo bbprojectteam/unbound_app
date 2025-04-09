@@ -23,7 +23,7 @@ class MemberIconItem extends StatefulWidget {
 class _MemberIconItemState extends State<MemberIconItem> {
   @override
   Widget build(BuildContext context) {
-    return  Positioned(
+    return Positioned(
       top: widget.topHeight,
       left: widget.leftWidth,
       child: Column(

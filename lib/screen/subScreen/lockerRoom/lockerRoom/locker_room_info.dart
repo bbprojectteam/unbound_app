@@ -42,8 +42,11 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
   }
 
 
+
   @override
   Widget build(BuildContext context) {
+
+
     return GetBuilder<MatchController>(
       init: matchController,
       builder: (context) {
@@ -166,38 +169,40 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
 
                                   ],
                                 ),
-                                GestureDetector(
-                                  onTap: () async {
-                                      await matchController.fnMatchJoin(widget.chatRoomId);
 
+                                if(!matchModel.isJoinLockerRoom!)
+                                  GestureDetector(
+                                    onTap: () async {
+                                        await matchController.fnMatchJoin(widget.chatRoomId);
+                                      },
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(width: 1,color: Colors.orange),
+                                          color: Colors.orange
+                                      ),
+                                      child: Text('참여',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3,fontFamily: 'EHSMB'),),
+                                    ),
+                                  ),
+
+                                if(matchModel.isJoinLockerRoom!)
+                                  GestureDetector(
+                                    onTap: () async {
+                                      await matchController.fnMatchExit(widget.chatRoomId);
+                                      Get.toNamed('/');
                                     },
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(width: 1,color: Colors.orange),
-                                        color: Colors.orange
+                                    child: Container(
+                                      padding: EdgeInsets.all(10),
+                                      decoration: BoxDecoration(
+                                          borderRadius: BorderRadius.circular(10),
+                                          border: Border.all(width: 1,color: Colors.grey),
+                                          color: Colors.grey
+                                      ),
+                                      child: Text('나가기',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3,fontFamily: 'EHSMB'),),
                                     ),
-                                    child: Text('참여',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3,fontFamily: 'EHSMB'),),
                                   ),
-                                ),
 
-                                GestureDetector(
-                                  onTap: () async {
-                                    await matchController.fnMatchExit(widget.chatRoomId);
-                                    Get.toNamed('/');
-                                  },
-                                  child: Container(
-                                    padding: EdgeInsets.all(10),
-                                    decoration: BoxDecoration(
-                                        borderRadius: BorderRadius.circular(10),
-                                        border: Border.all(width: 1,color: Colors.grey),
-                                        color: Colors.grey
-                                    ),
-                                    child: Text('나가기',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,letterSpacing: -0.3,fontFamily: 'EHSMB'),),
-                                  ),
-                                ),
-                                
                               ],
                             ),
 
@@ -224,13 +229,15 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                               children: [
                                 MatchPointItem(
                                     matchPointText: '3 vs 3',
-                                    matchPointEditStatus: true,
-                                    containerWidth: 43.w),
+                                    matchPointEditStatusYn: matchModel.matchInfoModel == null ? 'N' : matchModel.matchInfoModel!.threeOnThreeYn!,
+                                    containerWidth: 43.w
+
+                                ),
 
 
                                 MatchPointItem(
                                     matchPointText: '농구공',
-                                    matchPointEditStatus: true,
+                                    matchPointEditStatusYn: matchModel.matchInfoModel == null ? 'N' : matchModel.matchInfoModel!.ballYn!,
                                     containerWidth: 43.w),
                               ],
                             ),
@@ -241,17 +248,17 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
 
                                 MatchPointItem(
                                     matchPointText: '백보드',
-                                    matchPointEditStatus: true,
+                                    matchPointEditStatusYn: matchModel.matchInfoModel == null ? 'N' : matchModel.matchInfoModel!.backBoardYn!,
                                     containerWidth: 25.w),
 
                                 MatchPointItem(
                                     matchPointText: '3점 라인 제한',
-                                    matchPointEditStatus: true,
+                                    matchPointEditStatusYn: matchModel.matchInfoModel == null ? 'N' : matchModel.matchInfoModel!.threePointLimitYn!,
                                     containerWidth: 35.w),
 
                                 MatchPointItem(
                                     matchPointText: '심판',
-                                    matchPointEditStatus: false,
+                                    matchPointEditStatusYn: matchModel.matchInfoModel == null ? 'N' : matchModel.matchInfoModel!.refereeYn!,
                                     containerWidth: 30.w),
 
 
@@ -265,12 +272,12 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
 
                                 MatchPointItem(
                                     matchPointText: '하프코트',
-                                    matchPointEditStatus: true,
+                                    matchPointEditStatusYn: matchModel.matchInfoModel == null ? 'N' : matchModel.matchInfoModel!.halfCourtYn!,
                                     containerWidth: 43.w),
 
                                 MatchPointItem(
                                     matchPointText: '풀코트',
-                                    matchPointEditStatus: false,
+                                    matchPointEditStatusYn: matchModel.matchInfoModel == null ? 'N' : matchModel.matchInfoModel!.halfCourtYn == 'Y' ? 'N' : 'Y',
                                     containerWidth: 43.w),
 
                               ],

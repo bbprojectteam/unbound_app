@@ -6,13 +6,13 @@ class MatchPointItem extends StatefulWidget {
   const MatchPointItem({
     super.key,
     required this.matchPointText,
-    required this.matchPointEditStatus,
+    required this.matchPointEditStatusYn,
     required this.containerWidth,
 
   });
 
   final String matchPointText;
-  final bool matchPointEditStatus;
+  final String matchPointEditStatusYn;
   final double containerWidth;
 
 
@@ -27,7 +27,7 @@ class _MatchPointItemState extends State<MatchPointItem> {
       width: widget.containerWidth,
       height: 5.h,
       decoration: BoxDecoration(
-        border: Border.all(color: widget.matchPointEditStatus ? Colors.orange : Colors.grey, width: 1.5),
+        border: Border.all(color: widget.matchPointEditStatusYn == 'Y' ? Colors.orange : Colors.grey, width: 1.5),
         borderRadius: BorderRadius.circular(10),
       ),
       child: Center(

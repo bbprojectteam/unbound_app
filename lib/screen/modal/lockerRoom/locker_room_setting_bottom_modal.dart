@@ -44,15 +44,15 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
   TextEditingController lockerRoomDescriptionEditController = TextEditingController();
   TextEditingController localeEditController = TextEditingController();
 
-  bool chk1 = true;
-  bool chk2 = false;
-  bool chk3 = false;
-  bool chk4 = false;
-  bool chk5 = false;
-  bool chk6 = false;
-  bool chk7 = false;
-  bool chk8 = false;
-  bool chk9 = false;
+  String chk1 = 'y';
+  String chk2 = 'N';
+  String chk3 = 'N';
+  String chk4 = 'N';
+  String chk5 = 'N';
+  String chk6 = 'N';
+  String chk7 = 'N';
+  String chk8 = 'N';
+  String chk9 = 'N';
 
 
   late MatchController matchController;
@@ -63,15 +63,11 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
     super.initState();
 
     matchController = Get.find<MatchController>();
-
-
     lockerRoomTitleEditController.text = "새 라커룸";
   }
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Container(
       width: 100.w,
@@ -105,7 +101,6 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceBetween,
               children: [
-
                 Container(
                   width: 44.w,
                   height: 5.h,
@@ -259,24 +254,24 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
               children: [
                 GestureDetector(
                   onTap: (){
-                    chk1 = true;
+                    chk1 = 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '3 vs 3',
-                      matchPointEditStatus: chk1,
+                      matchPointEditStatusYn: chk1,
                       containerWidth: 43.w),
                 ),
 
 
                 GestureDetector(
                   onTap: (){
-                    chk2 = !chk2;
+                    chk2 = (chk2 == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '농구공',
-                      matchPointEditStatus: chk2,
+                      matchPointEditStatusYn: chk2,
                       containerWidth: 43.w),
                 ),
               ],
@@ -288,34 +283,34 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
                 GestureDetector(
                   onTap: (){
-                    chk3 = !chk3;
+                    chk3 = (chk3 == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '백보드',
-                      matchPointEditStatus: chk3,
+                      matchPointEditStatusYn: chk3,
                       containerWidth: 25.w),
                 ),
 
                 GestureDetector(
                   onTap: (){
-                    chk4 = !chk4;
+                    chk4 = (chk4 == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '3점 라인 제한',
-                      matchPointEditStatus: chk4,
+                      matchPointEditStatusYn: chk4,
                       containerWidth: 35.w),
                 ),
 
                 GestureDetector(
                   onTap: (){
-                    chk5 = !chk5;
+                    chk5 = (chk5 == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '심판',
-                      matchPointEditStatus: chk5,
+                      matchPointEditStatusYn: chk5,
                       containerWidth: 30.w),
                 ),
 
@@ -330,23 +325,23 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
                 GestureDetector(
                   onTap: (){
-                    chk6 = !chk6;
+                    chk6 = (chk6 == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '하프코트',
-                      matchPointEditStatus: chk6,
+                      matchPointEditStatusYn: chk6,
                       containerWidth: 43.w),
                 ),
 
                 GestureDetector(
                   onTap: (){
-                    chk7 = !chk7;
+                    chk7 = (chk7 == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '풀코트',
-                      matchPointEditStatus: chk7,
+                      matchPointEditStatusYn: chk7,
                       containerWidth: 43.w),
                 ),
 
