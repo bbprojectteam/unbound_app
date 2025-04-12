@@ -6,7 +6,7 @@ part 'match_info_model.g.dart'; // 생성될 파일
 @JsonSerializable()
 class MatchInfoModel {
 
-  int? id;
+  int? matchInfoId;
 
   int? chatRoomId;
 
@@ -23,8 +23,6 @@ class MatchInfoModel {
   int? memberCnt;
 
   String? matchDt;
-
-
 
   String? backBoardYn;
 

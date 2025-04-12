@@ -6,18 +6,16 @@ part of 'match_info_model.dart';
 // JsonSerializableGenerator
 // **************************************************************************
 
-
-
 MatchInfoModel _$MatchInfoModelFromJson(Map<String, dynamic> json) =>
     MatchInfoModel()
-      ..id = (json['id'] as num?)?.toInt()
-      ..memberCnt = (json['memberCnt'] as num?)?.toInt()
-      ..averageMmr = (json['averageMmr'] as num?)?.toDouble()
+      ..matchInfoId = (json['matchInfoId'] as num?)?.toInt()
       ..chatRoomId = (json['chatRoomId'] as num?)?.toInt()
       ..name = json['name'] as String?
       ..regionId = (json['regionId'] as num?)?.toInt()
       ..location = json['location'] as String?
+      ..averageMmr = (json['averageMmr'] as num?)?.toDouble()
       ..description = json['description'] as String?
+      ..memberCnt = (json['memberCnt'] as num?)?.toInt()
       ..matchDt = json['matchDt'] as String?
       ..backBoardYn = json['backBoardYn'] as String?
       ..ballYn = json['ballYn'] as String?
@@ -28,14 +26,14 @@ MatchInfoModel _$MatchInfoModelFromJson(Map<String, dynamic> json) =>
 
 Map<String, dynamic> _$MatchInfoModelToJson(MatchInfoModel instance) =>
     <String, dynamic>{
-      'id': instance.id,
-      'memberCnt': instance.memberCnt,
-      'averageMmr': instance.averageMmr,
+      'matchInfoId': instance.matchInfoId,
       'chatRoomId': instance.chatRoomId,
       'name': instance.name,
       'regionId': instance.regionId,
       'location': instance.location,
+      'averageMmr': instance.averageMmr,
       'description': instance.description,
+      'memberCnt': instance.memberCnt,
       'matchDt': instance.matchDt,
       'backBoardYn': instance.backBoardYn,
       'ballYn': instance.ballYn,

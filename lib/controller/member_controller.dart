@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 
+import 'package:badboys/model/match/member_match_history_model.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/utils/helpers.dart';
@@ -17,6 +18,7 @@ class MemberController extends GetxController {
 
   MemberModel memberModel = MemberModel();
   MemberModel memberInfoModel = MemberModel();
+  MemberMatchHistoryModel memberMatchHistoryModel = MemberMatchHistoryModel();
 
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   var reginonNm = "지역 선택".obs;
@@ -60,12 +62,8 @@ class MemberController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
-
-
-        memberInfoModel = MemberModel();
-        memberInfoModel = MemberModel.fromJson(jsonResponse['userInfo']);
-
-
+        memberMatchHistoryModel = MemberMatchHistoryModel();
+        memberMatchHistoryModel = MemberMatchHistoryModel.fromJson(jsonResponse);
 
         update();
 

@@ -1,4 +1,5 @@
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/model/match/member_match_history_model.dart';
 import 'package:badboys/model/member/member_model.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
@@ -22,7 +23,7 @@ class MemberPageScreen extends StatefulWidget {
 class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerProviderStateMixin {
   late TabController _tabController;
   late MemberController memberController;
-  late MemberModel memberInfoModel;
+  late MemberMatchHistoryModel memberMatchHistoryModel;
 
   @override
   void initState() {
@@ -63,7 +64,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
         init: memberController,
         builder: (memberControllerContext) {
 
-          memberInfoModel = memberController.memberInfoModel;
+          memberMatchHistoryModel = memberController.memberMatchHistoryModel;
 
           return Container(
                 color: Colors.black,
@@ -81,7 +82,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
 
                           ClipOval(
                             child: CustomCachedNetworkImage(
-                                imagePath: memberInfoModel.profileImage.toString(),
+                                imagePath: memberMatchHistoryModel.memberModel?.profileImage.toString(),
                                 imageWidth: 27.w,
                                 imageHeight: null
                             ),
@@ -89,17 +90,17 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
 
 
                           SizedBox(height: 6,),
-                          Text(memberInfoModel.username ?? "null" ,style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                          Text(memberMatchHistoryModel.memberModel?.username ?? "null" ,style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
 
                           SizedBox(height: 6,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('20대',style: TextStyle(fontSize: 13, color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              Text('20대 코드 추가 필요',style: TextStyle(fontSize: 13, color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                               SizedBox(width: 5,),
-                              Text('여자',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              Text('${memberMatchHistoryModel.memberModel!.gender == "M" ? "남성" : "여성" }',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                               SizedBox(width: 5,),
-                              Text(memberInfoModel.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              Text(memberMatchHistoryModel.memberModel?.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                             ],
                           ),
                         ],
@@ -118,7 +119,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                           SizedBox(width: 15,),
                           Row(
                             children: [
-                              Text((memberInfoModel.mmr ?? 1000).toString() ,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
+                              Text((memberMatchHistoryModel.memberModel?.mmr ?? 1000).toString() ,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
                               SizedBox(width: 3,),
                               Text('pts',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
                             ],
@@ -131,7 +132,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                         GestureDetector(
                           onTap :() async {
                             await AppBottomModalRouter.fnModalRouter(context, 4);
-                            await memberController.fnGetMemberInfo(memberInfoModel.userId);
+                            await memberController.fnGetMemberInfo(memberMatchHistoryModel.memberModel?.userId);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -187,6 +188,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                         child: TabBarView(
                           controller: _tabController,
                           children: [
+                            ///첫번째 탭
                             Container(
                               width : 100.w,
                               height: 100,
@@ -195,7 +197,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    memberInfoModel.introduction ?? "",
+                                    memberMatchHistoryModel.memberModel?.introduction ?? "",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 17,
@@ -215,11 +217,9 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
                                     children: [
-                                      MemberPlayRecordItem(isWin: true,),
-                                      MemberPlayRecordItem(isWin: false,),
-                                      MemberPlayRecordItem(isWin: true,),
-                                      MemberPlayRecordItem(isWin: false,),
-                                      MemberPlayRecordItem(isWin: true,),
+                                      for(int i = 0; i < memberMatchHistoryModel.userMatchInfoList.length; i++)
+                                        MemberPlayRecordItem(isWin: true, matchHistoryInfoModel : memberMatchHistoryModel.userMatchInfoList[i] ),
+                                      // MemberPlayRecordItem(isWin: false,),
                                     ],
                                   ),
                                 ),

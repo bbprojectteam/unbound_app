@@ -1,15 +1,21 @@
+import 'package:badboys/model/match/match_history_info_model.dart';
+import 'package:badboys/model/match/member_match_history_model.dart';
+import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class MemberPlayRecordItem extends StatefulWidget {
   const MemberPlayRecordItem({
     super.key,
     required this.isWin,
+    required this.matchHistoryInfoModel,
   });
 
   final bool isWin;
+  final MatchHistoryInfoModel matchHistoryInfoModel;
 
   @override
   State<MemberPlayRecordItem> createState() => _MemberPlayRecordItemState();
@@ -20,12 +26,11 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
   Widget build(BuildContext context) {
 
 
-
     return Column(
       children: [
         Container(
           width: 95.w,
-          height: 12.h,
+          height: 23.h,
           padding: EdgeInsets.all(10),
           decoration: BoxDecoration(
             borderRadius: BorderRadius.circular(5),
@@ -49,9 +54,10 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                   SizedBox(width: 10,),
 
                   Container(
+                    width: 55.w,
                     child: Column(
                       mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
 
                         Text('대전 탄방동 KAIST 농구장',
@@ -64,28 +70,105 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                         ),
 
                         Row(
-                          mainAxisAlignment: MainAxisAlignment.start,
+                          mainAxisAlignment: MainAxisAlignment.spaceAround,
                           children: [
-                            Row(
-                              children: [
-                                Icon(Icons.account_circle_sharp,color: Colors.white,size: 30,),
-                                Icon(Icons.account_circle_sharp,color: Colors.red,size: 30),
-                                Icon(Icons.account_circle_sharp,color: Colors.blue,size: 30),
-                                Icon(Icons.account_circle_sharp,color: Colors.purpleAccent,size: 30),
-                                Icon(Icons.account_circle_sharp,color: Colors.green,size: 30),
-                              ],
+
+                        for(int i = 0; i < widget.matchHistoryInfoModel.teamList.length; i++)...[
+                          Column(
+                            children: [
+                              Text('${widget.matchHistoryInfoModel.teamList[i].result}',
+                                style: TextStyle(
+                                    color: widget.matchHistoryInfoModel.teamList[i].result == 'WIN' ? Colors.red : Colors.blue,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15,
+                                    fontFamily: 'EHSMB'
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: 20.w,
+                                child: Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 4,       // 아이콘 사이 간격
+                                  runSpacing: 4,    // 줄바꿈 시 줄 간격
+                                  children: List.generate(widget.matchHistoryInfoModel.teamList[i].userList.length, (j) {
+                                    return  ClipOval(
+                                      child: CustomCachedNetworkImage(
+                                          imagePath: widget.matchHistoryInfoModel.teamList[i].userList[j].profileImage,
+                                          imageWidth: 8.w,
+                                          imageHeight: null
+                                      ),
+                                    );
+                                  }),
+                                ),
+                              )
+                            ],
+                          ),
+
+                          if(i == 0)
+                            Center(
+                              child: Text("vs",
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 13,
+                                    fontFamily: 'EHSMB'
+                                ),
+                              ),
+                            ),
+                          ],
+
+                          ],
+                        ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("Start : ",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'EHSMB'
+                              ),
+                            ),
+                            Text(DateFormat('yy-MM-dd HH:mm').format(DateTime.parse(widget.matchHistoryInfoModel.startAt.toString())),
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'EHSMB'
+                              ),
                             ),
 
                           ],
                         ),
 
-                        Text('2025-01-28',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontSize: 13,
-                              fontWeight: FontWeight.w700,
-                          ),
+
+                        Row(
+                          mainAxisAlignment: MainAxisAlignment.center,
+                          children: [
+                            Text("  End : ",
+                              style: TextStyle(
+                                  color: Colors.grey,
+                                  fontSize: 13,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'EHSMB'
+                              ),
+                            ),
+                            Text(DateFormat('yy-MM-dd HH:mm').format(DateTime.parse(widget.matchHistoryInfoModel.endAt.toString())),
+                              style: TextStyle(
+                                color: Colors.grey,
+                                fontSize: 13,
+                                fontWeight: FontWeight.w700,
+                                  fontFamily: 'EHSMB'
+                              ),
+                            ),
+                          ],
                         ),
+
+
+
                       ],
                     ),
                   ),
@@ -94,8 +177,9 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
 
 
               GestureDetector(
-                onTap: ()=>{
-                  Get.toNamed('/playInfo')
+                onTap: () {
+                Get.toNamed('/playInfo', arguments: widget.matchHistoryInfoModel);
+
                 },
                 child: Container(
                   padding: EdgeInsets.all(10),

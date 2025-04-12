@@ -145,7 +145,7 @@ class MatchController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
-        matchModel.matchInfoModel!.id = jsonResponse['matchInfoId'];
+        matchModel.matchInfoModel!.matchInfoId = jsonResponse['matchInfoId'];
         matchModel.aTeamId = jsonResponse['ateamId'].toString();
         matchModel.bTeamId = jsonResponse['bteamId'].toString();
 
@@ -190,7 +190,7 @@ class MatchController extends GetxController {
             'Content-Type': 'application/json', // JSON 형식
           },
           body: {
-            "matchInfoId": matchModel.matchInfoModel!.id,
+            "matchInfoId": matchModel.matchInfoModel!.matchInfoId,
             "ateamResult": {
               "teamId": matchModel.aTeamId,
               "score": matchModel.aTeamValue,

@@ -16,7 +16,8 @@ MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel()
   ..username = json['username'] as String?
   ..regionId = (json['regionId'] as num?)?.toInt()
   ..regionNm = json['regionNm'] as String?
-  ..introduction = json['introduction'] as String?;
+  ..introduction = json['introduction'] as String?
+  ..lastReadMessageId = json['lastReadMessageId'] as String?;
 
 Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
     <String, dynamic>{
@@ -30,4 +31,5 @@ Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
       'regionId': instance.regionId,
       'regionNm': instance.regionNm,
       'introduction': instance.introduction,
+      'lastReadMessageId': instance.lastReadMessageId,
     };

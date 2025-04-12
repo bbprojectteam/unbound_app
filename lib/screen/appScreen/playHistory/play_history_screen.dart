@@ -1,9 +1,13 @@
 
+import 'package:badboys/model/match/match_history_info_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
+import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/playHistory/play_history_comment_item.dart';
-import 'package:badboys/screen/subScreen/playHistory/play_history_result_item.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
+import 'package:intl/intl.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PlayInfoScreen extends StatefulWidget {
@@ -14,8 +18,13 @@ class PlayInfoScreen extends StatefulWidget {
 }
 
 class _PlayInfoScreenState extends State<PlayInfoScreen> {
+
+  final MatchHistoryInfoModel matchHistoryInfoModel = Get.arguments;
+
   @override
   Widget build(BuildContext context) {
+
+
     return Container(
       height: 150.h,
       color: Colors.black,
@@ -115,9 +124,9 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
             Container(
               padding: EdgeInsets.all(7),
               child: Column(
+                mainAxisAlignment: MainAxisAlignment.spaceAround,
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
-                  Text('1월 9일 목요일 12:00',style: TextStyle(fontWeight: FontWeight.w800,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
                   Text('대전 서구 아크 실내 농구장',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
 
                   Row(
@@ -134,43 +143,178 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                     ],
                   ),
 
+                  SizedBox(height: 10,),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("경기 시작 : ",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'EHSMB'
+                        ),
+                      ),
+                      Text(DateFormat('yy-MM-dd HH:mm').format(DateTime.parse(matchHistoryInfoModel.startAt.toString())),
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'EHSMB'
+                        ),
+                      ),
 
-                ],
-              ),
-            ),
-
-            SizedBox(height: 15,),
-
-            /// 경기 정보
-            PlayHistoryResultItem(pageCnt: 1,),
-            SizedBox(height: 15,),
-            Container(
-              width: 100.w,
-              padding: EdgeInsets.only(bottom: 15),
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.center,
-                children: [
-                  Text('뭐넣지',
-                    style: TextStyle(
-                        color: Colors.white,
-                        fontSize: 18,
-                        fontWeight: FontWeight.w700
-                    ),
+                    ],
                   ),
 
-                  Text('뭐넣지',
-                    style: TextStyle(
-                      color: Colors.white,
-                      fontSize: 18,
-                      fontWeight: FontWeight.w700
-                    ),
-                  )
+
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    children: [
+                      Text("경기 종료 : ",
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'EHSMB'
+                        ),
+                      ),
+                      Text(DateFormat('yy-MM-dd HH:mm').format(DateTime.parse(matchHistoryInfoModel.endAt.toString())),
+                        style: TextStyle(
+                            color: Colors.grey,
+                            fontSize: 13,
+                            fontWeight: FontWeight.w700,
+                            fontFamily: 'EHSMB'
+                        ),
+                      ),
+                    ],
+                  ),
+
 
                 ],
               ),
             ),
 
+            /// 경기 정보
+            Container(
+              width: 100.w,
+              height: 32.h,
+              padding: EdgeInsets.all(10),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(5),
+                color: Colors.black,
+              ),
+              child: Container(
+                width: 100.w,
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.spaceAround,
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
 
+
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceAround,
+                      children: [
+
+                        for(int i = 0; i < matchHistoryInfoModel.teamList.length; i++)...[
+                          Column(
+                            children: [
+                              Text('${matchHistoryInfoModel.teamList[i].result}',
+                                style: TextStyle(
+                                    color: matchHistoryInfoModel.teamList[i].result == 'WIN' ? Colors.red : Colors.blue,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15,
+                                    fontFamily: 'EHSMB'
+                                ),
+                              ),
+                              SizedBox(height: 10,),
+                              Container(
+                                width: 40.w,
+                                child: Wrap(
+                                  alignment: WrapAlignment.center,
+                                  spacing: 15,       // 아이콘 사이 간격
+                                  runSpacing: 4,    // 줄바꿈 시 줄 간격
+                                  children: List.generate(matchHistoryInfoModel.teamList[i].userList.length, (j) {
+                                    return Column(
+                                      children: [
+                                        GestureDetector(
+                                          onTap: (){
+                                            Get.toNamed(
+                                                '/memberPageScreen',
+                                                arguments: {'tab' : 0, 'memberId' : matchHistoryInfoModel.teamList[i].userList[j].userId }
+                                            );
+                                          },
+                                          child: ClipOval(
+                                            child: CustomCachedNetworkImage(
+                                                imagePath: matchHistoryInfoModel.teamList[i].userList[j].profileImage,
+                                                imageWidth: 15.w,
+                                                imageHeight: null
+                                            ),
+                                          ),
+                                        ),
+
+                                        Container(
+                                          width: 18.w,
+                                          child: Text("${matchHistoryInfoModel.teamList[i].userList[j].username}",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 12,
+                                                fontFamily: 'EHSMB'
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+                                        Container(
+                                          width: 18.w,
+                                          child: Text("${matchHistoryInfoModel.teamList[i].userList[j].mmr} Pts",
+                                            style: TextStyle(
+                                                color: Colors.white,
+                                                fontWeight: FontWeight.w700,
+                                                fontSize: 12,
+                                                fontFamily: 'EHSMB'
+                                            ),
+                                            textAlign: TextAlign.center,
+                                            overflow: TextOverflow.ellipsis,
+                                          ),
+                                        ),
+
+
+
+                                      ],
+                                    );
+                                  }),
+                                ),
+                              )
+                            ],
+                          ),
+
+                          if(i == 0)
+                            Center(
+                              child: Text("vs",
+                                style: TextStyle(
+                                    color: Colors.orange,
+                                    fontWeight: FontWeight.w700,
+                                    fontSize: 15,
+                                    fontFamily: 'EHSMB'
+                                ),
+                              ),
+                            ),
+                        ],
+
+                      ],
+                    ),
+
+
+
+
+                  ],
+                ),
+              ),
+            ),
+
+            SizedBox(height: 15,),
 
 
             Padding(
