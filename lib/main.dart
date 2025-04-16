@@ -1,5 +1,6 @@
 import 'package:badboys/controller/auth_controller.dart';
 import 'package:badboys/controller/chat_controller.dart';
+import 'package:badboys/controller/comment_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/fcm/fcm_notifications.dart';
@@ -52,6 +53,7 @@ class MyApp extends StatelessWidget {
               Get.put(MatchController());  // Put the controller globally
               Get.put(AuthController());  // Put the controller globally
               Get.put(ChatController());
+              Get.put(CommentController());
             }),
             getPages: [
               GetPage(name: '/',

@@ -1,3 +1,4 @@
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_history_info_model.dart';
 import 'package:badboys/model/match/member_match_history_model.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
@@ -22,6 +23,22 @@ class MemberPlayRecordItem extends StatefulWidget {
 }
 
 class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
+  late MatchController matchController;
+
+  @override
+  void initState() {
+    // TODO: implement initState
+    super.initState();
+    matchController = Get.find<MatchController>();
+  }
+
+  @override
+  void dispose() {
+    // TODO: implement dispose
+    super.dispose();
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
@@ -78,7 +95,7 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                             children: [
                               Text('${widget.matchHistoryInfoModel.teamList[i].result}',
                                 style: TextStyle(
-                                    color: widget.matchHistoryInfoModel.teamList[i].result == 'WIN' ? Colors.red : Colors.blue,
+                                    color: matchController.selectMatchResultColor(widget.matchHistoryInfoModel.teamList[i].result!),
                                     fontWeight: FontWeight.w700,
                                     fontSize: 15,
                                     fontFamily: 'EHSMB'

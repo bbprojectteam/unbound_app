@@ -65,6 +65,19 @@ class MatchController extends GetxController {
 
   }
 
+  Color selectMatchResultColor(String matchResult){
+
+    if(matchResult == "WIN"){
+      return Colors.red;
+    } else if(matchResult == "LOSE"){
+      return Colors.blue;
+    } else{
+      return Colors.green;
+    }
+
+  }
+
+
   Future<void> fnMatchJoin(String chatRoomId) async {
 
     try {

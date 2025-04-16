@@ -1,3 +1,4 @@
+import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/model/match/member_match_history_model.dart';
 import 'package:badboys/model/member/member_model.dart';
@@ -24,6 +25,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
   late TabController _tabController;
   late MemberController memberController;
   late MemberMatchHistoryModel memberMatchHistoryModel;
+  late MatchController matchController;
 
   @override
   void initState() {
@@ -32,7 +34,9 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
     _tabController = TabController(length: 2, vsync: this);
     dynamic args = Get.arguments ?? {};
 
+    matchController = Get.put(MatchController());
     memberController = Get.put(MemberController());
+
     memberController.fnGetMemberInfo(args['memberId']);
 
     if (args == null || args['tab'] == null){
@@ -50,6 +54,8 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
 
   @override
   void dispose() {
+    Get.delete<MemberController>();
+    Get.delete<MatchController>();
     _tabController.dispose();
     super.dispose();
   }
@@ -98,7 +104,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                             children: [
                               Text('20대 코드 추가 필요',style: TextStyle(fontSize: 13, color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                               SizedBox(width: 5,),
-                              Text('${memberMatchHistoryModel.memberModel!.gender == "M" ? "남성" : "여성" }',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              Text('${memberMatchHistoryModel.memberModel?.gender == "M" ? "남성" : "여성" }',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                               SizedBox(width: 5,),
                               Text(memberMatchHistoryModel.memberModel?.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                             ],
@@ -111,7 +117,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                         children: [
                           Row(
                             children: [
-                              Text('24회',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
+                              Text('${memberMatchHistoryModel.memberModel?.matchCnt ?? '0'}회',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
                               SizedBox(width: 2,),
                               Text('참여',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
                             ],
@@ -214,12 +220,12 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                             Container(
                               child: SingleChildScrollView(
                                 child: Padding(
-                                  padding: const EdgeInsets.all(8.0),
+                                  padding: const EdgeInsets.all(15.0),
                                   child: Column(
                                     children: [
                                       for(int i = 0; i < memberMatchHistoryModel.userMatchInfoList.length; i++)
                                         MemberPlayRecordItem(isWin: true, matchHistoryInfoModel : memberMatchHistoryModel.userMatchInfoList[i] ),
-                                      // MemberPlayRecordItem(isWin: false,),
+                                        SizedBox(height: 15,),
                                     ],
                                   ),
                                 ),

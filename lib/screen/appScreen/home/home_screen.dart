@@ -18,30 +18,25 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
-  int matchIndex = 0;
-  String defaultMatchSelText = '지역';
-  String defaultMatchSelText2 = '동네';
   late TabController _tabController;
-  late PageController _pageController;
 
   @override
   void initState() {
     super.initState();
     // TabController 초기화 (탭의 개수는 2로 설정)
     _tabController = TabController(length: 2, vsync: this);
-    _pageController = PageController();
   }
 
   @override
   void dispose() {
     _tabController.dispose();
-    _pageController.dispose();
     super.dispose();
   }
 
   @override
   Widget build(BuildContext context) {
 
+    print('홈 빌드');
 
     return Scaffold(
       body: Container(

@@ -18,6 +18,7 @@ class MemberModel {
   String? regionNm;
   String? introduction;
   String? lastReadMessageId;
+  int? matchCnt;
 
   MemberModel();
 
