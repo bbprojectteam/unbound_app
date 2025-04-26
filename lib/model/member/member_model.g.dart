@@ -15,10 +15,10 @@ MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel()
   ..uid = json['uid'] as String?
   ..username = json['username'] as String?
   ..regionId = (json['regionId'] as num?)?.toInt()
-  ..matchCnt = (json['matchCnt'] as num?)?.toInt()
   ..regionNm = json['regionNm'] as String?
   ..introduction = json['introduction'] as String?
-  ..lastReadMessageId = json['lastReadMessageId'] as String?;
+  ..lastReadMessageId = json['lastReadMessageId'] as String?
+  ..matchCnt = (json['matchCnt'] as num?)?.toInt();
 
 Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
     <String, dynamic>{
@@ -30,8 +30,8 @@ Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
       'uid': instance.uid,
       'username': instance.username,
       'regionId': instance.regionId,
-      'matchCnt': instance.matchCnt,
       'regionNm': instance.regionNm,
       'introduction': instance.introduction,
       'lastReadMessageId': instance.lastReadMessageId,
+      'matchCnt': instance.matchCnt,
     };

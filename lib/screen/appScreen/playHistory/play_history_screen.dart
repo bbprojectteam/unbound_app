@@ -1,6 +1,7 @@
 
 import 'package:badboys/controller/comment_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/model/match/match_history_comment_model.dart';
 import 'package:badboys/model/match/match_history_info_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
@@ -26,6 +27,8 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
   late CommentController commentController;
   late TextEditingController textEditingController;
   late int memberNickNmLength;
+  int depth = 0;
+  int? parentId = null;
 
   @override
   void initState() {
@@ -34,6 +37,8 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
     matchController = Get.find<MatchController>();
     commentController = Get.put(CommentController());
     textEditingController = TextEditingController();
+
+    commentController.fnSelectComment(matchHistoryInfoModel.matchInfoId!);
   }
 
   @override
@@ -42,6 +47,39 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
     textEditingController.dispose();
     Get.delete<CommentController>();
     super.dispose();
+  }
+
+  Widget renderCommentTree(List<MatchHistoryCommentModel> comments, {bool isChild = false}) {
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: comments.map((comment) {
+        return Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Padding(
+              padding: EdgeInsets.only(left: !isChild ? 0 : 30),
+              child: PlayHistoryCommentItem(
+                matchHistoryCommentModel: comment,
+                choiceCommentCallBack: (String selectUserName, int selectParentId, int selectDepth) {
+                  textEditingController.text = "@$selectUserName ";
+                  parentId = selectParentId;
+                  depth = selectDepth;
+
+                  memberNickNmLength = textEditingController.text.length;
+
+                },
+              ),
+            ),
+
+            SizedBox(height: 15),
+
+            if (comment.childList != null && comment.childList.isNotEmpty)
+              renderCommentTree(comment.childList, isChild: true),
+          ],
+        );
+      }).toList(),
+    );
   }
 
   @override
@@ -357,38 +395,20 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                     ],
                   ),
                 ),
-                  
-                  
-                Container(
-                  color: Colors.black,  // 배경색
-                  padding: EdgeInsets.symmetric(horizontal: 10),  // 좌우 여백
-                  child: Column(
-                    children: [
-                      for(int i = 0; i < 5; i++)...[
-                        PlayHistoryCommentItem(choiceCommentCallBack : (){
-                          textEditingController.text = "12345 ";
-                          memberNickNmLength = textEditingController.text.length;
-
-                        }),
-                        SizedBox(height: 15),
-                        Container(
-                          padding: EdgeInsets.only(left: 30),
-                          width: 90.w,
-                          child: Column(
-                            children: [
-                              for(int i = 0; i <2; i++)...[
-                                PlayHistoryCommentItem(choiceCommentCallBack : ()=>{} ),
-                                SizedBox(height: 15),
-                              ],
-                            ],
-                          ),
-                        ),
-                      ],
 
 
-                    ],
-                  ),
-                ),
+              GetBuilder<CommentController>(
+                init: commentController,
+                builder: (commentControllerContext) {
+                  return Container(
+                    color: Colors.black, // 배경색
+                    padding: EdgeInsets.symmetric(horizontal: 10), // 좌우 여백
+                    child: renderCommentTree(commentController.matchHistoryCommentModel),
+                  );
+                },
+              ),
+
+
                 SizedBox(height: 60),
                   
                   
@@ -415,9 +435,11 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                       onChanged: (value) {
                         print('입력된 값: $value');
 
-                        if (memberNickNmLength != 0 && value.length < 6) {
+                        if (memberNickNmLength != 0 && value.length < memberNickNmLength) {
                           textEditingController.text = '';
+                          parentId = null;
                           memberNickNmLength = 0;
+                          depth = 0;
                         }
 
                       },
@@ -437,15 +459,22 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                               return;
                             }
 
+                            print('test123123');
+                            print(textEditingController.text);
+
                             Map<String, dynamic> commentData = {
-                              'commentId': null, //수정용
+                              'commentId': null,
                               'matchInfoId': matchHistoryInfoModel.matchInfoId,
-                              'parentId': 4,
-                              'depth': 1,
+                              'parentId': parentId,
+                              'depth': depth,
                               'content': textEditingController.text,
                             };
 
-                            commentController.fnInsertComment(commentData);
+                            commentController.fnInsertComment(matchHistoryInfoModel.matchInfoId!,commentData);
+
+                            textEditingController.text = '';
+                            depth = 0;
+                            parentId = null;
 
                           },
                         ),

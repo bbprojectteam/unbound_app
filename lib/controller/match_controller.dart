@@ -28,8 +28,6 @@ class MatchController extends GetxController {
     matchModel = MatchModel(); // 상태 초기화
   }
 
-
-
   Future<void> fnMatchStart() async {
 
     int regionId = await Helpers.getRegionId();
@@ -292,7 +290,7 @@ class MatchController extends GetxController {
 
         standByMatchModelList = [];
 
-        for(var item in jsonResponse['chatRoomList']){
+        for (var item in jsonResponse['chatRoomList']) {
 
           if(item['matchDt'] != null) {
             String dateString = item['matchDt'];
@@ -394,7 +392,13 @@ class MatchController extends GetxController {
             'name' : requestMap['matchName'],
             'matchDt' : requestMap['matchDt'],
             'location' : '대전테스트',
-            'description' : requestMap['matchDescription']
+            'description' : requestMap['matchDescription'],
+            'threeOnThreeYn' : requestMap['threeOnThreeYn'],
+            'ballYn' : requestMap['ballYn'],
+            'backBoardYn' : requestMap['backBoardYn'],
+            'threePointLimitYn' : requestMap['threePointLimitYn'],
+            'refereeYn' : requestMap['refereeYn'],
+            'halfCourtYn' : requestMap['halfCourtYn'],
           }
       );
 

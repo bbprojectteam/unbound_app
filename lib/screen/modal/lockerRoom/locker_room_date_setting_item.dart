@@ -46,7 +46,8 @@ class _LockerRoomDateSettingItemState extends State<LockerRoomDateSettingItem> {
         width: widget.containerWidth,
         height: 5.h,
         decoration: BoxDecoration(
-          border: Border.all(color: Colors.grey,width: 1.5),
+          border: Border.all(
+              color: Colors.orange,width: 1.5),
           borderRadius: BorderRadius.circular(10),
         ),
         child: Center(

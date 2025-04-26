@@ -43,7 +43,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
   @override
   void dispose() {
-    if(chatController.isApiCalled.value) {
+    if (chatController.isApiCalled.value) {
       chatController.disconnect();
     }
     chatController.isApiCalled = false.obs;

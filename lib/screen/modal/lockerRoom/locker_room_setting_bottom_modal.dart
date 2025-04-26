@@ -1,3 +1,4 @@
+
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/modal/comn/select_bottom_modal_screen.dart';
@@ -42,17 +43,15 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
   TextEditingController lockerRoomTitleEditController = TextEditingController();
   TextEditingController lockerRoomDescriptionEditController = TextEditingController();
-  TextEditingController localeEditController = TextEditingController();
 
-  String chk1 = 'y';
-  String chk2 = 'N';
-  String chk3 = 'N';
-  String chk4 = 'N';
-  String chk5 = 'N';
-  String chk6 = 'N';
-  String chk7 = 'N';
-  String chk8 = 'N';
-  String chk9 = 'N';
+  String threeOnThreeYn = 'y';
+  String ballYn = 'N';
+  String backBoardYn = 'N';
+  String threePointLimitYn = 'N';
+  String refereeYn = 'N';
+  String halfCourtYn = 'N';
+  String fullCourtYn = 'N';
+
 
 
   late MatchController matchController;
@@ -63,11 +62,32 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
     super.initState();
 
     matchController = Get.find<MatchController>();
-    lockerRoomTitleEditController.text = "새 라커룸";
+    lockerRoomTitleEditController.text = matchController.matchModel.matchInfoModel!.name!;
+    lockerRoomDescriptionEditController.text = matchController.matchModel.matchInfoModel!.description!;
+
+    List<String> matchDt = matchController.matchModel.matchInfoModel!.matchDt!.toString().split(' ');
+
+    selectedYear = matchDt[0].split('-')[0];
+    selectedMonth = matchDt[0].split('-')[1];
+    selectedDay = matchDt[0].split('-')[2];
+
+    selectedHour = matchDt[1].split(':')[0];
+    selectedMinute = matchDt[1].split(':')[1];
+
+
+    threeOnThreeYn = matchController.matchModel.matchInfoModel!.threeOnThreeYn!;
+    ballYn = matchController.matchModel.matchInfoModel!.ballYn!;
+    backBoardYn = matchController.matchModel.matchInfoModel!.backBoardYn!;
+    threePointLimitYn = matchController.matchModel.matchInfoModel!.threePointLimitYn!;
+    refereeYn = matchController.matchModel.matchInfoModel!.refereeYn!;
+    halfCourtYn = matchController.matchModel.matchInfoModel!.halfCourtYn!;
+    fullCourtYn = halfCourtYn == 'Y' ? 'N' : 'Y';
+
   }
 
   @override
   Widget build(BuildContext context) {
+
 
     return Container(
       width: 100.w,
@@ -105,7 +125,8 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
                   width: 44.w,
                   height: 5.h,
                   decoration: BoxDecoration(
-                      border: Border.all(color: Colors.orange,width: 1.5),
+                      border: Border.all(
+                          color: Colors.orange,width: 1.5),
                     borderRadius: BorderRadius.circular(10),
                   ),
                   child: Center(
@@ -254,24 +275,24 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
               children: [
                 GestureDetector(
                   onTap: (){
-                    chk1 = 'Y';
+                    threeOnThreeYn = 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '3 vs 3',
-                      matchPointEditStatusYn: chk1,
+                      matchPointEditStatusYn: threeOnThreeYn,
                       containerWidth: 43.w),
                 ),
 
 
                 GestureDetector(
                   onTap: (){
-                    chk2 = (chk2 == 'Y') ? 'N': 'Y';
+                    ballYn = (ballYn == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '농구공',
-                      matchPointEditStatusYn: chk2,
+                      matchPointEditStatusYn: ballYn,
                       containerWidth: 43.w),
                 ),
               ],
@@ -283,34 +304,34 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
                 GestureDetector(
                   onTap: (){
-                    chk3 = (chk3 == 'Y') ? 'N': 'Y';
+                    backBoardYn = (backBoardYn == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '백보드',
-                      matchPointEditStatusYn: chk3,
+                      matchPointEditStatusYn: backBoardYn,
                       containerWidth: 25.w),
                 ),
 
                 GestureDetector(
                   onTap: (){
-                    chk4 = (chk4 == 'Y') ? 'N': 'Y';
+                    threePointLimitYn = (threePointLimitYn == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '3점 라인 제한',
-                      matchPointEditStatusYn: chk4,
+                      matchPointEditStatusYn: threePointLimitYn,
                       containerWidth: 35.w),
                 ),
 
                 GestureDetector(
                   onTap: (){
-                    chk5 = (chk5 == 'Y') ? 'N': 'Y';
+                    refereeYn = (refereeYn == 'Y') ? 'N': 'Y';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '심판',
-                      matchPointEditStatusYn: chk5,
+                      matchPointEditStatusYn: refereeYn,
                       containerWidth: 30.w),
                 ),
 
@@ -325,23 +346,25 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
                 GestureDetector(
                   onTap: (){
-                    chk6 = (chk6 == 'Y') ? 'N': 'Y';
+                    halfCourtYn = 'Y';
+                    fullCourtYn = 'N';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '하프코트',
-                      matchPointEditStatusYn: chk6,
+                      matchPointEditStatusYn: halfCourtYn,
                       containerWidth: 43.w),
                 ),
 
                 GestureDetector(
                   onTap: (){
-                    chk7 = (chk7 == 'Y') ? 'N': 'Y';
+                    fullCourtYn = 'Y';
+                    halfCourtYn = 'N';
                     setState(() {});
                   },
                   child: MatchPointItem(
                       matchPointText: '풀코트',
-                      matchPointEditStatusYn: chk7,
+                      matchPointEditStatusYn: fullCourtYn,
                       containerWidth: 43.w),
                 ),
 
@@ -362,7 +385,15 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
                     'matchName': matchName,
                     'matchDescription': matchDescription,
                     'matchDt': matchDt,
+                    'threeOnThreeYn' : threeOnThreeYn,
+                    'ballYn' : ballYn,
+                    'backBoardYn' : backBoardYn,
+                    'threePointLimitYn' : threePointLimitYn,
+                    'refereeYn' :refereeYn,
+                    'halfCourtYn' : halfCourtYn,
                   };
+
+                  print(requestMap);
 
                   await matchController.fnMatchRoomInfoUpdate(requestMap);
                   matchController.fnMatchInfo(widget.chatRoomId!);

@@ -75,14 +75,12 @@ class ChatController extends GetxController{
   Future<void> fnChatList(String? chatRoomId) async {
 
     try {
-      // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
           '/service/chatRoom/${chatRoomId}/messages',
           headers: {
-            'Content-Type': 'application/json', // JSON 형식
+            'Content-Type': 'application/json',
           },
       );
-
 
       if (response.statusCode == 200) {
         final decodedBody = utf8.decode(response.bodyBytes);
@@ -102,14 +100,11 @@ class ChatController extends GetxController{
 
         scrollToBottom();
       } else {
-        // 오류 처리
         throw Exception('fnChatList Failed');
       }
 
     } catch (error) {
-      // 오류 처리
       print('fnChatList Error: $error');
-
     } finally {
       isLoading.value = false;
     }
@@ -258,6 +253,7 @@ class ChatController extends GetxController{
       },
     );
   }
+
   String _formatMessageTime(DateTime dateTime) {
     return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
   }
@@ -275,8 +271,9 @@ class ChatController extends GetxController{
     chatModel.isMyChat = true;
 
     chatModelList.add(chatModel);
-
-    scrollToBottom();
+    if (chatModelList.length >= 10) {
+      scrollToBottom();
+    }
   }
 
   // 메시지 전송
