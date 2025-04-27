@@ -16,6 +16,24 @@ class CommentController extends GetxController {
     return "${date.year}-${date.month.toString().padLeft(2, '0')}-${date.day.toString().padLeft(2, '0')}";
   }
 
+
+  List<MatchHistoryCommentModel> extractAllChildListsIteratively(List<MatchHistoryCommentModel> comments) {
+    List<MatchHistoryCommentModel> allChildLists = [];
+    List<MatchHistoryCommentModel> stack = List.from(comments);
+
+    while (stack.isNotEmpty) {
+      MatchHistoryCommentModel comment = stack.removeLast();
+
+      if (comment.childList != null && comment.childList.isNotEmpty) {
+        allChildLists.addAll(comment.childList);
+        stack.addAll(comment.childList);
+      }
+    }
+
+    return allChildLists;
+  }
+
+
   Future<bool> fnSelectComment(int matchInfoId) async {
 
     try {
@@ -35,7 +53,21 @@ class CommentController extends GetxController {
         var commentList = jsonDecode(utf8Body)['commentList'];
 
         for (var item in commentList) {
-          matchHistoryCommentModel.add(MatchHistoryCommentModel.fromJson(item));
+
+          MatchHistoryCommentModel comment = MatchHistoryCommentModel.fromJson(item);
+
+          if (comment.childList.isNotEmpty) {
+            List<MatchHistoryCommentModel> allChildComments = extractAllChildListsIteratively(comment.childList);
+            comment.childList.addAll(allChildComments);
+          }
+
+          comment.childList.sort((a, b) {
+            int idA = a.commentId!;
+            int idB = b.commentId!;
+            return idA.compareTo(idB);
+          });
+
+          matchHistoryCommentModel.add(comment);
         }
 
         update();
@@ -50,7 +82,6 @@ class CommentController extends GetxController {
     }
     return false;
   }
-
 
   Future<void> fnInsertComment(int? matchInfoId, Map<String, dynamic> commentData) async {
 

@@ -2,16 +2,6 @@
 
 part of 'match_history_comment_model.dart';
 
-String? formatToDateOnly(String? dateTimeString) {
-      if (dateTimeString == null) return null;
-
-      // 문자열을 DateTime 객체로 변환
-      DateTime dateTime = DateTime.parse(dateTimeString);
-
-      // 원하는 형식으로 포맷 (yyyy-MM-dd)
-      return DateFormat('yyyy-MM-dd').format(dateTime);
-}
-
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
@@ -24,7 +14,7 @@ MatchHistoryCommentModel _$MatchHistoryCommentModelFromJson(
       ..depth = (json['depth'] as num?)?.toInt()
       ..userId = (json['userId'] as num?)?.toInt()
       ..username = json['username'] as String?
-      ..updatedAt = formatToDateOnly(json['updatedAt'])
+      ..updatedAt = json['updatedAt'] as String?
       ..childList = (json['childList'] as List<dynamic>? ?? [])
           .map((e) => MatchHistoryCommentModel.fromJson(e as Map<String, dynamic>))
           .toList();

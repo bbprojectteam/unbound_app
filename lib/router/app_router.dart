@@ -29,12 +29,7 @@ class _AppScreenState extends State<AppScreen> {
   @override
   void initState() {
     super.initState();
-
-    // _childNotifier 초기화 (여기서 초기화는 한 번만)
-    print('위젯업데이트검사');
-    print(widget.child);
     _childNotifier.value = widget.child;
-
   }
 
 
@@ -67,8 +62,7 @@ class _AppScreenState extends State<AppScreen> {
 
           // 페이지 전환
           if (index == 0) {
-            Get.toNamed('/'); // HomeScreen
-
+            _childNotifier.value = HomeScreen(); // HomeScreen
           } else if (index == 1) {
             _childNotifier.value = MatchScreen();// n
           } else if (index == 2) {

@@ -49,38 +49,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
     super.dispose();
   }
 
-  Widget renderCommentTree(List<MatchHistoryCommentModel> comments, {bool isChild = false}) {
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: comments.map((comment) {
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Padding(
-              padding: EdgeInsets.only(left: !isChild ? 0 : 30),
-              child: PlayHistoryCommentItem(
-                matchHistoryCommentModel: comment,
-                choiceCommentCallBack: (String selectUserName, int selectParentId, int selectDepth) {
-                  textEditingController.text = "@$selectUserName ";
-                  parentId = selectParentId;
-                  depth = selectDepth;
-
-                  memberNickNmLength = textEditingController.text.length;
-
-                },
-              ),
-            ),
-
-            SizedBox(height: 15),
-
-            if (comment.childList != null && comment.childList.isNotEmpty)
-              renderCommentTree(comment.childList, isChild: true),
-          ],
-        );
-      }).toList(),
-    );
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -400,10 +369,67 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
               GetBuilder<CommentController>(
                 init: commentController,
                 builder: (commentControllerContext) {
-                  return Container(
-                    color: Colors.black, // 배경색
-                    padding: EdgeInsets.symmetric(horizontal: 10), // 좌우 여백
-                    child: renderCommentTree(commentController.matchHistoryCommentModel),
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children:[
+                        for(int i = 0 ; i < commentController.matchHistoryCommentModel.length; i++)...[
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              PlayHistoryCommentItem(
+                                  matchHistoryCommentModel: commentController.matchHistoryCommentModel[i],
+                                  choiceCommentCallBack: (String selectUserName, int selectParentId, int selectDepth) {
+                                    textEditingController.text = "@$selectUserName ";
+                                    parentId = selectParentId;
+                                    depth = selectDepth;
+                                    memberNickNmLength = textEditingController.text.length;
+                                  },
+                                  deleteCommentCallBack:(MatchHistoryCommentModel matchHistoryCommentModel){
+
+                                    Map<String, dynamic> commentData = {
+                                      'commentId': matchHistoryCommentModel.commentId,
+                                      'matchInfoId': matchHistoryInfoModel.matchInfoId,
+                                      'depth': matchHistoryCommentModel.depth,
+                                      'content': '삭제된 댓글입니다',
+                                    };
+                                    commentController.fnInsertComment(matchHistoryInfoModel.matchInfoId!,commentData);
+                                  }
+                              ),
+
+                              for(int j = 0; j < commentController.matchHistoryCommentModel[i].childList.length; j++)
+                                Padding(
+                                  padding: const EdgeInsets.only(left : 30.0),
+                                  child: PlayHistoryCommentItem(
+                                      matchHistoryCommentModel: commentController.matchHistoryCommentModel[i].childList[j],
+                                      choiceCommentCallBack: (String selectUserName, int selectParentId, int selectDepth) {
+                                        textEditingController.text = "@$selectUserName ";
+                                        parentId = selectParentId;
+                                        depth = selectDepth;
+                                        memberNickNmLength = textEditingController.text.length;
+                                      },
+                                      deleteCommentCallBack:(MatchHistoryCommentModel matchHistoryCommentModel){
+
+                                        Map<String, dynamic> commentData = {
+                                          'commentId': matchHistoryCommentModel.commentId,
+                                          'matchInfoId': matchHistoryInfoModel.matchInfoId,
+                                          'depth': matchHistoryCommentModel.depth,
+                                          'content': '삭제된 댓글입니다',
+                                        };
+
+                                        commentController.fnInsertComment(matchHistoryInfoModel.matchInfoId!,commentData);
+
+                                      }
+
+                                  ),
+                                ),
+                            ],
+                          ),
+                        ]
+
+                      ],
+                    ),
                   );
                 },
               ),
@@ -458,9 +484,6 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                             if (textEditingController.text == '') {
                               return;
                             }
-
-                            print('test123123');
-                            print(textEditingController.text);
 
                             Map<String, dynamic> commentData = {
                               'commentId': null,
