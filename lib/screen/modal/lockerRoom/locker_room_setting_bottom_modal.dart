@@ -102,9 +102,9 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
             CustomAppbar(isNotification: false, ),
             SizedBox(height: 15,),
 
-            ProfileSettingTextField(labelText: "방 제목",textEditingController: lockerRoomTitleEditController,maxLines: 1,),
+            ProfileSettingTextField(labelText: "방 제목",textLength : 20 ,textEditingController: lockerRoomTitleEditController,maxLines: 1,),
             SizedBox(height: 5),
-            ProfileSettingTextField(labelText: "메모",textEditingController: lockerRoomDescriptionEditController,maxLines: 1,),
+            ProfileSettingTextField(labelText: "메모", textLength : 30, textEditingController: lockerRoomDescriptionEditController,maxLines: 1,),
 
             SizedBox(height: 10,),
 

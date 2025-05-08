@@ -1,4 +1,4 @@
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'team.g.dart';
@@ -7,7 +7,7 @@ part 'team.g.dart';
 class Team {
 
   String? result;
-  List<MemberModel> userList = [];
+  List<UserInfo> userList = [];
   int? teamId;
 
   Team();

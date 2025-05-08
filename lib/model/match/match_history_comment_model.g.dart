@@ -14,6 +14,7 @@ MatchHistoryCommentModel _$MatchHistoryCommentModelFromJson(
       ..depth = (json['depth'] as num?)?.toInt()
       ..userId = (json['userId'] as num?)?.toInt()
       ..username = json['username'] as String?
+      ..profileImage = json['profileImage'] as String?
       ..updatedAt = json['updatedAt'] as String?
       ..childList = (json['childList'] as List<dynamic>? ?? [])
           .map((e) => MatchHistoryCommentModel.fromJson(e as Map<String, dynamic>))
@@ -27,6 +28,7 @@ Map<String, dynamic> _$MatchHistoryCommentModelToJson(
       'depth': instance.depth,
       'userId': instance.userId,
       'username': instance.username,
+      'profileImage': instance.profileImage,
       'updatedAt': instance.updatedAt,
       'childList': instance.childList,
     };

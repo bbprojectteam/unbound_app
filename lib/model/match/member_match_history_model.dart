@@ -1,7 +1,7 @@
 
 import 'package:badboys/model/match/match_history_info_model.dart';
 import 'package:badboys/model/match/match_info_model.dart';
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:json_annotation/json_annotation.dart';
 
 part 'member_match_history_model.g.dart';
@@ -9,7 +9,7 @@ part 'member_match_history_model.g.dart';
 @JsonSerializable()
 class MemberMatchHistoryModel {
 
-  MemberModel? memberModel;
+  UserInfo? userInfo;
   List<MatchHistoryInfoModel> userMatchInfoList = [];
 
   MemberMatchHistoryModel();

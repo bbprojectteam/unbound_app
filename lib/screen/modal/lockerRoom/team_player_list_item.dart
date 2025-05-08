@@ -1,8 +1,10 @@
 
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class TeamPlayerListItem extends StatefulWidget {
@@ -11,7 +13,7 @@ class TeamPlayerListItem extends StatefulWidget {
     required this.matchMemberModel,
   });
 
-  final MemberModel matchMemberModel;
+  final UserInfo matchMemberModel;
 
   @override
   State<TeamPlayerListItem> createState() => _TeamPlayerListItemState();
@@ -58,13 +60,21 @@ class _TeamPlayerListItemState extends State<TeamPlayerListItem> {
             ],
           ),
 
-          Center(
-            child: Text(
-              '상세보기',
-              style: TextStyle(
-                  color: Colors.white,
-                  fontWeight: FontWeight.w700,
-                  fontFamily: 'EHSMB'
+          GestureDetector(
+            onTap: () {
+              Get.toNamed(
+                  '/memberPageScreen',
+                  arguments: {'tab' : 0, 'memberId' : widget.matchMemberModel.userId }
+              );
+            },
+            child: Center(
+              child: Text(
+                '상세보기',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w700,
+                    fontFamily: 'EHSMB'
+                ),
               ),
             ),
           )

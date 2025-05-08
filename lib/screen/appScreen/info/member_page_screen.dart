@@ -1,7 +1,7 @@
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/model/match/member_match_history_model.dart';
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
@@ -64,7 +64,6 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
   @override
   Widget build(BuildContext context) {
 
-
     return Scaffold(
       body: GetBuilder<MemberController>(
         init: memberController,
@@ -88,25 +87,24 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
 
                           ClipOval(
                             child: CustomCachedNetworkImage(
-                                imagePath: memberMatchHistoryModel.memberModel?.profileImage.toString(),
+                                imagePath: memberMatchHistoryModel.userInfo?.profileImage.toString(),
                                 imageWidth: 27.w,
                                 imageHeight: null
                             ),
                           ),
 
-
                           SizedBox(height: 6,),
-                          Text(memberMatchHistoryModel.memberModel?.username ?? "null" ,style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                          Text(memberMatchHistoryModel.userInfo?.username ?? "null" ,style: TextStyle(fontSize: 19, color: Colors.white,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
 
                           SizedBox(height: 6,),
                           Row(
                             mainAxisAlignment: MainAxisAlignment.center,
                             children: [
-                              Text('20대 코드 추가 필요',style: TextStyle(fontSize: 13, color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              Text(memberController.categorizeAgeGroup(memberMatchHistoryModel.userInfo?.birth ?? ""), style: TextStyle(fontSize: 13, color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                               SizedBox(width: 5,),
-                              Text('${memberMatchHistoryModel.memberModel?.gender == "M" ? "남성" : "여성" }',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              Text('${memberMatchHistoryModel.userInfo?.gender == "M" ? "남성" : "여성" }',style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                               SizedBox(width: 5,),
-                              Text(memberMatchHistoryModel.memberModel?.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
+                              Text(memberMatchHistoryModel.userInfo?.regionNm ?? "null",style: TextStyle(fontSize: 13,color: Colors.grey,fontWeight: FontWeight.w600,fontFamily: 'EHSMB'),),
                             ],
                           ),
                         ],
@@ -117,7 +115,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                         children: [
                           Row(
                             children: [
-                              Text('${memberMatchHistoryModel.memberModel?.matchCnt ?? '0'}회',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
+                              Text('${memberMatchHistoryModel.userInfo?.matchCnt ?? '0'}회',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
                               SizedBox(width: 2,),
                               Text('참여',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
                             ],
@@ -125,7 +123,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                           SizedBox(width: 15,),
                           Row(
                             children: [
-                              Text((memberMatchHistoryModel.memberModel?.mmr ?? 1000).toString() ,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
+                              Text((memberMatchHistoryModel.userInfo?.mmr ?? 1000).toString() ,style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),),
                               SizedBox(width: 3,),
                               Text('pts',style: TextStyle(color: Colors.grey,fontWeight: FontWeight.w700,fontSize: 13,fontFamily: 'EHSMB'),)
                             ],
@@ -137,8 +135,8 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                       if(memberController.isAuth.value)
                         GestureDetector(
                           onTap :() async {
-                            await AppBottomModalRouter.fnModalRouter(context, 4);
-                            await memberController.fnGetMemberInfo(memberMatchHistoryModel.memberModel?.userId);
+                            await AppBottomModalRouter.fnModalRouter(context, 7, userInfo: memberMatchHistoryModel.userInfo);
+                            await memberController.fnGetMemberInfo(memberMatchHistoryModel.userInfo?.userId);
                           },
                           child: Row(
                             mainAxisAlignment: MainAxisAlignment.center,
@@ -203,7 +201,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                                 crossAxisAlignment: CrossAxisAlignment.start,
                                 children: [
                                   Text(
-                                    memberMatchHistoryModel.memberModel?.introduction ?? "",
+                                    memberMatchHistoryModel.userInfo?.introduction ?? "",
                                     style: TextStyle(
                                       color: Colors.white,
                                       fontSize: 17,

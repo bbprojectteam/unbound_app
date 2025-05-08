@@ -12,6 +12,7 @@ class MatchHistoryCommentModel {
   int? depth;
   int? userId;
   String? username;
+  String? profileImage;
   String? updatedAt;
   List<MatchHistoryCommentModel> childList = [];
 

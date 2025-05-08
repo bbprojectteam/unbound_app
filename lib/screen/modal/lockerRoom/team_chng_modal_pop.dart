@@ -1,7 +1,7 @@
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_member_position_model.dart';
 import 'package:badboys/model/match/match_model.dart';
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -53,7 +53,7 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
     // items[firstIndex - 1] = items[secondIndex - 1];
     // items[secondIndex - 1] = temp;
 
-    MemberModel memberTemp = matchModel.matchMemberModel[firstIndex - 1];
+    UserInfo memberTemp = matchModel.matchMemberModel[firstIndex - 1];
     matchModel.matchMemberModel[firstIndex - 1] = matchModel.matchMemberModel[secondIndex - 1];
     matchModel.matchMemberModel[secondIndex - 1] = memberTemp;
 

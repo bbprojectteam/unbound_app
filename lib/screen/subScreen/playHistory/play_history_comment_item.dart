@@ -1,4 +1,5 @@
 import 'package:badboys/model/match/match_history_comment_model.dart';
+import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -8,11 +9,13 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class PlayHistoryCommentItem extends StatefulWidget {
   const PlayHistoryCommentItem({
     super.key,
+    required this.loginMemberId,
     required this.choiceCommentCallBack,
     required this.matchHistoryCommentModel,
     required this.deleteCommentCallBack,
   });
 
+  final int? loginMemberId;
   final Function choiceCommentCallBack;
   final MatchHistoryCommentModel matchHistoryCommentModel;
   final Function deleteCommentCallBack;
@@ -26,16 +29,15 @@ class _PlayHistoryCommentItemState extends State<PlayHistoryCommentItem> {
   String? formatToDateOnly(String? dateTimeString) {
     if (dateTimeString == null) return null;
 
-    // 문자열을 DateTime 객체로 변환
     DateTime dateTime = DateTime.parse(dateTimeString);
 
-    // 원하는 형식으로 포맷 (yyyy-MM-dd)
     return DateFormat('yyyy-MM-dd').format(dateTime);
   }
 
 
   @override
   Widget build(BuildContext context) {
+
     return GestureDetector(
       onTap: () {
         widget.choiceCommentCallBack(widget.matchHistoryCommentModel.username,widget.matchHistoryCommentModel.commentId,1);
@@ -53,12 +55,13 @@ class _PlayHistoryCommentItemState extends State<PlayHistoryCommentItem> {
                 );
               },
               child: ClipOval(
-                child:  Image.asset(
-                  'assets/images/intro.png',
-                  width: 10.w,
-                  height: 5.h,
-                  fit: BoxFit.cover,
+                child: CustomCachedNetworkImage(
+                    imagePath: widget.matchHistoryCommentModel.profileImage,
+                    imageWidth: 10.w,
+                    imageHeight: 5.h
                 ),
+
+
               ),
             ),
 
@@ -88,20 +91,21 @@ class _PlayHistoryCommentItemState extends State<PlayHistoryCommentItem> {
                         ),
                       ),
 
-                      GestureDetector(
-                        onTap: (){
-                          widget.deleteCommentCallBack(widget.matchHistoryCommentModel);
-                        },
-                        child: Text(
-                          '삭제',
-                          style: TextStyle(
-                              color: Colors.grey,
-                              fontWeight: FontWeight.w700,
-                              fontSize: 12,
-                              fontFamily: 'EHSMB'
+                      if (widget.matchHistoryCommentModel.userId == widget.loginMemberId)
+                        GestureDetector(
+                          onTap: (){
+                            widget.deleteCommentCallBack(widget.matchHistoryCommentModel);
+                          },
+                          child: Text(
+                            '삭제',
+                            style: TextStyle(
+                                color: Colors.grey,
+                                fontWeight: FontWeight.w700,
+                                fontSize: 12,
+                                fontFamily: 'EHSMB'
+                            ),
                           ),
                         ),
-                      ),
 
 
                     ],

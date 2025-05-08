@@ -6,6 +6,7 @@ import 'package:badboys/model/match/match_history_info_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/playHistory/play_history_comment_item.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
@@ -26,7 +27,8 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
   late MatchController matchController;
   late CommentController commentController;
   late TextEditingController textEditingController;
-  late int memberNickNmLength;
+  late int memberNickNmLength = 0;
+  late int loginMemberId;
   int depth = 0;
   int? parentId = null;
 
@@ -39,6 +41,11 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
     textEditingController = TextEditingController();
 
     commentController.fnSelectComment(matchHistoryInfoModel.matchInfoId!);
+    loadLoginMemberId();
+  }
+
+  void loadLoginMemberId() async {
+    loginMemberId = await Helpers.getMemberId();
   }
 
   @override
@@ -48,8 +55,6 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
     Get.delete<CommentController>();
     super.dispose();
   }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -325,7 +330,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                                 Center(
                                   child: Text("vs",
                                     style: TextStyle(
-                                        color: Colors.orange,
+                                        color: Colors.white,
                                         fontWeight: FontWeight.w700,
                                         fontSize: 15,
                                         fontFamily: 'EHSMB'
@@ -379,6 +384,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [
                               PlayHistoryCommentItem(
+                                  loginMemberId : loginMemberId,
                                   matchHistoryCommentModel: commentController.matchHistoryCommentModel[i],
                                   choiceCommentCallBack: (String selectUserName, int selectParentId, int selectDepth) {
                                     textEditingController.text = "@$selectUserName ";
@@ -402,6 +408,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                                 Padding(
                                   padding: const EdgeInsets.only(left : 30.0),
                                   child: PlayHistoryCommentItem(
+                                      loginMemberId : loginMemberId,
                                       matchHistoryCommentModel: commentController.matchHistoryCommentModel[i].childList[j],
                                       choiceCommentCallBack: (String selectUserName, int selectParentId, int selectDepth) {
                                         textEditingController.text = "@$selectUserName ";

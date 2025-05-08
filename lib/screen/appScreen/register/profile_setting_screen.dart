@@ -2,21 +2,28 @@ import 'dart:ffi';
 
 import 'package:badboys/controller/auth_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/model/member/user_info.dart';
+import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/comn/select_match_info_btn.dart';
 
 import 'package:badboys/screen/subScreen/register/profile_setting_text_field.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:file_picker/file_picker.dart';
-import 'package:firebase_auth/firebase_auth.dart';
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ProfileSettingScreen extends StatefulWidget {
-  const ProfileSettingScreen({super.key,});
+  const ProfileSettingScreen({
+    super.key,
+    required this.userInfo,
+  });
 
+  final UserInfo? userInfo;
 
   @override
   State<ProfileSettingScreen> createState() => _ProfileSettingScreenState();
@@ -28,12 +35,17 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   late int? selectedGender = 0;
   Uint8List? _imageBytes = null;
   late FilePickerResult filePickerResult;
-
+  late UserInfo? userInfoTemp;
   @override
   void initState() {
     // TODO: implement initState
     super.initState();
     memberController = Get.find<MemberController>();
+    selectedGender = widget.userInfo?.gender == 'M' ? 0 : 1;
+    memberController.nickNmTextEdController.text = widget.userInfo?.username ?? '';
+    memberController.introductionTextEdController.text = widget.userInfo?.introduction ?? '';
+    memberController.birthTextEdController.text = widget.userInfo?.birth ?? '';
+
   }
 
   @override
@@ -47,22 +59,36 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
   Widget build(BuildContext context) {
 
     Future<void> _pickImage() async {
+      try {
+        final ImagePicker picker = ImagePicker();
 
-      FilePickerResult? result = await FilePicker.platform.pickFiles(
-        type: FileType.image, // 이미지 파일만 선택
-      );
+        final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
-      if (result != null && result.files.isNotEmpty) {
-        _imageBytes = await Helpers.cropImage(result.files.first.path!);
+        if (image != null) {
+          print("이미지 선택됨: ${image.path}");
 
-        filePickerResult = await Helpers.convertUint8ListToFilePickerResult(
-            _imageBytes!, result.files.first.size
-        );
+          Uint8List? croppedImage = await Helpers.cropImage(image.path);
 
-        setState(() {});
+          if (croppedImage != null) {
+            filePickerResult = await Helpers.convertUint8ListToFilePickerResult(
+              croppedImage,
+              croppedImage.lengthInBytes,
+            );
 
+            setState(() {
+              _imageBytes = croppedImage;
+            });
+          } else {
+            print("이미지를 자르는 중 문제가 발생했습니다.");
+          }
+        } else {
+          print("이미지가 선택되지 않았습니다.");
+        }
+      } catch (e) {
+        print("이미지 선택 또는 처리 중 오류 발생: $e");
       }
     }
+
 
 
     return Scaffold(
@@ -108,12 +134,23 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
 
-                        Container(
+                        if (widget.userInfo != null)
+                          ClipOval(
+                            child: CustomCachedNetworkImage(
+                                imagePath: widget.userInfo?.profileImage,
+                                imageWidth: 30.w,
+                                imageHeight: 15.h
+                            ),
+                          ),
+
+                        if (widget.userInfo == null)
+                          Container(
                           width: 25.w,
                           height: 20.h,
                           child: GestureDetector(
                             onTap: (){
                               _pickImage();
+
                             },
                             child: _imageBytes != null // 선택된 이미지가 있을 경우
                                 ? ClipOval(
@@ -138,11 +175,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           child: Column(
                             children: [
 
-                              ProfileSettingTextField(labelText: "닉네임",textEditingController: memberController.nickNmTextEdController,maxLines: 1,),
-                              ProfileSettingTextField(labelText: "생년월일",textEditingController: memberController.birthTextEdController,maxLines: 1,),
-                              ProfileSettingTextField(labelText: "소개",textEditingController: memberController.introductionTextEdController,maxLines: 4,),
-
-
+                              ProfileSettingTextField(labelText: "닉네임",textLength : 8, textEditingController: memberController.nickNmTextEdController,maxLines: 1,),
+                              ProfileSettingTextField(labelText: "생년월일",textLength : 8,textEditingController: memberController.birthTextEdController,maxLines: 1,),
+                              ProfileSettingTextField(labelText: "소개",textLength : 200,textEditingController: memberController.introductionTextEdController,maxLines: 4,),
 
 
                               SizedBox(height: 10,),

@@ -1,7 +1,7 @@
 
 import 'package:badboys/model/match/match_info_model.dart';
 
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 
 
 
@@ -9,7 +9,7 @@ class MatchModel {
 
   MatchInfoModel? matchInfoModel;
 
-  List<MemberModel> matchMemberModel = [];
+  List<UserInfo> matchMemberModel = [];
 
   bool? isJoinLockerRoom = false;
 

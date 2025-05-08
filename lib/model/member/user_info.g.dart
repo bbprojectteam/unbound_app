@@ -1,12 +1,13 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'member_model.dart';
+part of 'user_info.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel()
+
+UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo()
   ..userId = (json['userId'] as num?)?.toInt()
   ..birth = json['birth'] as String?
   ..gender = json['gender'] as String?
@@ -20,7 +21,7 @@ MemberModel _$MemberModelFromJson(Map<String, dynamic> json) => MemberModel()
   ..lastReadMessageId = json['lastReadMessageId'] as String?
   ..matchCnt = (json['matchCnt'] as num?)?.toInt();
 
-Map<String, dynamic> _$MemberModelToJson(MemberModel instance) =>
+Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
     <String, dynamic>{
       'userId': instance.userId,
       'birth': instance.birth,

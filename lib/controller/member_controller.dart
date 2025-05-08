@@ -3,7 +3,7 @@ import 'dart:io';
 import 'dart:typed_data';
 
 import 'package:badboys/model/match/member_match_history_model.dart';
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:file_picker/file_picker.dart';
@@ -16,8 +16,8 @@ import 'package:http_parser/http_parser.dart';
 
 class MemberController extends GetxController {
 
-  MemberModel memberModel = MemberModel();
-  MemberModel memberInfoModel = MemberModel();
+  UserInfo memberModel = UserInfo();
+  UserInfo memberInfoModel = UserInfo();
   MemberMatchHistoryModel memberMatchHistoryModel = MemberMatchHistoryModel();
 
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
@@ -43,6 +43,35 @@ class MemberController extends GetxController {
     birthTextEdController = TextEditingController();
     introductionTextEdController = TextEditingController();
   }
+
+
+  String categorizeAgeGroup(String? birth) {
+
+    if (birth == "" || birth == null) {
+      return '';
+    }
+
+    String birthYear = birth.split('-')[0];
+
+    int currentYear = DateTime.now().year;
+
+    int age = currentYear - int.parse(birthYear);
+
+    if (age >= 10 && age < 20) {
+      return "10대";
+    } else if (age >= 20 && age < 30) {
+      return "20대";
+    } else if (age >= 30 && age < 40) {
+      return "30대";
+    } else if (age >= 40 && age < 50) {
+      return "40대";
+     }else if (age >= 50 && age < 60) {
+      return "50대";
+    } else {
+      return "50대";
+    }
+  }
+
 
 
   Future<void> fnGetMemberInfo(int? memberId) async {
@@ -99,8 +128,8 @@ class MemberController extends GetxController {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
 
-        memberModel = MemberModel();
-        memberModel = MemberModel.fromJson(jsonResponse['userInfo']);
+        memberModel = UserInfo();
+        memberModel = UserInfo.fromJson(jsonResponse['userInfo']);
 
         Helpers.setMember(memberModel);
         Helpers.setMemberId(memberModel.userId.toString());

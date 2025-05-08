@@ -1,3 +1,4 @@
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
 import 'package:badboys/screen/modal/game/playing_result_modal_pop.dart';
 import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_bottom_modal.dart';
@@ -16,6 +17,7 @@ class AppBottomModalRouter {
       int modalIndex,
       {
         String? chatRoomId,
+        UserInfo? userInfo,
       }) async {
 
 
@@ -34,14 +36,17 @@ class AppBottomModalRouter {
         return SelectLocaleBottomModal();
       },
       4: () async{
-        return ProfileSettingScreen();
+        return ProfileSettingScreen(userInfo : null);
       },
       5: () async{
         return MatchingHistoryModal();
       },
       6: () async{
         return PlayingResultModalPop();
-      }
+      },
+      7: () async{
+        return ProfileSettingScreen(userInfo : userInfo);
+      },
 
 
 
@@ -62,8 +67,6 @@ class AppBottomModalRouter {
           if(modalIndex == 1 || modalIndex == 4 ){
             canBeDragged = false;
           }
-
-
 
           await showModalBottomSheet(
             context: context,

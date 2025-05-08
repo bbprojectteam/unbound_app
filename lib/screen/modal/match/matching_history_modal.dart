@@ -20,13 +20,12 @@ class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
 
   @override
   void initState() {
-    // TODO: implement initState
+
     super.initState();
     matchController = Get.put(MatchController());
     matchController.fnGetJoinLockerRoomList();
 
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -66,14 +65,15 @@ class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
 
               SizedBox(height: 20,),
 
-
               GetBuilder<MatchController>(
                 init: matchController,
                 builder: (context) {
 
                   joinMatchModelList = matchController.joinMatchModelList;
 
-                  return SizedBox(
+                  return matchController.isLoading.value
+                      ? Center(child: CircularProgressIndicator())
+                      : SizedBox(
                     height: 79.h,
                     child: SingleChildScrollView(
                       child: Column(
@@ -94,6 +94,11 @@ class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
                   );
                 }
               )
+
+
+
+
+
 
             ],
           ),

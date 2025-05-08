@@ -39,9 +39,8 @@ class CommentController extends GetxController {
     try {
       http.Response response = await Helpers.apiCall(
           '/service/match/info?matchInfoId=${matchInfoId}',
-          method: "GET",
           headers: {
-            'Content-Type': 'application/json', // JSON 형식
+            'Content-Type': 'application/json',
           },
       );
 

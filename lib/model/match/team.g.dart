@@ -9,7 +9,7 @@ part of 'team.dart';
 Team _$TeamFromJson(Map<String, dynamic> json) => Team()
   ..result = json['result'] as String?
   ..userList = (json['userList'] as List<dynamic>)
-      .map((e) => MemberModel.fromJson(e as Map<String, dynamic>))
+      .map((e) => UserInfo.fromJson(e as Map<String, dynamic>))
       .toList()
   ..teamId = (json['teamId'] as num?)?.toInt();
 

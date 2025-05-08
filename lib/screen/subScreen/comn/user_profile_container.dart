@@ -1,5 +1,5 @@
 import 'package:badboys/controller/member_controller.dart';
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
@@ -15,7 +15,7 @@ class UserProfileContainer extends StatefulWidget {
 
 class _UserProfileContainerState extends State<UserProfileContainer> {
   late MemberController memberController;
-  late MemberModel memberModel;
+  late UserInfo memberModel;
 
   @override
   void initState() {

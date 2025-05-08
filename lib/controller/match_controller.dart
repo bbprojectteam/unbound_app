@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:badboys/model/match/match_info_model.dart';
 
 import 'package:badboys/model/match/match_model.dart';
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
@@ -90,7 +90,7 @@ class MatchController extends GetxController {
 
       if (response.statusCode == 200) {
 
-        MemberModel memberModel = await Helpers.getMember();
+        UserInfo memberModel = await Helpers.getMember();
 
         matchModel.matchMemberModel.add(memberModel);
 
@@ -330,6 +330,8 @@ class MatchController extends GetxController {
 
   Future<void> fnGetJoinLockerRoomList() async {
 
+    isLoading.value = true;
+
     try {
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
@@ -443,7 +445,7 @@ class MatchController extends GetxController {
         matchModel.matchInfoModel = MatchInfoModel.fromJson(jsonResponse['chatRoomInfo']);
 
         for (var item in jsonResponse['memberList']) {
-          matchModel.matchMemberModel.add(MemberModel.fromJson(item));
+          matchModel.matchMemberModel.add(UserInfo.fromJson(item));
 
           if (item['userId'] == loginMemberId) {
             matchModel.isJoinLockerRoom = true;

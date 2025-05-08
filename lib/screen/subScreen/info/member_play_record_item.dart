@@ -141,7 +141,7 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("Start : ",
+                            Text("경기 시작 : ",
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 13,
@@ -165,7 +165,7 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                         Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            Text("  End : ",
+                            Text("경기 종료 : ",
                               style: TextStyle(
                                   color: Colors.grey,
                                   fontSize: 13,

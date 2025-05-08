@@ -4,7 +4,7 @@ import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
 import 'package:badboys/firebase/auth_service.dart';
-import 'package:badboys/model/member/member_model.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -18,7 +18,7 @@ import 'package:shared_preferences/shared_preferences.dart';
 
 class Helpers {
 
-  static Future<void> setMember(MemberModel memberModel) async {
+  static Future<void> setMember(UserInfo memberModel) async {
     // SharedPreferences에 저장
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String memberJson = jsonEncode(memberModel.toJson());
@@ -26,7 +26,7 @@ class Helpers {
     await prefs.setString('member', memberJson);
   }
 
-  static Future<MemberModel> getMember() async {
+  static Future<UserInfo> getMember() async {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     String? member = prefs.getString('member');
@@ -34,7 +34,7 @@ class Helpers {
     if (member != null) {
       Map<String, dynamic> memberMap = jsonDecode(member);
 
-      return MemberModel.fromJson(memberMap);
+      return UserInfo.fromJson(memberMap);
     } else {
       throw Exception('No member data found');
     }

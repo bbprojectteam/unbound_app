@@ -64,7 +64,7 @@ class _AppScreenState extends State<AppScreen> {
           if (index == 0) {
             _childNotifier.value = HomeScreen(); // HomeScreen
           } else if (index == 1) {
-            _childNotifier.value = MatchScreen();// n
+            _childNotifier.value = MatchScreen();
           } else if (index == 2) {
             _childNotifier.value = RankScreen();
           }

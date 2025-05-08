@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ProfileSettingTextField extends StatefulWidget {
@@ -7,11 +8,13 @@ class ProfileSettingTextField extends StatefulWidget {
     required this.labelText,
     required this.textEditingController,
     required this.maxLines,
+    required this.textLength,
   });
 
   final TextEditingController textEditingController;
   final String labelText;
   final int maxLines;
+  final int textLength;
 
   @override
   State<ProfileSettingTextField> createState() => _ProfileSettingTextFieldState();
@@ -46,6 +49,9 @@ class _ProfileSettingTextFieldState extends State<ProfileSettingTextField> {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 8.0),
       child: TextField(
+        inputFormatters: [
+          LengthLimitingTextInputFormatter(widget.textLength), // 최대 10글자 제한 (YYYY-MM-DD)
+        ],
         maxLines : widget.maxLines,
         controller: widget.textEditingController,
         focusNode: _focusNode, // FocusNode 연결
