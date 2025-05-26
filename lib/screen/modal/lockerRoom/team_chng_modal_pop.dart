@@ -90,7 +90,7 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 50,),
-              CustomAppbar(isNotification: false, ),
+              CustomAppbar(isNotification: false, isBackButton : false ),
 
               Container(
                 padding: EdgeInsets.only(left: 25, right: 25),

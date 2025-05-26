@@ -46,7 +46,7 @@ class _MatchingButtonState extends State<MatchingButton> {
       matchController.isMatch.value = true;
 
       // 타이머로 매칭 완료 여부 확인
-      timer = Timer.periodic(Duration(seconds: 1), (timer) {
+      timer = Timer.periodic(Duration(seconds: 100), (timer) {
         if (prefs.getBool("isMatching") == true) {
           matchController.isMatching.value = false;
           // 매칭이 완료되면 타이머 종료
@@ -103,22 +103,20 @@ class _MatchingButtonState extends State<MatchingButton> {
                   ],
                 ),
               )
-              : Container(
-                child: Center(
-                  child: Text(
-                    matchController.isMatch.value
-                        ? '라커룸 이동'
-                        : '매칭하기',
-                    style: TextStyle(
-                      color: Colors.orange,
-                      fontSize: 19,
-                        fontWeight: FontWeight.w700,
-                        fontFamily: 'EHSMB'
-                  
-                    ),
+              : Center(
+                child: Text(
+                  matchController.isMatch.value
+                      ? '라커룸 이동'
+                      : '매칭',
+                  style: TextStyle(
+                    color: Colors.orange,
+                    fontSize: 19,
+                      fontWeight: FontWeight.w700,
+                      fontFamily: 'EHSMB'
+
                   ),
                 ),
-          ),
+              ),
         ),
       );
     });

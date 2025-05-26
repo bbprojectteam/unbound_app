@@ -69,7 +69,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
                 SizedBox(height : 40),
-                CustomAppbar(isNotification: true, ),
+                CustomAppbar(isNotification: true, isBackButton : true),
                   
                 Container(
                   width: 90.w,
@@ -398,7 +398,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                                       'commentId': matchHistoryCommentModel.commentId,
                                       'matchInfoId': matchHistoryInfoModel.matchInfoId,
                                       'depth': matchHistoryCommentModel.depth,
-                                      'content': '삭제된 댓글입니다',
+                                      'useYn' : "N"
                                     };
                                     commentController.fnInsertComment(matchHistoryInfoModel.matchInfoId!,commentData);
                                   }
@@ -422,7 +422,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                                           'commentId': matchHistoryCommentModel.commentId,
                                           'matchInfoId': matchHistoryInfoModel.matchInfoId,
                                           'depth': matchHistoryCommentModel.depth,
-                                          'content': '삭제된 댓글입니다',
+                                          'useYn' : "N"
                                         };
 
                                         commentController.fnInsertComment(matchHistoryInfoModel.matchInfoId!,commentData);
@@ -498,6 +498,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                               'parentId': parentId,
                               'depth': depth,
                               'content': textEditingController.text,
+                              'useYn': "Y",
                             };
 
                             commentController.fnInsertComment(matchHistoryInfoModel.matchInfoId!,commentData);

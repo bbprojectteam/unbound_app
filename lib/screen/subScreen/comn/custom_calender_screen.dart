@@ -18,9 +18,8 @@ class _CustomCalenderScreenState extends State<CustomCalenderScreen> {
   void initState() {
     super.initState();
 
-    // 오늘 날짜를 기준으로 5일 전부터 5일 후까지 표시
-    startDate = today.subtract(Duration(days: 4)); // 5일 전
-    endDate = today.add(Duration(days: 4)); // 5일 후
+    startDate = today.subtract(Duration(days: 4));
+    endDate = today.add(Duration(days: 4));
 
   }
 

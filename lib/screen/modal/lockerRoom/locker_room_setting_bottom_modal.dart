@@ -61,18 +61,20 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
     // TODO: implement initState
     super.initState();
 
-    matchController = Get.find<MatchController>();
+    matchController = Get.put(MatchController());
     lockerRoomTitleEditController.text = matchController.matchModel.matchInfoModel!.name!;
-    lockerRoomDescriptionEditController.text = matchController.matchModel.matchInfoModel!.description!;
+    lockerRoomDescriptionEditController.text = matchController.matchModel.matchInfoModel!.description ?? "";
 
-    List<String> matchDt = matchController.matchModel.matchInfoModel!.matchDt!.toString().split(' ');
+    if (matchController.matchModel.matchInfoModel!.matchDt != null) {
+      List<String> matchDt = matchController.matchModel.matchInfoModel!.matchDt!.toString().split(' ');
 
-    selectedYear = matchDt[0].split('-')[0];
-    selectedMonth = matchDt[0].split('-')[1];
-    selectedDay = matchDt[0].split('-')[2];
+      selectedYear = matchDt[0].split('-')[0];
+      selectedMonth = matchDt[0].split('-')[1];
+      selectedDay = matchDt[0].split('-')[2];
 
-    selectedHour = matchDt[1].split(':')[0];
-    selectedMinute = matchDt[1].split(':')[1];
+      selectedHour = matchDt[1].split(':')[0];
+      selectedMinute = matchDt[1].split(':')[1];
+    }
 
 
     threeOnThreeYn = matchController.matchModel.matchInfoModel!.threeOnThreeYn!;
@@ -99,7 +101,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
           mainAxisAlignment: MainAxisAlignment.start,
           crossAxisAlignment: CrossAxisAlignment.start,
           children: [
-            CustomAppbar(isNotification: false, ),
+            CustomAppbar(isNotification: false, isBackButton : false),
             SizedBox(height: 15,),
 
             ProfileSettingTextField(labelText: "방 제목",textLength : 20 ,textEditingController: lockerRoomTitleEditController,maxLines: 1,),
@@ -237,7 +239,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
             SizedBox(height: 10,),
             GestureDetector(
               onTap: () async {
-                await AppBottomModalRouter.fnModalRouter(context,3);
+                AppBottomModalRouter.fnModalRouter(context,3);
               },
               child: Container(
                 width: 100.w,
@@ -392,8 +394,6 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
                     'refereeYn' :refereeYn,
                     'halfCourtYn' : halfCourtYn,
                   };
-
-                  print(requestMap);
 
                   await matchController.fnMatchRoomInfoUpdate(requestMap);
                   matchController.fnMatchInfo(widget.chatRoomId!);

@@ -35,10 +35,11 @@ class AuthService {
     String? idToken = await user.getIdToken();
 
 
-    // print(idToken!.length);
-    // print(idToken!.substring(0,1000));
-    // print( idToken!.substring(1000,idToken.length));
-    // print('----');
+    print(idToken!.length);
+    print(idToken!.substring(0,1000));
+    print( idToken!.substring(1000,idToken.length));
+    print('----');
+
     final String? deviceToken = await FcmNotifications.getMyDeviceToken();
     // print(deviceToken);
     http.Response response = await Helpers.apiCall(

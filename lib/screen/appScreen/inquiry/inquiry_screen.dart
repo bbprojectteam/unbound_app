@@ -38,7 +38,7 @@ class _InquiryScreenState extends State<InquiryScreen> with TickerProviderStateM
       child: Column(
         children: [
           SizedBox(height: 40,),
-          CustomAppbar(isNotification: true, ),
+          CustomAppbar(isNotification: true,isBackButton : false ),
 
           TabBar(
             tabAlignment : TabAlignment.start,

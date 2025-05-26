@@ -63,7 +63,7 @@ class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
         children: [
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: CustomAppbar(isNotification: false, ),
+            child: CustomAppbar(isNotification: false, isBackButton : false),
           ),
 
           Container(

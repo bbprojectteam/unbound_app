@@ -91,7 +91,7 @@ class _PlayHistoryCommentItemState extends State<PlayHistoryCommentItem> {
                         ),
                       ),
 
-                      if (widget.matchHistoryCommentModel.userId == widget.loginMemberId)
+                      if (widget.matchHistoryCommentModel.userId == widget.loginMemberId && widget.matchHistoryCommentModel.useYn == "Y")
                         GestureDetector(
                           onTap: (){
                             widget.deleteCommentCallBack(widget.matchHistoryCommentModel);
@@ -127,9 +127,9 @@ class _PlayHistoryCommentItemState extends State<PlayHistoryCommentItem> {
                           ),
                         ),
                         Text(
-                          widget.matchHistoryCommentModel.content.toString().split(' ')[1] ?? '',
+                          widget.matchHistoryCommentModel.useYn == "N" ? "삭제된 댓글입니다" : widget.matchHistoryCommentModel.content.toString().split(' ')[1] ?? '',
                           style: TextStyle(
-                            color: Colors.white,
+                            color: widget.matchHistoryCommentModel.useYn == "N" ? Colors.grey : Colors.white,
                             fontWeight: FontWeight.w700,
                             fontFamily: 'EHSMB',
                           ),
@@ -143,9 +143,9 @@ class _PlayHistoryCommentItemState extends State<PlayHistoryCommentItem> {
                       spacing: 6,
                       children: [
                         Text(
-                          widget.matchHistoryCommentModel.content ?? '',
+                          widget.matchHistoryCommentModel.useYn == "N" ? "삭제된 댓글입니다" : widget.matchHistoryCommentModel.content ?? '',
                           style: TextStyle(
-                              color: Colors.white,
+                              color: widget.matchHistoryCommentModel.useYn == "N" ? Colors.grey : Colors.white,
                               fontWeight: FontWeight.w700,
                               fontFamily: 'EHSMB'
 

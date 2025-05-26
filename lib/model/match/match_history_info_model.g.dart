@@ -10,6 +10,7 @@ MatchHistoryInfoModel _$MatchHistoryInfoModelFromJson(
         Map<String, dynamic> json) =>
     MatchHistoryInfoModel()
       ..matchInfoId = (json['matchInfoId'] as num?)?.toInt()
+      ..matchName = json['matchName'] as String?
       ..startAt = json['startAt'] as String?
       ..endAt = json['endAt'] as String?
       ..regionId = (json['regionId'] as num?)?.toInt()
@@ -21,6 +22,7 @@ Map<String, dynamic> _$MatchHistoryInfoModelToJson(
         MatchHistoryInfoModel instance) =>
     <String, dynamic>{
       'matchInfoId': instance.matchInfoId,
+      'matchName': instance.matchName,
       'startAt': instance.startAt,
       'endAt': instance.endAt,
       'regionId': instance.regionId,

@@ -10,10 +10,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class CustomMatchAppbar extends StatefulWidget {
   const CustomMatchAppbar({
     super.key,
-    required this.chatRoomId
+    required this.chatRoomId,
+    required this.isBackButton,
   });
 
   final String chatRoomId;
+  final bool isBackButton;
 
   @override
   State<CustomMatchAppbar> createState() => _CustomMatchAppbarState();
@@ -30,7 +32,6 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
     super.initState();
     matchController = Get.find<MatchController>();
   }
-
 
   @override
   Widget build(BuildContext context) {
@@ -53,20 +54,38 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             children: [
 
-              GestureDetector(
-                onTap: () async{
-                  await _authService.signOut();
-                  Get.toNamed('/splash');
-                },
-                child: Text(
-                  'Unbound',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 20,
-                      fontFamily: 'EHSMB',
+              Row(
+                children: [
+                  if (widget.isBackButton)
+                    GestureDetector(
+                      onTap: () {
+                        Get.back();
+                      },
+                      child: Icon(
+                        Icons.arrow_back,
+                        color: Colors.white,
+                        size: 23,
+                      ),
+                    ),
+
+                  SizedBox(width: 10,),
+
+                  GestureDetector(
+                    onTap: () async{
+                      await _authService.signOut();
+                      Get.toNamed('/splash');
+                    },
+                    child: Text(
+                      'Unbound',
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.w900,
+                        fontSize: 20,
+                        fontFamily: 'EHSMB',
+                      ),
+                    ),
                   ),
-                ),
+                ],
               ),
 
               Row(

@@ -77,7 +77,7 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
 
-                        Text('대전 탄방동 KAIST 농구장',
+                        Text( widget.matchHistoryInfoModel.matchName ?? "NULL",
                           style: TextStyle(
                             color: Colors.white,
                             fontSize: 15,

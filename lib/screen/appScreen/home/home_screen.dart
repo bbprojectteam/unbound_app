@@ -51,6 +51,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 SizedBox(height: 40,),
                 CustomAppbar(
                   isNotification: true,
+                    isBackButton : false
                 ),
 
                 SizedBox(height: 5,),
@@ -242,15 +243,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                         fontWeight: FontWeight.w900),
                                   ),
                                 ),
-                                Tab(
-                                  child: Text(
-                                    '이벤트 ',
-                                    style: TextStyle(
-                                        color: Colors.white,
-                                        fontSize: 16,
-                                        fontWeight: FontWeight.w900),
-                                  ),
-                                ),
                               ],
                             ),
 
@@ -264,27 +256,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                                   StandByLockerRoomList(),
 
 
-                                  // 두 번째 탭 (주변의 코트)
-                                  Column(
-                                    crossAxisAlignment:
-                                    CrossAxisAlignment.center,
-                                    children: [
-                                      Padding(
-                                        padding: const EdgeInsets.all(8.0),
-                                        child: Text(
-                                          '최근 이벤트',
-                                          style: TextStyle(
-                                              fontWeight: FontWeight.w700,
-                                              fontSize: 17,
-                                              color: Colors.white
-                                          ),
-                                        ),
-                                      ),
-
-                                      for (int i = 0; i < 3; i++)
-                                        EventListItem()
-                                    ],
-                                  ),
                                 ],
                               ),
                             ),

@@ -55,7 +55,10 @@ class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
               mainAxisAlignment: MainAxisAlignment.start,
               crossAxisAlignment: CrossAxisAlignment.start,
               children: [
-                CustomAppbar(isNotification: false, ),
+                CustomAppbar(
+                    isNotification: false,
+                    isBackButton : false
+                ),
 
                 Expanded(
                   child: SingleChildScrollView(

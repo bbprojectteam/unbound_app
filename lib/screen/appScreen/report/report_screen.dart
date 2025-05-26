@@ -43,7 +43,7 @@ class _ReportScreenState extends State<ReportScreen> {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               SizedBox(height: 40),
-              CustomAppbar(isNotification: true, ),
+              CustomAppbar(isNotification: true, isBackButton : false),
 
               SizedBox(height: 20),
               // 신고할 유저 선택 DropdownButton

@@ -122,7 +122,9 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                             border: Border.all(width: 2.3,color: Colors.orange)
                         ),
                         child: Text(
-                          matchModel.matchInfoModel?.description ?? "메모가 없습니다.",
+                            matchModel.matchInfoModel?.description?.trim().isNotEmpty == true
+                                ? matchModel.matchInfoModel!.description! : "메모가 없습니다.",
+
                           style: TextStyle(
                               color: Colors.orange,
                               fontWeight: FontWeight.w700,

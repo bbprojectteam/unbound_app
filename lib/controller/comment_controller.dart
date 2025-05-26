@@ -84,6 +84,11 @@ class CommentController extends GetxController {
 
   Future<void> fnInsertComment(int? matchInfoId, Map<String, dynamic> commentData) async {
 
+
+    print('댓글 입력');
+    print(commentData);
+
+
     try {
       http.Response response = await Helpers.apiCall(
           '/service/match/comment/update',
@@ -96,7 +101,8 @@ class CommentController extends GetxController {
             "matchInfoId": commentData['matchInfoId'],
             "parentId": commentData['parentId'],
             "depth": commentData['depth'],
-            "content": commentData['content']
+            "content": commentData['content'],
+            "useYn" : commentData['useYn']
           }
       );
 

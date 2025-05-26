@@ -76,7 +76,7 @@ class MyApp extends StatelessWidget {
                   page: () => AppScreen(child: RankScreen())),
               GetPage(name: '/memberPageScreen',
                   transition: Transition.fadeIn,
-                  page: () => AppScreen(child: MemberPageScreen())),
+                  page: () => AppScreen(child: const MemberPageScreen())),
               GetPage(name: '/lockerRoomScreen',
                   transition: Transition.fadeIn,
                   page: () => AppScreen(child: LockerRoomScreen())),

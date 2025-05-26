@@ -79,7 +79,10 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                   child: Column(
                     children: [
                       SizedBox(height: 40,),
-                      CustomAppbar(isNotification: true),
+                      CustomAppbar(
+                          isBackButton : true,
+                          isNotification: true
+                      ),
 
                       Column(
                         crossAxisAlignment: CrossAxisAlignment.center,
@@ -135,7 +138,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                       if(memberController.isAuth.value)
                         GestureDetector(
                           onTap :() async {
-                            await AppBottomModalRouter.fnModalRouter(context, 7, userInfo: memberMatchHistoryModel.userInfo);
+                            AppBottomModalRouter.fnModalRouter(context, 7, userInfo: memberMatchHistoryModel.userInfo);
                             await memberController.fnGetMemberInfo(memberMatchHistoryModel.userInfo?.userId);
                           },
                           child: Row(

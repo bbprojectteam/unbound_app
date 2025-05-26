@@ -9,6 +9,7 @@ part 'match_history_info_model.g.dart';
 class MatchHistoryInfoModel {
 
    int? matchInfoId;
+   String? matchName;
    String? startAt;
    String? endAt;
    int? regionId;

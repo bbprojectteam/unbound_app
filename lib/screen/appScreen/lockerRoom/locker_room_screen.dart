@@ -67,8 +67,10 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           SizedBox(height: 40,),
-          CustomMatchAppbar(chatRoomId: matchingRoomId,),
-
+          CustomMatchAppbar(
+            isBackButton : true,
+            chatRoomId: matchingRoomId,
+          ),
 
           TabBar(
             tabAlignment : TabAlignment.start,

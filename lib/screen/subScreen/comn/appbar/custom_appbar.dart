@@ -10,9 +10,11 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class CustomAppbar extends StatefulWidget {
   const CustomAppbar({
     super.key,
+    required this.isBackButton,
     required this.isNotification,
   });
 
+  final bool isBackButton;
   final bool isNotification;
 
   @override
@@ -34,21 +36,40 @@ class _CustomAppbarState extends State<CustomAppbar> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [
 
-          GestureDetector(
-            onTap: () async{
-              await _authService.signOut();
-              Get.toNamed('/splash');
-            },
-            child: Text(
-              'Unbound',
-              style: TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.w900,
-                fontSize: 20,
-                fontStyle: FontStyle.italic,
-                  fontFamily: 'EHSMB'
+          Row(
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              if (widget.isBackButton)
+                GestureDetector(
+                  onTap: () {
+                    Get.back();
+                  },
+                  child: Icon(
+                    Icons.arrow_back,
+                    color: Colors.white,
+                    size: 23,
+                  ),
+                ),
+
+              SizedBox(width: 10,),
+
+              GestureDetector(
+                onTap: () async{
+                  await _authService.signOut();
+                  Get.toNamed('/splash');
+                },
+                child: Text(
+                  'Unbound',
+                  style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.w900,
+                      fontSize: 20,
+                      fontStyle: FontStyle.italic,
+                      fontFamily: 'EHSMB'
+                  ),
+                ),
               ),
-            ),
+            ],
           ),
 
           Row(

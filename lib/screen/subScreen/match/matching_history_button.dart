@@ -16,7 +16,7 @@ class _MatchingHistoryButtonState extends State<MatchingHistoryButton> {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap:() async {
-        await AppBottomModalRouter.fnModalRouter(context,5);
+        AppBottomModalRouter.fnModalRouter(context,5);
       },
       child: Container(
         decoration: BoxDecoration(

@@ -1,5 +1,6 @@
 import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
+import 'package:badboys/screen/modal/chat/select_image_bottom_modal.dart';
 import 'package:badboys/screen/modal/game/playing_result_modal_pop.dart';
 import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_bottom_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart';
@@ -12,12 +13,13 @@ import 'package:flutter/material.dart';
 // AppBottomRouter 클래스 정의
 class AppBottomModalRouter {
 
-  static Future<void> fnModalRouter(
+  static void fnModalRouter(
       BuildContext context,
       int modalIndex,
       {
         String? chatRoomId,
         UserInfo? userInfo,
+        Function? callBack,
       }) async {
 
 
@@ -47,7 +49,11 @@ class AppBottomModalRouter {
       7: () async{
         return ProfileSettingScreen(userInfo : userInfo);
       },
-
+      8: () async{
+        return SelectImageBottomModal(callBack : (imageFile) {
+          callBack!(imageFile);
+        });
+      },
 
 
     };

@@ -14,6 +14,7 @@ class MatchHistoryCommentModel {
   String? username;
   String? profileImage;
   String? updatedAt;
+  String? useYn;
   List<MatchHistoryCommentModel> childList = [];
 
   MatchHistoryCommentModel();

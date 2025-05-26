@@ -6,6 +6,7 @@ import 'package:badboys/model/chat/chat_model.dart';
 import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -13,6 +14,8 @@ import 'package:stomp_dart_client/stomp.dart';
 import 'package:stomp_dart_client/stomp_config.dart';
 import 'package:stomp_dart_client/stomp_frame.dart';
 import 'package:http/http.dart' as http;
+import 'package:http_parser/http_parser.dart';
+
 
 class ChatController extends GetxController{
   late StompClient stompClient;
@@ -155,7 +158,6 @@ class ChatController extends GetxController{
     });
   }
 
-
   void scrollToLoadChat(bool isScrollMove, int loadChatListCnt) {
     WidgetsBinding.instance.addPostFrameCallback((_) {
       if(isScrollMove){
@@ -165,6 +167,7 @@ class ChatController extends GetxController{
       }
     });
   }
+
   bool isAtBottom() {
     double threshold = 50.0; //허용 범위
     return scrollController.position.maxScrollExtent - scrollController.position.pixels <= threshold;
@@ -219,7 +222,7 @@ class ChatController extends GetxController{
       chatModel.username = matchedMember.username;
       chatModel.profileImage = matchedMember.profileImage;
       chatModel.createdAt = _formatMessageTime(dateTime);
-      chatModel.unreadMemberCnt = 5;
+      chatModel.unreadMemberCnt = 5; //???
       chatModel.isMyChat = false;
 
       chatModelList.add(chatModel);
@@ -267,7 +270,7 @@ class ChatController extends GetxController{
     chatModel.senderId = loginMemberId;
     chatModel.message = message;
     chatModel.createdAt = _formatMessageTime(dateTime);
-    chatModel.unreadMemberCnt = 4;
+    chatModel.unreadMemberCnt = 5;
     chatModel.isMyChat = true;
 
     chatModelList.add(chatModel);
@@ -276,19 +279,59 @@ class ChatController extends GetxController{
     }
   }
 
+  Future<void> sendImageMessage(String chatRoomId, Uint8List? imageBytes) async {
+    try {
+      http.Response response = await Helpers.apiCall(
+          '/service/chatRoom/${chatRoomId}/uploadImage',
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          file: http.MultipartFile.fromBytes(
+            'profileImageFile', // 서버에서 받을 필드 이름
+            imageBytes!, // 선택한 파일의 바이트
+            filename: "test", // 파일 이름
+            contentType: MediaType('image', 'jpg'),
+          )
+
+      );
+
+      print(response);
+
+      if (response.statusCode == 200) {
+
+
+
+
+      } else {
+        throw Exception('sendImageMessage Failed');
+      }
+
+    } catch (error) {
+      print('sendImageMessage Error: $error');
+    }
+  }
+
   // 메시지 전송
   Future<void> sendMessage(String chatRoomId,String message) async {
 
+    int loginMemberId = await Helpers.getMemberId();
+
     var body = jsonEncode({
       'chatRoomId': chatRoomId,
-      'senderId' : 8,
+      'senderId' : loginMemberId,
       'message': message,
     });
 
-    stompClient.send(
-      destination: '/app/chat.send',
-      body: body,
-    );
+    try {
+      stompClient.send(
+        destination: '/app/chat.send',
+        body: body,
+      );
+    } catch (e) {
+      print('채팅 전송 오류 : ${e}');
+    }
+
 
     await _createNewSendMessage(message);
 

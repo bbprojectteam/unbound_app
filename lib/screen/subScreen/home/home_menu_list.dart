@@ -12,7 +12,7 @@ class HomeMenuList extends StatefulWidget {
 
 class _HomeMenuListState extends State<HomeMenuList> {
 
-  late int? memberId;
+  late int? loginMemberId;
   bool isLoading = false;
 
   @override
@@ -23,7 +23,7 @@ class _HomeMenuListState extends State<HomeMenuList> {
   }
 
   void _loadMemberId() async {
-    memberId = await Helpers.getMemberId();
+    loginMemberId = await Helpers.getMemberId();
     isLoading = true;
     setState(() {});
   }
@@ -48,7 +48,7 @@ class _HomeMenuListState extends State<HomeMenuList> {
                 iconWSize: 6.6.w,
                 iconHSize: 3.h,
                 uri: '/memberPageScreen',
-                arguments: {'tab': 0, 'memberId' : memberId}),
+                arguments: {'tab': 0, 'memberId' : loginMemberId}),
 
             HomeMenuBtn(icon: null,
                 imagePath: 'assets/images/rank.png',
@@ -70,7 +70,7 @@ class _HomeMenuListState extends State<HomeMenuList> {
                 iconWSize: 6.6.w,
                 iconHSize: 3.h,
                 uri: '/memberPageScreen',
-                arguments: {'tab': 1}),
+                arguments: {'tab': 1, 'memberId' : loginMemberId}),
 
             HomeMenuBtn(icon: null,
                 imagePath: 'assets/images/admin.png',

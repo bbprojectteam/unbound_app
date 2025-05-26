@@ -1,11 +1,16 @@
 import 'dart:ffi';
+import 'dart:typed_data';
 
 import 'package:badboys/controller/chat_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
+import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/chat/chat_item.dart';
+import 'package:badboys/utils/helpers.dart';
+import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class ChatList extends StatefulWidget {
@@ -24,6 +29,7 @@ class _ChatListState extends State<ChatList> {
   final TextEditingController textController = TextEditingController();
   late ChatController chatController;
   late MatchController matchController;
+
 
   @override
   void initState() {
@@ -48,11 +54,6 @@ class _ChatListState extends State<ChatList> {
     chatController.scrollToJump();
   }
 
-
-  @override
-  void dispose() {
-    super.dispose();
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -114,7 +115,22 @@ class _ChatListState extends State<ChatList> {
                       decoration: InputDecoration(
                         hintText: '메시지를 입력하세요',  // 기본 텍스트
                         hintStyle: TextStyle(color: Colors.grey),
-                        prefixIcon: Icon(Icons.add, color: Colors.grey),  // 왼쪽에 플러스 아이콘 추가
+                        prefixIcon: GestureDetector(
+                          onTap: () async {
+
+
+                            AppBottomModalRouter.fnModalRouter(context,8, callBack: (imageFile) async {
+                              await chatController.sendImageMessage(widget.chatRoomId, imageFile);
+                            });
+
+
+
+                          },
+                          child: Icon(
+                              Icons.add,
+                              color: Colors.grey
+                          ),
+                        ),  // 왼쪽에 플러스 아이콘 추가
                         border: OutlineInputBorder(
                           borderRadius: BorderRadius.circular(20),  // 둥근 모서리
                           borderSide: BorderSide(color: Colors.grey),
@@ -129,6 +145,7 @@ class _ChatListState extends State<ChatList> {
                   IconButton(
                     icon: Icon(Icons.send),
                     onPressed: () async {
+
                       await chatController.sendMessage(widget.chatRoomId,textController.text);
                       textController.text = "";
                     },
