@@ -393,7 +393,7 @@ class MatchController extends GetxController {
           body: {
             'name' : requestMap['matchName'],
             'matchDt' : requestMap['matchDt'],
-            'location' : '대전테스트',
+            'location' : requestMap['location'],
             'description' : requestMap['matchDescription'],
             'threeOnThreeYn' : requestMap['threeOnThreeYn'],
             'ballYn' : requestMap['ballYn'],

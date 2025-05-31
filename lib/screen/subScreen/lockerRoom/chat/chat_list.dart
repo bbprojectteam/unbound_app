@@ -8,6 +8,7 @@ import 'package:badboys/screen/subScreen/lockerRoom/chat/chat_item.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
@@ -119,11 +120,23 @@ class _ChatListState extends State<ChatList> {
                           onTap: () async {
 
 
-                            AppBottomModalRouter.fnModalRouter(context,8, callBack: (imageFile) async {
-                              await chatController.sendImageMessage(widget.chatRoomId, imageFile);
+                            await AppBottomModalRouter.fnModalRouter(context,8, callBack: (imageFile) async {
+                              String? imagePath = await chatController.sendImageMessage(widget.chatRoomId, imageFile);
+
+                              if (imagePath != null) {
+                                chatController.sendMessage(widget.chatRoomId, imagePath);
+                              } else {
+                                Fluttertoast.showToast(
+                                  msg: "잠시 후 다시 시도해주세요. ", // 메시지 내용
+                                  toastLength: Toast.LENGTH_SHORT, // 토스트의 길이 (짧거나 길게 설정)
+                                  gravity: ToastGravity.BOTTOM,  // 토스트 위치 (BOTTOM, CENTER, TOP)
+                                  timeInSecForIosWeb: 1,         // iOS/Web에서의 지속 시간 설정
+                                  backgroundColor: Colors.black, // 배경색
+                                  textColor: Colors.white,       // 텍스트 색
+                                  fontSize: 16.0,                // 폰트 크기
+                                );
+                              }
                             });
-
-
 
                           },
                           child: Icon(

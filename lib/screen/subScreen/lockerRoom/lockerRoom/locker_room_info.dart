@@ -7,9 +7,10 @@ import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/match_point_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_inappwebview/flutter_inappwebview.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
+import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class LockerRoomInfo extends StatefulWidget {
@@ -75,11 +76,17 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
 
-                      Image.asset(
-                        'assets/images/123.PNG',
+                      KakaoMapView(
                         width: 100.w,
-                        height: 23.h, // 명시적으로 크기 설정
-                        fit: BoxFit.cover,
+                        height: 23.h,
+                        kakaoMapKey: dotenv.get("KAKAO_JAVASCRIPT_KEY"),
+                        lat: 37.5804159,
+                        lng: 127.00468989999999,
+                        zoomLevel: 1,
+                        draggableMarker: false,
+                        showMapTypeControl: false,
+                        showZoomControl: true,
+                        markerImageURL: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
                       ),
 
                       Container(

@@ -137,7 +137,7 @@ class ChatController extends GetxController{
     if (scrollController.hasClients) {
       WidgetsBinding.instance.addPostFrameCallback((_) {
           scrollController.animateTo(
-            chatModelList.length * 8.h,
+            chatModelList.length * 40.h,
             duration: Duration(milliseconds: 300), // 이동 시간을 설정
             curve: Curves.easeInOut, // 애니메이션의 곡선을 설정
           );
@@ -279,7 +279,7 @@ class ChatController extends GetxController{
     }
   }
 
-  Future<void> sendImageMessage(String chatRoomId, Uint8List? imageBytes) async {
+  Future<String?> sendImageMessage(String chatRoomId, Uint8List? imageBytes) async {
     try {
       http.Response response = await Helpers.apiCall(
           '/service/chatRoom/${chatRoomId}/uploadImage',
@@ -290,25 +290,25 @@ class ChatController extends GetxController{
           file: http.MultipartFile.fromBytes(
             'profileImageFile', // 서버에서 받을 필드 이름
             imageBytes!, // 선택한 파일의 바이트
-            filename: "test", // 파일 이름
+            filename: "example.jpg", // 파일 이름
             contentType: MediaType('image', 'jpg'),
           )
 
       );
 
-      print(response);
-
       if (response.statusCode == 200) {
+        final decodedBody = utf8.decode(response.bodyBytes);
 
+        var jsonResponse = jsonDecode(decodedBody);
 
-
-
+        return jsonResponse['imageUrl'];
       } else {
         throw Exception('sendImageMessage Failed');
       }
 
     } catch (error) {
       print('sendImageMessage Error: $error');
+      return null;
     }
   }
 

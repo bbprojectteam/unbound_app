@@ -1,4 +1,6 @@
 
+import 'dart:convert';
+
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/modal/comn/select_bottom_modal_screen.dart';
@@ -7,6 +9,7 @@ import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/match_point_item.dart';
 import 'package:badboys/screen/subScreen/register/profile_setting_text_field.dart';
 import 'package:flutter/material.dart';
+import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -40,6 +43,10 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
   String selectedHour = "05";
   String selectedMinute = "30";
 
+  String? location;
+
+  double latitude = 0.0;  // 위도
+  double longitude = 0.0;  // 경도
 
   TextEditingController lockerRoomTitleEditController = TextEditingController();
   TextEditingController lockerRoomDescriptionEditController = TextEditingController();
@@ -64,6 +71,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
     matchController = Get.put(MatchController());
     lockerRoomTitleEditController.text = matchController.matchModel.matchInfoModel!.name!;
     lockerRoomDescriptionEditController.text = matchController.matchModel.matchInfoModel!.description ?? "";
+    location = matchController.matchModel.matchInfoModel!.location;
 
     if (matchController.matchModel.matchInfoModel!.matchDt != null) {
       List<String> matchDt = matchController.matchModel.matchInfoModel!.matchDt!.toString().split(' ');
@@ -110,7 +118,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
 
             SizedBox(height: 10,),
 
-            Text("경기 날짜 선택",
+            Text("경기 날짜",
               style: TextStyle(
                 color: Colors.white,
                 fontSize : 16,
@@ -208,7 +216,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
             SizedBox(height: 20,),
 
 
-            Text("경기장 선택",
+            Text("경기장",
               style: TextStyle(
                   color: Colors.white,
                   fontSize : 16,
@@ -226,7 +234,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
               ),
               child: Center(
                 child: Text(
-                  '경기장을 선택해주세요',
+                  location ?? '경기장을 선택해주세요',
                   style: TextStyle(
                       color: Colors.white,
                       fontSize: 18,
@@ -239,7 +247,19 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
             SizedBox(height: 10,),
             GestureDetector(
               onTap: () async {
-                AppBottomModalRouter.fnModalRouter(context,3);
+                await AppBottomModalRouter.fnModalRouter(context,3, callBack: (value) {
+                  location = value.address;
+
+                  WidgetsBinding.instance.addPostFrameCallback((_) async {
+                    List<Location> locations = await locationFromAddress(value.roadAddress);
+                    if (locations.isNotEmpty) {
+                      latitude = locations[0].latitude;
+                      longitude = locations[0].longitude;
+                    }
+                  });
+
+                  setState(() {});
+                });
               },
               child: Container(
                 width: 100.w,
@@ -387,6 +407,7 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
                     'matchName': matchName,
                     'matchDescription': matchDescription,
                     'matchDt': matchDt,
+                    'location': location ?? "",
                     'threeOnThreeYn' : threeOnThreeYn,
                     'ballYn' : ballYn,
                     'backBoardYn' : backBoardYn,

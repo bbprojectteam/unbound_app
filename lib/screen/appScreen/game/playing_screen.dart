@@ -533,7 +533,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
 
                   _stopTimer();
                   ///경기 결과 팝업 생성
-                  AppBottomModalRouter.fnModalRouter(context, 6);
+                  await AppBottomModalRouter.fnModalRouter(context, 6);
                 },
                 child: Container(
                   width: 35.w,

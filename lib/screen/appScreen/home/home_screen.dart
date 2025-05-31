@@ -72,111 +72,111 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 ),
                 SizedBox(height: 10,),
 
-                Container(
-                  width: 95.w,
-                  height: 15.h,
-                  decoration: BoxDecoration(
-                    borderRadius: BorderRadius.circular(10),
-                    // border: Border.all(color: Colors.orange,width: 1),
-                    color: Color(0x39ffffff),
-                  ),
-
-                  child: Padding(
-                    padding: const EdgeInsets.all(15.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-
-                      children: [
-
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.start,
-                              children: [
-                                Text('경상남도 양산시',
-                                  style: TextStyle(
-                                    color: Colors.white,
-                                    fontWeight: FontWeight.w700,
-                                    fontSize: 18,
-                                      fontFamily: 'EHSMB'
-                                  ),
-                                ),
-                                Text('물금읍',
-                                  style: TextStyle(
-                                      color: Colors.grey,
-                                      fontWeight: FontWeight.w700,
-                                      fontSize: 15,
-                                      fontFamily: 'EHSMB'
-                                  ),
-                                ),
-                              ],
-                            ),
-
-                            Row(
-                              crossAxisAlignment: CrossAxisAlignment.center,
-                              children: [
-                                Text('26',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 20,
-                                      fontFamily: 'EHSMB'
-                                  ),
-                                ),
-                                SizedBox(
-                                  width: 10,
-                                ),
-                                Icon(Icons.umbrella,color: Colors.white,),
-
-                                Text('38%',
-                                  style: TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.w600,
-                                      fontSize: 14,
-                                      fontFamily: 'EHSMB'
-                                  ),
-                                ),
-                              ],
-                            ),
-
-
-                          ],
-                        ),
-
-
-
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Column(
-                              crossAxisAlignment: CrossAxisAlignment.end,
-                              children: [
-                               
-                               Icon(Icons.cloud,color: Colors.white,size: 50,),
-                              ],
-                            ),
-
-                            Text('9:15 오후',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700,
-                                  fontSize: 20,
-                                  fontFamily: 'EHSMB'
-                              ),
-                            ),
-                          ],
-                        ),
-
-
-
-
-                      ],
-                    ),
-                  ),
-                ),
+                // Container(
+                //   width: 95.w,
+                //   height: 15.h,
+                //   decoration: BoxDecoration(
+                //     borderRadius: BorderRadius.circular(10),
+                //     // border: Border.all(color: Colors.orange,width: 1),
+                //     color: Color(0x39ffffff),
+                //   ),
+                //
+                //   child: Padding(
+                //     padding: const EdgeInsets.all(15.0),
+                //     child: Row(
+                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //       crossAxisAlignment: CrossAxisAlignment.start,
+                //
+                //       children: [
+                //
+                //         // Column(
+                //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //         //   crossAxisAlignment: CrossAxisAlignment.start,
+                //         //   children: [
+                //         //     Column(
+                //         //       crossAxisAlignment: CrossAxisAlignment.start,
+                //         //       children: [
+                //         //         Text('경상남도 양산시',
+                //         //           style: TextStyle(
+                //         //             color: Colors.white,
+                //         //             fontWeight: FontWeight.w700,
+                //         //             fontSize: 18,
+                //         //               fontFamily: 'EHSMB'
+                //         //           ),
+                //         //         ),
+                //         //         Text('물금읍',
+                //         //           style: TextStyle(
+                //         //               color: Colors.grey,
+                //         //               fontWeight: FontWeight.w700,
+                //         //               fontSize: 15,
+                //         //               fontFamily: 'EHSMB'
+                //         //           ),
+                //         //         ),
+                //         //       ],
+                //         //     ),
+                //         //
+                //         //     Row(
+                //         //       crossAxisAlignment: CrossAxisAlignment.center,
+                //         //       children: [
+                //         //         Text('26',
+                //         //           style: TextStyle(
+                //         //               color: Colors.white,
+                //         //               fontWeight: FontWeight.w600,
+                //         //               fontSize: 20,
+                //         //               fontFamily: 'EHSMB'
+                //         //           ),
+                //         //         ),
+                //         //         SizedBox(
+                //         //           width: 10,
+                //         //         ),
+                //         //         Icon(Icons.umbrella,color: Colors.white,),
+                //         //
+                //         //         Text('38%',
+                //         //           style: TextStyle(
+                //         //               color: Colors.white,
+                //         //               fontWeight: FontWeight.w600,
+                //         //               fontSize: 14,
+                //         //               fontFamily: 'EHSMB'
+                //         //           ),
+                //         //         ),
+                //         //       ],
+                //         //     ),
+                //         //
+                //         //
+                //         //   ],
+                //         // ),
+                //
+                //
+                //
+                //         Column(
+                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                //           children: [
+                //             Column(
+                //               crossAxisAlignment: CrossAxisAlignment.end,
+                //               children: [
+                //
+                //                Icon(Icons.cloud,color: Colors.white,size: 50,),
+                //               ],
+                //             ),
+                //
+                //             Text('9:15 오후',
+                //               style: TextStyle(
+                //                   color: Colors.white,
+                //                   fontWeight: FontWeight.w700,
+                //                   fontSize: 20,
+                //                   fontFamily: 'EHSMB'
+                //               ),
+                //             ),
+                //           ],
+                //         ),
+                //
+                //
+                //
+                //
+                //       ],
+                //     ),
+                //   ),
+                // ),
 
 
                 Container(

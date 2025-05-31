@@ -27,14 +27,15 @@ class HomeMenuBtn extends StatelessWidget {
   Widget build(BuildContext context) {
     return Container(
       width: 45.w,
-      height: 8.h,
+      height: 13.h,
       decoration: BoxDecoration(
         borderRadius: BorderRadius.circular(10),
         border: Border.all(color: Colors.orange,width: 1.5)
       ),
       child: GestureDetector(
         onTap: ()=>{
-          Get.toNamed(uri!,
+          Get.toNamed(
+            uri!,
             arguments: arguments,
           )
         },

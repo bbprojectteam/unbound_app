@@ -31,6 +31,7 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "env/config.env");
+
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions,  // FirebaseOptions 설정
   );

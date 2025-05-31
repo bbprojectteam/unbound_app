@@ -7,13 +7,15 @@ import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart'
 import 'package:badboys/screen/modal/lockerRoom/team_chng_modal_pop.dart';
 import 'package:badboys/screen/modal/lockerRoom/team_player_list_modal_pop.dart';
 import 'package:badboys/screen/modal/match/matching_history_modal.dart';
+import 'package:daum_postcode_search/data_model.dart';
+import 'package:daum_postcode_search/widget.dart';
 import 'package:flutter/material.dart';
 
 
 // AppBottomRouter 클래스 정의
 class AppBottomModalRouter {
 
-  static void fnModalRouter(
+  static Future<void> fnModalRouter(
       BuildContext context,
       int modalIndex,
       {
@@ -28,14 +30,13 @@ class AppBottomModalRouter {
         return TeamPlayerListModalPop(chatRoomId: chatRoomId,);
       },
       1: () async {
-        // 파일 선택 처리
         return TeamChngModalPop();
       },
       2: () async {
         return LockerRoomSettingBottomModal(chatRoomId : chatRoomId);
       },
       3: () async {
-        return SelectLocaleBottomModal();
+        return DaumPostcodeSearch();
       },
       4: () async{
         return ProfileSettingScreen(userInfo : null);
@@ -55,7 +56,6 @@ class AppBottomModalRouter {
         });
       },
 
-
     };
 
 
@@ -74,7 +74,7 @@ class AppBottomModalRouter {
             canBeDragged = false;
           }
 
-          await showModalBottomSheet(
+          var result = await showModalBottomSheet(
             context: context,
             isScrollControlled: true,
             isDismissible: canBeDragged,
@@ -83,6 +83,10 @@ class AppBottomModalRouter {
               return modalContent;
             },
           );
+
+          if(modalIndex == 3) {
+            callBack!(result);
+          }
 
         }
       }

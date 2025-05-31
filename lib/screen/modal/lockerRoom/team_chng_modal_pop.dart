@@ -23,6 +23,7 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
 
   late MatchController matchController;
   late MatchModel matchModel;
+  int? selectedItemIndex;
 
   List<MatchMemberPositionModel> items = [
     MatchMemberPositionModel(top: 5.h, left: 15.w, right: 0),
@@ -34,9 +35,6 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
     MatchMemberPositionModel(top: 28.h, left: 70.w, right: 0),
   ];
 
-  int? selectedItemIndex;
-
-
   @override
   void initState() {
     // TODO: implement initState
@@ -45,18 +43,10 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
 
   }
 
-
-
   void _swapPositions(int firstIndex, int secondIndex) {
-
-    // MatchMemberPositionModel temp = items[firstIndex - 1];
-    // items[firstIndex - 1] = items[secondIndex - 1];
-    // items[secondIndex - 1] = temp;
-
     UserInfo memberTemp = matchModel.matchMemberModel[firstIndex - 1];
     matchModel.matchMemberModel[firstIndex - 1] = matchModel.matchMemberModel[secondIndex - 1];
     matchModel.matchMemberModel[secondIndex - 1] = memberTemp;
-
   }
 
   void _onItemTap(int itemIndex) {
@@ -83,7 +73,7 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
           width: 100.w,
           height: 100.h,
           decoration: BoxDecoration(
-            color: Colors.black,
+            color: Colors.black87,
           ),
           child: Column(
             mainAxisAlignment: MainAxisAlignment.start,
@@ -94,73 +84,131 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
 
               Container(
                 padding: EdgeInsets.only(left: 25, right: 25),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                child: Column(
                   children: [
-                    Stack(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // 테두리 텍스트
-                        Text(
-                          'HOME',
-                          style: TextStyle(
-                            color: Colors.white,
-                            // 테두리 색상
-                            fontSize: 65,
-                            // fontWeight: FontWeight.w600,
-                            fontFamily: 'backToSchool',
-                            shadows: [
-                              Shadow(
-                                blurRadius: 3.0,
-                                color: Colors.white, // 테두리 색상
-                                offset: Offset(1.0, 1.0), // 테두리의 위치
+                        Stack(
+                          children: [
+                            // 테두리 텍스트
+                            Text(
+                              'HOME',
+                              style: TextStyle(
+                                color: Colors.white,
+                                // 테두리 색상
+                                fontSize: 65,
+                                // fontWeight: FontWeight.w600,
+                                fontFamily: 'backToSchool',
+                                shadows: [
+                                  Shadow(
+                                    blurRadius: 3.0,
+                                    color: Colors.white, // 테두리 색상
+                                    offset: Offset(1.0, 1.0), // 테두리의 위치
+                                  ),
+                                ],
                               ),
-                            ],
-                          ),
+                            ),
+                            // 실제 텍스트
+                            Text(
+                              'HOME',
+                              style: TextStyle(
+                                color: Colors.orange,
+                                fontSize: 65,
+                                // fontWeight: FontWeight.w600,
+                                fontFamily: 'backToSchool',
+                              ),
+                            ),
+                          ],
                         ),
-                        // 실제 텍스트
-                        Text(
-                          'HOME',
-                          style: TextStyle(
-                            color: Colors.orange,
-                            fontSize: 65,
-                            // fontWeight: FontWeight.w600,
-                            fontFamily: 'backToSchool',
-                          ),
+
+                        Stack(
+                          children: [
+                            // 테두리 텍스트
+                            Text(
+                              'AWAY',
+                              style: TextStyle(
+                                color: Colors.orange,
+                                // 테두리 색상
+                                fontSize: 60,
+                                // fontWeight: FontWeight.w600,
+                                fontFamily: 'backToSchool',
+
+                              ),
+                            ),
+                            // 실제 텍스트
+                            Text(
+                              'AWAY',
+                              style: TextStyle(
+                                color: Colors.orange,
+                                fontSize: 60,
+                                // fontWeight: FontWeight.w600,
+                                fontFamily: 'backToSchool',
+                              ),
+                            ),
+                          ],
                         ),
+
                       ],
                     ),
 
-                    Stack(
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        // 테두리 텍스트
-                        Text(
-                          'AWAY',
-                          style: TextStyle(
-                            color: Colors.orange,
-                            // 테두리 색상
-                            fontSize: 60,
-                            // fontWeight: FontWeight.w600,
-                            fontFamily: 'backToSchool',
 
+                        Container(
+                          width: 35.w,
+                          height: 13.5.h,
+                          padding: EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "00",
+                              style: TextStyle(
+                                color: Colors.white10,
+                                fontSize: 98,
+                                fontFamily: 'EHSMB',
+                                letterSpacing: 0,
+                              ),
+                            ),
                           ),
                         ),
-                        // 실제 텍스트
-                        Text(
-                          'AWAY',
-                          style: TextStyle(
-                            color: Colors.orange,
-                            fontSize: 60,
-                            // fontWeight: FontWeight.w600,
-                            fontFamily: 'backToSchool',
+
+
+                        Container(
+                          width: 35.w,
+                          height: 13.5.h,
+                          padding: EdgeInsets.only(bottom: 20),
+                          decoration: BoxDecoration(
+                            color: Colors.black,
+                            borderRadius: BorderRadius.circular(5),
+                          ),
+                          child: Center(
+                            child: Text(
+                              "00",
+                              style: TextStyle(
+                                color: Colors.white10,
+                                fontSize: 98,
+                                fontFamily: 'EHSMB',
+                                letterSpacing: 0,
+                              ),
+                            ),
                           ),
                         ),
+
+
                       ],
                     ),
                   ],
                 ),
               ),
 
-              SizedBox(height: 150,),
+
+
+              SizedBox(height: 30,),
 
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -306,10 +354,22 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
                         },
                         child: Column(
                           children: [
+
+                            if ((i + 1) == selectedItemIndex)
+                              Text(
+                                "선택",
+                                style: TextStyle(
+                                  color: Colors.white,
+                                  fontSize: 13.5,
+                                  fontWeight: FontWeight.w700,
+                                  fontFamily: 'EHSMB',
+                                ),
+                              ),
+
                             Container(
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: (i + 1) == selectedItemIndex ? Colors.red : Colors.white, width: 3),
+                                border: Border.all(color: (i + 1) == selectedItemIndex ? Colors.orange : Colors.transparent, width: 4),
                               ),
                               child: ClipOval(
                                 child: CustomCachedNetworkImage(
@@ -324,7 +384,7 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
                               matchModel.matchMemberModel[i].username.toString(),
                               style: TextStyle(
                                 color: Colors.white,
-                                fontSize: 15,
+                                fontSize: 13.5,
                                 fontWeight: FontWeight.w700,
                                 fontFamily: 'EHSMB',
                               ),
@@ -336,19 +396,27 @@ class _TeamChngModalPopState extends State<TeamChngModalPop> {
                 ],
               ),
 
-              GestureDetector(
-                onTap: () async {
-                  await matchController.fnGameStart();
-                  Navigator.pop(context);
-                },
-                child: Container(
-                  width: 100.w,
-                  height: 5.h,
-                  color: Colors.black,
-                  child: Center(
-                    child: Text(
-                      '변경 완료',
-                      style: TextStyle(color: Colors.white,fontWeight: FontWeight.w700,fontSize: 17,fontFamily: 'EHSMB'),
+              SizedBox(height: 40,),
+
+              Center(
+                child: GestureDetector(
+                  onTap: () async {
+                    await matchController.fnGameStart();
+                    Navigator.pop(context);
+                  },
+                  child: Container(
+                    width: 50.w,
+                    height: 5.h,
+                    color: Colors.orange,
+                    child: Center(
+                      child: Text(
+                        '경기 시작',
+                        style: TextStyle(
+                            color: Colors.white,
+                            fontWeight: FontWeight.w700,
+                            fontSize: 17,
+                            fontFamily: 'EHSMB'),
+                      ),
                     ),
                   ),
                 ),

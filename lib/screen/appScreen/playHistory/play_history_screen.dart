@@ -168,6 +168,8 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                       Row(
                         children: [
                           Text('서울 특별시 도봉구 도봉로 100라길 69-6 4층',style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.grey),),
+
+
                           SizedBox(width: 3,),
                           Row(
                             children: [
@@ -370,8 +372,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                   ),
                 ),
 
-
-              GetBuilder<CommentController>(
+                GetBuilder<CommentController>(
                 init: commentController,
                 builder: (commentControllerContext) {
                   return Padding(
@@ -379,6 +380,12 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                     child: Column(
                       crossAxisAlignment: CrossAxisAlignment.start,
                       children:[
+
+                        if (commentController.matchHistoryCommentModel.isEmpty)
+                          const Center(
+                            child: Text('작성된 댓글이 없습니다.',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w600, letterSpacing: -0.3,color: Colors.white30,fontFamily: 'EHSMB'),),
+                          ),
+
                         for(int i = 0 ; i < commentController.matchHistoryCommentModel.length; i++)...[
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
@@ -441,11 +448,8 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                 },
               ),
 
-
                 SizedBox(height: 60),
-                  
-                  
-                  
+
               ],
             ),
           ),

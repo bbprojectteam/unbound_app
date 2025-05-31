@@ -49,6 +49,9 @@ class CommentController extends GetxController {
         matchHistoryCommentModel = [];
 
         var utf8Body = utf8.decode(response.bodyBytes);
+
+        print(jsonDecode(utf8Body));
+
         var commentList = jsonDecode(utf8Body)['commentList'];
 
         for (var item in commentList) {

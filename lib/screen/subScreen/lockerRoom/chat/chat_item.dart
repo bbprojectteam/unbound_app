@@ -19,11 +19,22 @@ class ChatItem extends StatefulWidget {
 class _ChatItemState extends State<ChatItem> {
 
 
+  bool isUrl(String text) {
+    final RegExp urlRegExp = RegExp(
+      r'^(https?:\/\/)?([\da-z.-]+)\.([a-z.]{2,6})(\/[\w.-]*)*$',
+      caseSensitive: false,
+    );
+    return urlRegExp.hasMatch(text);
+  }
+
+
   @override
   Widget build(BuildContext context) {
 
+    bool isImage = isUrl(widget.chatModel.message.toString());
+
     return SizedBox(
-      height: 8.h,
+      height: isImage ? 30.h : 8.h,
       child: Align(
         alignment: !widget.chatModel.isMyChat! ? Alignment.centerLeft : Alignment.centerRight , // 왼쪽에 붙도록 설정
         child: Container(
@@ -83,21 +94,39 @@ class _ChatItemState extends State<ChatItem> {
                           SizedBox(width: 5,),
                         ],
 
-                        Container(
-                          padding: EdgeInsets.all(10),
-                          decoration: BoxDecoration(
-                            borderRadius: BorderRadius.circular(10),
-                            color: Colors.orange
+                        if (isImage)
+                          Container(
+                            width: 50.w,
+                            height: 25.h,
+                            padding: EdgeInsets.all(5),
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(10),
+                                color: Colors.orange
+                            ),
+                            child: CachedNetworkImage(
+                                imageUrl: widget.chatModel.message.toString(),
+                                width: 25.w,
+                                height: 12.5.h,)
                           ),
-                          child: Text(
-                            widget.chatModel.message.toString(),
-                            style: TextStyle(
-                              color: Colors.white,
-                              fontWeight: FontWeight.w500,
-                              fontSize: 15,
+
+                        if (!isImage)
+                          Container(
+                            padding: EdgeInsets.all(10),
+                            decoration: BoxDecoration(
+                              borderRadius: BorderRadius.circular(10),
+                              color: Colors.orange
+                            ),
+                            child: Text(
+                              widget.chatModel.message.toString(),
+                              style: TextStyle(
+                                color: Colors.white,
+                                fontWeight: FontWeight.w500,
+                                fontSize: 15,
+                              ),
                             ),
                           ),
-                        ),
+
+
                         SizedBox(width: 5,),
                         if(!widget.chatModel.isMyChat!)...[
                           Text(widget.chatModel.createdAt.toString(),

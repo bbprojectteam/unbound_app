@@ -69,16 +69,16 @@ class LockerRoomSettingDropDownMenu {
 
   static void _handleMenuSelection(int value, BuildContext context, String chatRoomId) async {
     if (value == 100) {
-      AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId);
+      await AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId);
     } else if (value == 200) {
-      // AppBottomModalRouter.fnModalRouter(context, 1);
+      // await AppBottomModalRouter.fnModalRouter(context, 1);
     } else if (value == 300) {
 
       // 멤버정보
       MatchController matchController = Get.find<MatchController>();
 
       if (matchController.matchModel.matchMemberModel.length == 6){
-        AppBottomModalRouter.fnModalRouter(context, 1);
+        await AppBottomModalRouter.fnModalRouter(context, 1);
 
         Get.toNamed('/countDownScreen');
       } else {
@@ -104,7 +104,7 @@ class LockerRoomSettingDropDownMenu {
 
       // 대기실 나가기 관련 처리
     } else if (value == 500) {
-      AppBottomModalRouter.fnModalRouter(context, 2, chatRoomId: chatRoomId);
+      await AppBottomModalRouter.fnModalRouter(context, 2, chatRoomId: chatRoomId);
     }
   }
 }

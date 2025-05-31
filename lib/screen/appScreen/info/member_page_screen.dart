@@ -138,7 +138,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                       if(memberController.isAuth.value)
                         GestureDetector(
                           onTap :() async {
-                            AppBottomModalRouter.fnModalRouter(context, 7, userInfo: memberMatchHistoryModel.userInfo);
+                            await AppBottomModalRouter.fnModalRouter(context, 7, userInfo: memberMatchHistoryModel.userInfo);
                             await memberController.fnGetMemberInfo(memberMatchHistoryModel.userInfo?.userId);
                           },
                           child: Row(

@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:badboys/utils/helpers.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
@@ -19,19 +21,38 @@ class SelectImageBottomModal extends StatefulWidget {
 }
 
 class _SelectImageBottomModalState extends State<SelectImageBottomModal> {
-
+  final ImagePicker picker = ImagePicker();
   Uint8List? _imageBytes = null;
   late FilePickerResult filePickerResult;
 
+  Future<void> pickImageFromCamera() async {
+    final XFile? photo = await picker.pickImage(source: ImageSource.camera);
+    if (photo != null) {
+      Uint8List? croppedImage = await Helpers.cropImage(photo.path);
+
+      if (croppedImage != null) {
+        filePickerResult = await Helpers.convertUint8ListToFilePickerResult(
+          croppedImage,
+          croppedImage.lengthInBytes,
+        );
+
+        setState(() {
+          _imageBytes = croppedImage;
+        });
+      } else {
+        print("이미지를 자르는 중 문제가 발생했습니다.");
+      }
+
+    }
+    return null;
+  }
 
   Future<void> _pickImage() async {
     try {
-      final ImagePicker picker = ImagePicker();
 
       final XFile? image = await picker.pickImage(source: ImageSource.gallery);
 
       if (image != null) {
-        print("이미지 선택됨: ${image.path}");
 
         Uint8List? croppedImage = await Helpers.cropImage(image.path);
 
@@ -62,7 +83,7 @@ class _SelectImageBottomModalState extends State<SelectImageBottomModal> {
     return Container(
       width: 100.w,
       height: 20.h,
-      color: Colors.black38,
+      color: Colors.black87,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -70,7 +91,17 @@ class _SelectImageBottomModalState extends State<SelectImageBottomModal> {
           Column(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              Icon(Icons.camera_alt_outlined,size: 23.w,color: Colors.white,),
+              GestureDetector(
+                onTap: () async {
+                 await pickImageFromCamera();
+                 await widget.callBack(_imageBytes);
+                 Navigator.pop(context);
+                },
+                  child: Icon(
+                    Icons.camera_alt_outlined,
+                    size: 23.w,
+                    color: Colors.white,)
+              ),
               Text('카메라',
                 style: TextStyle(
                     color: Colors.white,
@@ -87,10 +118,7 @@ class _SelectImageBottomModalState extends State<SelectImageBottomModal> {
               GestureDetector(
                   onTap: () async {
                     await _pickImage();
-                    print('이미지 파일 검사');
-
-                    print(_imageBytes);
-                    widget.callBack(_imageBytes);
+                    await widget.callBack(_imageBytes);
                     Navigator.pop(context);
                   },
                   child: Icon(Icons.image,size: 23.w,color: Colors.white,)),

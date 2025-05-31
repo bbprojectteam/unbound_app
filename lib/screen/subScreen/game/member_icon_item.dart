@@ -36,7 +36,14 @@ class _MemberIconItemState extends State<MemberIconItem> {
             ),
           ),
           SizedBox(height: 3,),
-          Text( widget.memberNickName , style: TextStyle(color: Colors.white,fontSize: 16, fontWeight: FontWeight.w700),),
+          Text(
+            widget.memberNickName,
+            style: TextStyle(
+                color: Colors.white,
+                fontSize: 13.5,
+                fontWeight: FontWeight.w700
+            ),
+          ),
         ],
       ),
     );
