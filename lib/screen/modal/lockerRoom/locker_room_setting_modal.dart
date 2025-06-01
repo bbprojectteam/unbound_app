@@ -3,19 +3,19 @@ import 'dart:convert';
 
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
-import 'package:badboys/screen/modal/comn/select_bottom_modal_screen.dart';
+import 'package:badboys/screen/modal/comn/select_bottom_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/locker_room_date_setting_item.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/match_point_item.dart';
-import 'package:badboys/screen/subScreen/register/profile_setting_text_field.dart';
+import 'package:badboys/screen/modal/member/profile_setting_text_field_item.dart';
 import 'package:flutter/material.dart';
 import 'package:geocoding/geocoding.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class LockerRoomSettingBottomModal extends StatefulWidget {
-  const LockerRoomSettingBottomModal({
+class LockerRoomSettingModal extends StatefulWidget {
+  const LockerRoomSettingModal({
     super.key,
     required this.chatRoomId,
   });
@@ -23,10 +23,10 @@ class LockerRoomSettingBottomModal extends StatefulWidget {
   final String? chatRoomId;
 
   @override
-  State<LockerRoomSettingBottomModal> createState() => _LockerRoomSettingBottomModalState();
+  State<LockerRoomSettingModal> createState() => _LockerRoomSettingModalState();
 }
 
-class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomModal> {
+class _LockerRoomSettingModalState extends State<LockerRoomSettingModal> {
 
   static List<String> comnNumberBoxList = [
     '01', '02', '03', '04', '05', '06', '07', '08', '09', '10', '11', '12', '13', '14',
@@ -112,9 +112,9 @@ class _LockerRoomSettingBottomModalState extends State<LockerRoomSettingBottomMo
             CustomAppbar(isNotification: false, isBackButton : false),
             SizedBox(height: 15,),
 
-            ProfileSettingTextField(labelText: "방 제목",textLength : 20 ,textEditingController: lockerRoomTitleEditController,maxLines: 1,),
+            ProfileSettingTextFieldItem(labelText: "방 제목",textLength : 20 ,textEditingController: lockerRoomTitleEditController,maxLines: 1,),
             SizedBox(height: 5),
-            ProfileSettingTextField(labelText: "메모", textLength : 30, textEditingController: lockerRoomDescriptionEditController,maxLines: 1,),
+            ProfileSettingTextFieldItem(labelText: "메모", textLength : 30, textEditingController: lockerRoomDescriptionEditController,maxLines: 1,),
 
             SizedBox(height: 10,),
 

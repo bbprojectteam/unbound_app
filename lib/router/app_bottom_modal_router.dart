@@ -1,11 +1,12 @@
 import 'package:badboys/model/member/user_info.dart';
-import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
-import 'package:badboys/screen/modal/chat/select_image_bottom_modal.dart';
-import 'package:badboys/screen/modal/game/playing_result_modal_pop.dart';
-import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_bottom_modal.dart';
+import 'package:badboys/screen/modal/daumPostCodeSearch/daum_post_code_search_modal.dart';
+import 'package:badboys/screen/modal/member/profile_setting_modal.dart';
+import 'package:badboys/screen/modal/chat/select_image_modal.dart';
+import 'package:badboys/screen/modal/game/playing_result_modal.dart';
+import 'package:badboys/screen/modal/lockerRoom/locker_room_setting_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart';
-import 'package:badboys/screen/modal/lockerRoom/team_chng_modal_pop.dart';
-import 'package:badboys/screen/modal/lockerRoom/team_player_list_modal_pop.dart';
+import 'package:badboys/screen/modal/lockerRoom/team_chng_modal.dart';
+import 'package:badboys/screen/modal/lockerRoom/team_player_list_modal.dart';
 import 'package:badboys/screen/modal/match/matching_history_modal.dart';
 import 'package:daum_postcode_search/data_model.dart';
 import 'package:daum_postcode_search/widget.dart';
@@ -27,37 +28,35 @@ class AppBottomModalRouter {
 
     final Map<int, Future<dynamic> Function()> modalWidgets = {
       0: () async {
-        return TeamPlayerListModalPop(chatRoomId: chatRoomId,);
+        return TeamPlayerListModal(chatRoomId: chatRoomId,);
       },
       1: () async {
-        return TeamChngModalPop();
+        return const TeamChngModal();
       },
       2: () async {
-        return LockerRoomSettingBottomModal(chatRoomId : chatRoomId);
+        return LockerRoomSettingModal(chatRoomId : chatRoomId);
       },
       3: () async {
-        return DaumPostcodeSearch();
+        return const DaumPostCodeSearchModal();
       },
       4: () async{
-        return ProfileSettingScreen(userInfo : null);
+        return const ProfileSettingModal(userInfo : null);
       },
       5: () async{
-        return MatchingHistoryModal();
+        return const MatchingHistoryModal();
       },
       6: () async{
-        return PlayingResultModalPop();
+        return const PlayingResultModal();
       },
       7: () async{
-        return ProfileSettingScreen(userInfo : userInfo);
+        return ProfileSettingModal(userInfo : userInfo);
       },
       8: () async{
-        return SelectImageBottomModal(callBack : (imageFile) {
+        return SelectImageModal(callBack : (imageFile) {
           callBack!(imageFile);
         });
       },
-
     };
-
 
     // Modal 위젯이 존재하면 showModalBottomSheet 호출
     if (modalWidgets.containsKey(modalIndex)) {

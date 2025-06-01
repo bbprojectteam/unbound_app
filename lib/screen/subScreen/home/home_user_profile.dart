@@ -1,19 +1,20 @@
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/fcm/fcm_notifications.dart';
 import 'package:badboys/model/member/user_info.dart';
-import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class UserProfileContainer extends StatefulWidget {
-  const UserProfileContainer({super.key});
+class HomeUserProfile extends StatefulWidget {
+  const HomeUserProfile({super.key});
 
   @override
-  State<UserProfileContainer> createState() => _UserProfileContainerState();
+  State<HomeUserProfile> createState() => _HomeUserProfileState();
 }
 
-class _UserProfileContainerState extends State<UserProfileContainer> {
+class _HomeUserProfileState extends State<HomeUserProfile> {
   late MemberController memberController;
   late UserInfo memberModel;
 
@@ -22,7 +23,15 @@ class _UserProfileContainerState extends State<UserProfileContainer> {
     // TODO: implement initState
     super.initState();
     memberController = Get.put(MemberController());
-    memberController.fnGetProfileInfo();
+    getProfileInfo();
+  }
+
+  void getProfileInfo() async {
+    bool isLogin = await memberController.fnGetProfileInfo();
+
+    if(isLogin) {
+      FcmNotifications.fcmBackgroundDeepLink(context);
+    }
   }
 
 

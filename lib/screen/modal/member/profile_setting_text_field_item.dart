@@ -2,8 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ProfileSettingTextField extends StatefulWidget {
-  const ProfileSettingTextField({
+class ProfileSettingTextFieldItem extends StatefulWidget {
+  const ProfileSettingTextFieldItem({
     super.key,
     required this.labelText,
     required this.textEditingController,
@@ -17,10 +17,10 @@ class ProfileSettingTextField extends StatefulWidget {
   final int textLength;
 
   @override
-  State<ProfileSettingTextField> createState() => _ProfileSettingTextFieldState();
+  State<ProfileSettingTextFieldItem> createState() => _ProfileSettingTextFieldItemState();
 }
 
-class _ProfileSettingTextFieldState extends State<ProfileSettingTextField> {
+class _ProfileSettingTextFieldItemState extends State<ProfileSettingTextFieldItem> {
   late FocusNode _focusNode;
 
   @override

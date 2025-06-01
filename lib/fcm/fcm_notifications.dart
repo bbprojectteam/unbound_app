@@ -1,6 +1,11 @@
 
+import 'dart:convert';
+
 import 'package:firebase_messaging/firebase_messaging.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:get/get.dart';
+import 'package:get/get_core/src/get_main.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class FcmNotifications{
@@ -11,6 +16,21 @@ class FcmNotifications{
     print("내 디바이스 토큰: $token");
     return token;
 
+  }
+
+  static void fcmBackgroundDeepLink(BuildContext context) async {
+
+    SharedPreferences prefs = await SharedPreferences.getInstance();
+    String chatRoomId = await prefs.getString('matchingRoomId') ?? "";
+
+    if (chatRoomId != "") {
+
+      Future.delayed(Duration(milliseconds: 700), () async {
+        Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : chatRoomId});
+      });
+
+      await prefs.remove('matchingRoomId');
+    }
   }
 
   /**
@@ -47,9 +67,36 @@ class FcmNotifications{
     /**로컬 알림을 초기화 하는 메서드
      *  알림을 표시하기 전에 꼭 초기화를 해야함
      * */
-    await flutterLocalNotificationsPlugin.initialize(const InitializationSettings(
-      android: AndroidInitializationSettings("@mipmap/ic_launcher"), /** 알림에 표시 될 아이콘 */
-    ));
+    await flutterLocalNotificationsPlugin.initialize(
+        const InitializationSettings(android: AndroidInitializationSettings("@mipmap/ic_launcher"), /** 알림에 표시 될 아이콘 */
+      ),
+      onSelectNotification: (String? payload) async {
+        print("🔔 알림 클릭됨! Payload: $payload");
+
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        String chatRoomId = await prefs.getString('matchingRoomId') ?? "";
+
+        if (chatRoomId != "") {
+          Future.delayed(Duration(milliseconds: 700), () async {
+            Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : chatRoomId});
+          });
+        }
+
+      },
+    );
+
+
+    FirebaseMessaging.onMessageOpenedApp.listen((RemoteMessage message) async {
+
+      print("🔔 백그라운드/종료 후 ${message.notification!.body}");
+
+      SharedPreferences prefs = await SharedPreferences.getInstance();
+      String chatRoomId = jsonDecode(message.notification!.body.toString())['chatRoomId'];
+
+      await prefs.setBool('isMatching', true);
+      await prefs.setString('matchingRoomId', chatRoomId);
+
+    });
 
     /** 포그라운드 살태일 때 푸시 알림을 어떻게 표시할지 설정*/
     await FirebaseMessaging.instance.setForegroundNotificationPresentationOptions(
@@ -64,8 +111,41 @@ class FcmNotifications{
 
   /** 백그라운드 이벤트 리스너*/
   static Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
-    print("백그라운드 메시지 처리.. ${message.notification!.body!}");
+    try {
+      // 메시지의 제목과 본문 추출
+      RemoteNotification? notification = message.notification;
+
+      print("백그라운드 메시지 처리 중...");
+
+      // 메시지 데이터 확인
+      if (message.data.isNotEmpty) {
+        print("메시지 데이터: ${message.data}");
+      }
+
+      // 로컬 알림 생성 (flutter_local_notifications 활용)
+      final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
+
+      await flutterLocalNotificationsPlugin.show(
+        notification.hashCode, // 알림의 고유 id
+        notification?.title,
+        notification?.body,
+        NotificationDetails(
+          android: AndroidNotificationDetails(
+            'high_importance_channel',
+            'high_importance_notification',
+            importance: Importance.max,
+            color: Colors.black54, // 알림 아이콘 색상 설정 (배경 색상은 따로 스타일로 설정)
+            category: 'category_alert',
+          ),
+        ),
+      );
+
+
+    } catch (e) {
+      print("백그라운드 메시지 처리 중 오류 발생: $e");
+    }
   }
+
 
 
   /** 포그라운드 이벤트 리스너 */
@@ -86,7 +166,9 @@ class FcmNotifications{
          * */
         final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-        // 이미 초기화된 flutterLocalNotificationsPlugin을 사용해야 함
+        String rawBody = notification.body.toString(); // JSON 형식의 body 데이터
+        Map<String, dynamic> bodyMap = jsonDecode(rawBody); // JSON을 Map으로 변환
+
         /** 푸시 알림을 화면에 표시*/
         flutterLocalNotificationsPlugin.show(
           notification.hashCode, /** 알림의 고유 id , 알림을 식별하기 위한 값 */
@@ -99,6 +181,7 @@ class FcmNotifications{
               importance: Importance.max, /** 채널의 중요도 */
             ),
           ),
+            payload: rawBody
         );
 
 

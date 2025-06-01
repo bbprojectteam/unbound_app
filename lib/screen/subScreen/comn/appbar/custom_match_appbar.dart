@@ -1,5 +1,5 @@
 import 'package:badboys/controller/match_controller.dart';
-import 'package:badboys/firebase/auth_service.dart';
+import 'package:badboys/auth/auth_service.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/dropDownMenu/locker_room_setting_drop_down_menu.dart';
 import 'package:flutter/material.dart';

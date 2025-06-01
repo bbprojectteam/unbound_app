@@ -1,10 +1,11 @@
 import 'package:badboys/controller/auth_controller.dart';
 import 'package:badboys/controller/chat_controller.dart';
 import 'package:badboys/controller/comment_controller.dart';
+import 'package:badboys/controller/global_controller.dart';
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/fcm/fcm_notifications.dart';
-import 'package:badboys/firebase/firebase_options.dart';
+import 'package:badboys/fcm/firebase_options.dart';
 import 'package:badboys/router/app_router.dart';
 import 'package:badboys/screen/appScreen/splash/splash_screen.dart';
 import 'package:badboys/screen/appScreen/game/count_down_screen.dart';
@@ -18,7 +19,7 @@ import 'package:badboys/screen/appScreen/notification/notification_screen.dart';
 import 'package:badboys/screen/appScreen/playHistory/play_history_screen.dart';
 import 'package:badboys/screen/appScreen/rank/rank_screen.dart';
 import 'package:badboys/screen/appScreen/login/login_screen.dart';
-import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
+import 'package:badboys/screen/modal/member/profile_setting_modal.dart';
 import 'package:badboys/screen/appScreen/report/report_screen.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:badboys/utils/permissions.dart';
@@ -38,6 +39,7 @@ void main() async {
   FcmNotifications.initializeNotification();
   await Helpers.fnSetRegionList();
   Permissions.requestNotificationPermission();  // 알림 권한 요청
+  Get.put(GlobalController(), permanent: true);
   runApp(MyApp());
 }
 
@@ -66,9 +68,9 @@ class MyApp extends StatelessWidget {
               GetPage(name: '/login',
                   transition: Transition.fadeIn,
                   page: () => AppScreen(child: LoginScreen())),
-              // GetPage(name: '/profileSettingScreen',
-              //     transition: Transition.fadeIn,
-              //     page: () => AppScreen(child: ProfileSettingScreen(userInfo: null,))),
+              GetPage(name: '/profileSettingScreen',
+                  transition: Transition.fadeIn,
+                  page: () => AppScreen(child: ProfileSettingModal(userInfo: null,))),
               GetPage(name: '/match',
                   transition: Transition.fadeIn,
                   page: () => AppScreen(child: MatchScreen())),

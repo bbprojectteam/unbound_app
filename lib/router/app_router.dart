@@ -5,7 +5,7 @@ import 'package:badboys/screen/appScreen/home/home_screen.dart';
 import 'package:badboys/screen/appScreen/match/match_screen.dart';
 import 'package:badboys/screen/appScreen/rank/rank_screen.dart';
 import 'package:badboys/screen/appScreen/login/login_screen.dart';
-import 'package:badboys/screen/appScreen/register/profile_setting_screen.dart';
+import 'package:badboys/screen/modal/member/profile_setting_modal.dart';
 import 'package:badboys/screen/subScreen/comn/bottomNavigatorBar/custom_bottom_navigatoion_bar.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -36,11 +36,10 @@ class _AppScreenState extends State<AppScreen> {
   @override
   Widget build(BuildContext context) {
 
-
     bool showBottomNav = !(
         widget.child is SplashScreen ||
             widget.child is LoginScreen ||
-            widget.child is ProfileSettingScreen ||
+            widget.child is ProfileSettingModal ||
             widget.child is CountDownScreen ||
             widget.child is PlayingScreen
     );

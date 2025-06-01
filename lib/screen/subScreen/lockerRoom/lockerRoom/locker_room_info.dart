@@ -3,7 +3,7 @@ import 'package:badboys/model/match/match_info_model.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/appScreen/info/member_page_screen.dart';
-import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/match_point_item.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';

@@ -1,6 +1,6 @@
 
 import 'package:badboys/model/member/user_info.dart';
-import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';

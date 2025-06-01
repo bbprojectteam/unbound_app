@@ -2,16 +2,16 @@ import 'package:daum_postcode_search/widget.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class NaverMapModal extends StatefulWidget {
-  const NaverMapModal({
+class DaumPostCodeSearchModal extends StatefulWidget {
+  const DaumPostCodeSearchModal({
     super.key,
   });
 
   @override
-  State<NaverMapModal> createState() => _NaverMapModalState();
+  State<DaumPostCodeSearchModal> createState() => _DaumPostCodeSearchModalState();
 }
 
-class _NaverMapModalState extends State<NaverMapModal> {
+class _DaumPostCodeSearchModalState extends State<DaumPostCodeSearchModal> {
 
   @override
   void initState() {
@@ -45,13 +45,11 @@ class _NaverMapModalState extends State<NaverMapModal> {
     return Column(
       children: [
         SizedBox(
-          height: 10.h,
+          height: 7.h,
         ),
-
         Expanded(
           child: daumPostcodeSearch,
         ),
-
         Visibility(
           visible: _isError,
           child: Column(

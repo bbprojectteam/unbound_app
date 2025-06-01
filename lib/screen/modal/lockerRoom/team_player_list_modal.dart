@@ -7,8 +7,8 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class TeamPlayerListModalPop extends StatefulWidget {
-  const TeamPlayerListModalPop({
+class TeamPlayerListModal extends StatefulWidget {
+  const TeamPlayerListModal({
     super.key,
     required this.chatRoomId,
   });
@@ -16,10 +16,10 @@ class TeamPlayerListModalPop extends StatefulWidget {
   final String? chatRoomId;
 
   @override
-  State<TeamPlayerListModalPop> createState() => _TeamPlayerListModalPopState();
+  State<TeamPlayerListModal> createState() => _TeamPlayerListModalState();
 }
 
-class _TeamPlayerListModalPopState extends State<TeamPlayerListModalPop> {
+class _TeamPlayerListModalState extends State<TeamPlayerListModal> {
 
   late MatchController matchController;
   late MatchModel matchModel;

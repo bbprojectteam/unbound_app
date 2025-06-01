@@ -3,7 +3,7 @@
 import 'dart:async';
 import 'dart:convert';
 import 'dart:io';
-import 'package:badboys/firebase/auth_service.dart';
+import 'package:badboys/auth/auth_service.dart';
 import 'package:badboys/model/member/user_info.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';

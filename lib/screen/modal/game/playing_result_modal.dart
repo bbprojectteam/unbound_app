@@ -11,14 +11,14 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 import 'package:flutter/cupertino.dart'; // CupertinoPicker 사용을 위한 임포트
 
-class PlayingResultModalPop extends StatefulWidget {
-  const PlayingResultModalPop({super.key});
+class PlayingResultModal extends StatefulWidget {
+  const PlayingResultModal({super.key});
 
   @override
-  State<PlayingResultModalPop> createState() => _PlayingResultModalPopState();
+  State<PlayingResultModal> createState() => _PlayingResultModalState();
 }
 
-class _PlayingResultModalPopState extends State<PlayingResultModalPop> {
+class _PlayingResultModalState extends State<PlayingResultModal> {
 
   late MatchController matchController;
 

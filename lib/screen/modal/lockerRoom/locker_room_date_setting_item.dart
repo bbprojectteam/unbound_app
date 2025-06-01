@@ -1,4 +1,4 @@
-import 'package:badboys/screen/modal/comn/select_bottom_modal_screen.dart';
+import 'package:badboys/screen/modal/comn/select_bottom_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
@@ -33,7 +33,7 @@ class _LockerRoomDateSettingItemState extends State<LockerRoomDateSettingItem> {
             builder: (BuildContext context) {
               return SizedBox(
                 height: 40.h,
-                child: SelectBottomModalScreen(
+                child: SelectBottomModal(
                     selectItemIdx: int.parse(widget.selectItem),
                     selectItemList: widget.selectItemList,
                     callBack: (int? id, String text) => {

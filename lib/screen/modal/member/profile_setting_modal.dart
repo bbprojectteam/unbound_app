@@ -3,10 +3,10 @@ import 'dart:ffi';
 import 'package:badboys/controller/auth_controller.dart';
 import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/model/member/user_info.dart';
-import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
-import 'package:badboys/screen/subScreen/comn/select_match_info_btn.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
+import 'package:badboys/screen/subScreen/comn/button/select_match_info_btn.dart';
 
-import 'package:badboys/screen/subScreen/register/profile_setting_text_field.dart';
+import 'package:badboys/screen/modal/member/profile_setting_text_field_item.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:file_picker/file_picker.dart';
 
@@ -17,8 +17,8 @@ import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class ProfileSettingScreen extends StatefulWidget {
-  const ProfileSettingScreen({
+class ProfileSettingModal extends StatefulWidget {
+  const ProfileSettingModal({
     super.key,
     required this.userInfo,
   });
@@ -26,10 +26,10 @@ class ProfileSettingScreen extends StatefulWidget {
   final UserInfo? userInfo;
 
   @override
-  State<ProfileSettingScreen> createState() => _ProfileSettingScreenState();
+  State<ProfileSettingModal> createState() => _ProfileSettingModalState();
 }
 
-class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
+class _ProfileSettingModalState extends State<ProfileSettingModal> {
   late MemberController memberController;
 
   late int? selectedGender = 0;
@@ -175,9 +175,9 @@ class _ProfileSettingScreenState extends State<ProfileSettingScreen> {
                           child: Column(
                             children: [
 
-                              ProfileSettingTextField(labelText: "닉네임",textLength : 8, textEditingController: memberController.nickNmTextEdController,maxLines: 1,),
-                              ProfileSettingTextField(labelText: "생년월일",textLength : 8,textEditingController: memberController.birthTextEdController,maxLines: 1,),
-                              ProfileSettingTextField(labelText: "소개",textLength : 200,textEditingController: memberController.introductionTextEdController,maxLines: 4,),
+                              ProfileSettingTextFieldItem(labelText: "닉네임",textLength : 8, textEditingController: memberController.nickNmTextEdController,maxLines: 1,),
+                              ProfileSettingTextFieldItem(labelText: "생년월일",textLength : 8,textEditingController: memberController.birthTextEdController,maxLines: 1,),
+                              ProfileSettingTextFieldItem(labelText: "소개",textLength : 200,textEditingController: memberController.introductionTextEdController,maxLines: 4,),
 
 
                               SizedBox(height: 10,),

@@ -1,7 +1,7 @@
 import 'dart:async';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
-import 'package:badboys/screen/subScreen/comn/custom_calender_screen.dart';
-import 'package:badboys/screen/subScreen/comn/user_profile_container.dart';
+import 'package:badboys/screen/subScreen/comn/calender/custom_calender_screen.dart';
+import 'package:badboys/screen/subScreen/home/home_user_profile.dart';
 import 'package:badboys/screen/subScreen/home/event_list_item.dart';
 import 'package:badboys/screen/subScreen/home/home_menu_list.dart';
 import 'package:badboys/screen/subScreen/home/lockerRoom/stand_by_locker_room_List.dart';
@@ -35,7 +35,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
   @override
   Widget build(BuildContext context) {
-
     print('홈 빌드');
 
     return Scaffold(
@@ -58,11 +57,11 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 /**
                  *  상단 유저 프로필
                  */
-                UserProfileContainer(),
+                HomeUserProfile(),
 
-                SizedBox(height: 5,),
+                const SizedBox(height: 5,),
 
-                CustomCalenderScreen(),
+                const CustomCalenderScreen(),
 
                 Container(
                   margin: EdgeInsets.only(top: 5,bottom: 3),
@@ -71,113 +70,6 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                   color: Colors.orange.withOpacity(0.3),
                 ),
                 SizedBox(height: 10,),
-
-                // Container(
-                //   width: 95.w,
-                //   height: 15.h,
-                //   decoration: BoxDecoration(
-                //     borderRadius: BorderRadius.circular(10),
-                //     // border: Border.all(color: Colors.orange,width: 1),
-                //     color: Color(0x39ffffff),
-                //   ),
-                //
-                //   child: Padding(
-                //     padding: const EdgeInsets.all(15.0),
-                //     child: Row(
-                //       mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //       crossAxisAlignment: CrossAxisAlignment.start,
-                //
-                //       children: [
-                //
-                //         // Column(
-                //         //   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //         //   crossAxisAlignment: CrossAxisAlignment.start,
-                //         //   children: [
-                //         //     Column(
-                //         //       crossAxisAlignment: CrossAxisAlignment.start,
-                //         //       children: [
-                //         //         Text('경상남도 양산시',
-                //         //           style: TextStyle(
-                //         //             color: Colors.white,
-                //         //             fontWeight: FontWeight.w700,
-                //         //             fontSize: 18,
-                //         //               fontFamily: 'EHSMB'
-                //         //           ),
-                //         //         ),
-                //         //         Text('물금읍',
-                //         //           style: TextStyle(
-                //         //               color: Colors.grey,
-                //         //               fontWeight: FontWeight.w700,
-                //         //               fontSize: 15,
-                //         //               fontFamily: 'EHSMB'
-                //         //           ),
-                //         //         ),
-                //         //       ],
-                //         //     ),
-                //         //
-                //         //     Row(
-                //         //       crossAxisAlignment: CrossAxisAlignment.center,
-                //         //       children: [
-                //         //         Text('26',
-                //         //           style: TextStyle(
-                //         //               color: Colors.white,
-                //         //               fontWeight: FontWeight.w600,
-                //         //               fontSize: 20,
-                //         //               fontFamily: 'EHSMB'
-                //         //           ),
-                //         //         ),
-                //         //         SizedBox(
-                //         //           width: 10,
-                //         //         ),
-                //         //         Icon(Icons.umbrella,color: Colors.white,),
-                //         //
-                //         //         Text('38%',
-                //         //           style: TextStyle(
-                //         //               color: Colors.white,
-                //         //               fontWeight: FontWeight.w600,
-                //         //               fontSize: 14,
-                //         //               fontFamily: 'EHSMB'
-                //         //           ),
-                //         //         ),
-                //         //       ],
-                //         //     ),
-                //         //
-                //         //
-                //         //   ],
-                //         // ),
-                //
-                //
-                //
-                //         Column(
-                //           mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                //           children: [
-                //             Column(
-                //               crossAxisAlignment: CrossAxisAlignment.end,
-                //               children: [
-                //
-                //                Icon(Icons.cloud,color: Colors.white,size: 50,),
-                //               ],
-                //             ),
-                //
-                //             Text('9:15 오후',
-                //               style: TextStyle(
-                //                   color: Colors.white,
-                //                   fontWeight: FontWeight.w700,
-                //                   fontSize: 20,
-                //                   fontFamily: 'EHSMB'
-                //               ),
-                //             ),
-                //           ],
-                //         ),
-                //
-                //
-                //
-                //
-                //       ],
-                //     ),
-                //   ),
-                // ),
-
 
                 Container(
                   // height: 100.h,
@@ -248,7 +140,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
 
                             Container(
-                              height: 100.h,
+                              height: 75.h,
                               child: TabBarView(
                                 controller: _tabController,
                                 children: [
@@ -268,6 +160,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                     ],
                   ),
                 ),
+
               ],
             ),
 

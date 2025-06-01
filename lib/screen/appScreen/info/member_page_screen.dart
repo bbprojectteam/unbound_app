@@ -4,7 +4,7 @@ import 'package:badboys/model/match/member_match_history_model.dart';
 import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/router/app_bottom_modal_router.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
-import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/info/member_play_record_item.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';

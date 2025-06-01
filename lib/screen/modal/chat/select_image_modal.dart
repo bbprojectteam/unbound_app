@@ -8,8 +8,8 @@ import 'package:go_router/go_router.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class SelectImageBottomModal extends StatefulWidget {
-  const SelectImageBottomModal({
+class SelectImageModal extends StatefulWidget {
+  const SelectImageModal({
     super.key,
     required this.callBack,
   });
@@ -17,10 +17,10 @@ class SelectImageBottomModal extends StatefulWidget {
   final Function callBack;
 
   @override
-  State<SelectImageBottomModal> createState() => _SelectImageBottomModalState();
+  State<SelectImageModal> createState() => _SelectImageModalState();
 }
 
-class _SelectImageBottomModalState extends State<SelectImageBottomModal> {
+class _SelectImageModalState extends State<SelectImageModal> {
   final ImagePicker picker = ImagePicker();
   Uint8List? _imageBytes = null;
   late FilePickerResult filePickerResult;

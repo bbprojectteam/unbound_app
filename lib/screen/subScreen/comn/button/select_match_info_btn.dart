@@ -1,4 +1,4 @@
-import 'package:badboys/screen/modal/comn/select_bottom_modal_screen.dart';
+import 'package:badboys/screen/modal/comn/select_bottom_modal.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -59,7 +59,7 @@ class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
 
               return Container(
                 height: 40.h,
-                  child: SelectBottomModalScreen(selectItemIdx : 0, selectItemList : selectItemList, callBack : (int? id, String? text)=>{
+                  child: SelectBottomModal(selectItemIdx : 0, selectItemList : selectItemList, callBack : (int? id, String? text)=>{
                     widget.callBack(id,text),
                   }));
 
@@ -73,7 +73,7 @@ class _SelectMatchInfoBtnState extends State<SelectMatchInfoBtn> {
 
               return Container(
                   height: 40.h,
-                  child: SelectBottomModalScreen(selectItemIdx : 14, selectItemList : selectItemList,  callBack : (int? id, String text)=>{
+                  child: SelectBottomModal(selectItemIdx : 14, selectItemList : selectItemList,  callBack : (int? id, String text)=>{
                     widget.callBack(id,text),
                   }));
             }

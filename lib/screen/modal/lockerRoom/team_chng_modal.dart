@@ -3,23 +3,21 @@ import 'package:badboys/model/match/match_member_position_model.dart';
 import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
-import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-
-
-class TeamChngModalPop extends StatefulWidget {
-  const TeamChngModalPop({super.key});
+class TeamChngModal extends StatefulWidget {
+  const TeamChngModal({super.key});
 
   @override
-  State<TeamChngModalPop> createState() => _TeamChngModalPopState();
+  State<TeamChngModal> createState() => _TeamChngModalState();
 }
 
 
-class _TeamChngModalPopState extends State<TeamChngModalPop> {
+class _TeamChngModalState extends State<TeamChngModal> {
 
   late MatchController matchController;
   late MatchModel matchModel;

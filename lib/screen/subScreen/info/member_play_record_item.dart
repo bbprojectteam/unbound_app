@@ -1,7 +1,7 @@
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_history_info_model.dart';
 import 'package:badboys/model/match/member_match_history_model.dart';
-import 'package:badboys/screen/subScreen/comn/custom_cached_network_image.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';

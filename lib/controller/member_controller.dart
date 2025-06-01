@@ -111,7 +111,7 @@ class MemberController extends GetxController {
   }
 
 
-  Future<void> fnGetProfileInfo() async {
+  Future<bool> fnGetProfileInfo() async {
 
     try {
       // POST 요청 보내기
@@ -137,6 +137,7 @@ class MemberController extends GetxController {
 
         update();
 
+        return true;
       } else if (response.statusCode == 404 || response.statusCode == 500 ) {
         Get.toNamed("/profileSettingScreen");
       } else{
@@ -150,7 +151,7 @@ class MemberController extends GetxController {
     } finally {
       isLoading.value = false;
     }
-
+    return false;
   }
 
   Future<bool> fnSetMemberProfileImg(FilePickerResult profileImageFile, Uint8List _imageBytes) async {

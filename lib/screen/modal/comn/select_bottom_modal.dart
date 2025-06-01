@@ -2,8 +2,8 @@ import 'package:badboys/screen/modal/comn/select_bottom_modal_list.dart';
 import 'package:flutter/material.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
-class SelectBottomModalScreen extends StatefulWidget {
-  const SelectBottomModalScreen({
+class SelectBottomModal extends StatefulWidget {
+  const SelectBottomModal({
     super.key,
     required this.selectItemIdx,
     required this.selectItemList,
@@ -14,11 +14,11 @@ class SelectBottomModalScreen extends StatefulWidget {
   final List<dynamic> selectItemList;
   final Function callBack;
   @override
-  State<SelectBottomModalScreen> createState() => _SelectBottomModalScreenState();
+  State<SelectBottomModal> createState() => _SelectBottomModalState();
 }
 
-class _SelectBottomModalScreenState
-    extends State<SelectBottomModalScreen> {
+class _SelectBottomModalState
+    extends State<SelectBottomModal> {
 
   late int? itemIdx;
 
@@ -33,8 +33,6 @@ class _SelectBottomModalScreenState
 
   @override
   Widget build(BuildContext context) {
-
-
 
     return Container(
       width: 100.w,
