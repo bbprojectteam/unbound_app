@@ -5,6 +5,7 @@ import 'package:badboys/screen/subScreen/comn/appbar/custom_match_appbar.dart';
 
 import 'package:badboys/screen/subScreen/lockerRoom/chat/chat_list.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/locker_room_info.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
@@ -27,6 +28,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
   late ChatController chatController;
   late MatchController matchController;
   late String matchingRoomId;
+  late int? loginMemberId;
 
   @override
   void initState() {
@@ -39,6 +41,13 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
     _tabController = TabController(length: 2, vsync: this);
     _pageController = PageController();
+
+    loadLoginMemberId();
+  }
+
+  void loadLoginMemberId() async {
+    loginMemberId = await Helpers.getMemberId();
+    setState(() {});
   }
 
   @override
@@ -60,6 +69,10 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
   @override
   Widget build(BuildContext context) {
 
+    if (loginMemberId == null) {
+      return CircularProgressIndicator();
+    }
+
     return Container(
       color: Colors.black,
       width: 100.w,
@@ -70,6 +83,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
           CustomMatchAppbar(
             isBackButton : true,
             chatRoomId: matchingRoomId,
+            loginMemberId: loginMemberId!,
           ),
 
           TabBar(

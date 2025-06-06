@@ -12,6 +12,8 @@ MatchInfoModel _$MatchInfoModelFromJson(Map<String, dynamic> json) =>
       ..chatRoomId = (json['chatRoomId'] as num?)?.toInt()
       ..name = json['name'] as String?
       ..regionId = (json['regionId'] as num?)?.toInt()
+      ..longitude = (json['longitude'] as num?)?.toDouble()
+      ..latitude = (json['latitude'] as num?)?.toDouble()
       ..location = json['location'] as String?
       ..averageMmr = (json['averageMmr'] as num?)?.toDouble()
       ..description = json['description'] as String?
@@ -32,6 +34,8 @@ Map<String, dynamic> _$MatchInfoModelToJson(MatchInfoModel instance) =>
       'regionId': instance.regionId,
       'location': instance.location,
       'averageMmr': instance.averageMmr,
+      'latitude': instance.latitude,
+      'longitude': instance.longitude,
       'description': instance.description,
       'memberCnt': instance.memberCnt,
       'matchDt': instance.matchDt,

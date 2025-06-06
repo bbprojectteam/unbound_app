@@ -414,6 +414,8 @@ class _LockerRoomSettingModalState extends State<LockerRoomSettingModal> {
                     'threePointLimitYn' : threePointLimitYn,
                     'refereeYn' :refereeYn,
                     'halfCourtYn' : halfCourtYn,
+                    'latitude' : latitude.toString(),
+                    'longitude' : longitude.toString(),
                   };
 
                   await matchController.fnMatchRoomInfoUpdate(requestMap);

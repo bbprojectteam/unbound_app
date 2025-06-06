@@ -11,10 +11,12 @@ class CustomMatchAppbar extends StatefulWidget {
   const CustomMatchAppbar({
     super.key,
     required this.chatRoomId,
+    required this.loginMemberId,
     required this.isBackButton,
   });
 
   final String chatRoomId;
+  final int loginMemberId;
   final bool isBackButton;
 
   @override
@@ -25,6 +27,7 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
 
   late MatchController matchController;
   late MatchModel matchModel;
+  bool isOwnerAuth = false;
 
   @override
   void initState() {
@@ -38,12 +41,20 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
 
     AuthService _authService = AuthService();
 
-
     return GetBuilder<MatchController>(
         init: matchController,
         builder: (matchControllerContext) {
 
           matchModel = matchController.matchModel;
+
+          for (int i = 0; i < matchModel.matchMemberModel.length; i++ ) {
+            if (matchModel.matchMemberModel[i].role == "OWNER") {
+              if (matchModel.matchMemberModel[i].userId! == widget.loginMemberId) {
+                isOwnerAuth = true;
+              }
+            }
+          }
+
 
         return Container(
           padding: EdgeInsets.only(left: 10, right: 10),
@@ -92,7 +103,12 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
                 children: [
                     GestureDetector(
                       onTap: ()=>{
-                        LockerRoomSettingDropDownMenu.showDropdownMenu(context, widget.chatRoomId, matchModel.isJoinLockerRoom!),
+                        LockerRoomSettingDropDownMenu.showDropdownMenu(
+                            context,
+                            widget.chatRoomId,
+                            matchModel.isJoinLockerRoom!,
+                            isOwnerAuth
+                        ),
                       },
                       child: Container(
                         padding: EdgeInsets.all(3),

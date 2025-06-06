@@ -18,6 +18,7 @@ class UserInfo {
   String? introduction;
   String? lastReadMessageId;
   int? matchCnt;
+  String? role;
 
   UserInfo();
 

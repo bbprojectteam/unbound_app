@@ -176,8 +176,11 @@ class MatchController extends GetxController {
         },
         body: {
           "regionId": matchModel.matchInfoModel!.regionId,
+          "matchName" : matchModel.matchInfoModel?.name,
           "ateamIdList": aTeamList,
           "bteamIdList": bTeamList,
+          "latitude": matchModel.matchInfoModel?.latitude ?? 0,
+          "longitude": matchModel.matchInfoModel?.longitude ?? 0,
         }
       );
 
@@ -428,6 +431,8 @@ class MatchController extends GetxController {
             'threePointLimitYn' : requestMap['threePointLimitYn'],
             'refereeYn' : requestMap['refereeYn'],
             'halfCourtYn' : requestMap['halfCourtYn'],
+            'latitude' : requestMap['latitude'],
+            'longitude' : requestMap['longitude'],
           }
       );
 
@@ -442,6 +447,38 @@ class MatchController extends GetxController {
     } catch (error) {
       // 오류 처리
       print('fnMatchRoomInfoUpdate Error: $error');
+
+    } finally {
+      isLoading.value = false;
+    }
+
+  }
+
+  Future<void> fnMatchOwnerChange(int? userId) async {
+    try {
+
+      // POST 요청 보내기
+      // http.Response response = await Helpers.apiCall(
+      //     '/service/chatRoom/${requestMap['chatRoomId']}/update',
+      //     method: "POST",
+      //     headers: {
+      //       'Content-Type': 'application/json', // JSON 형식
+      //     },
+      //     body: {
+      //       'userId' : userId,
+      //     }
+      // );
+
+      // if (response.statusCode == 200) {
+      //
+      // } else {
+      //   // 오류 처리
+      //   throw Exception('fnMatchOwnerChange Failed');
+      // }
+
+    } catch (error) {
+      // 오류 처리
+      print('fnMatchOwnerChange Error: $error');
 
     } finally {
       isLoading.value = false;

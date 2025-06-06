@@ -31,7 +31,6 @@ class _ChatListState extends State<ChatList> {
   late ChatController chatController;
   late MatchController matchController;
 
-
   @override
   void initState() {
     // TODO: implement initState

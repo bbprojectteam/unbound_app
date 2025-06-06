@@ -42,17 +42,18 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
     }
   }
 
-
-
   @override
   Widget build(BuildContext context) {
-
 
     return GetBuilder<MatchController>(
       init: matchController,
       builder: (context) {
 
         matchModel = matchController.matchModel;
+
+        print('위치검사');
+        print(matchModel.matchInfoModel?.latitude );
+        print(matchModel.matchInfoModel?.longitude );
 
         return SingleChildScrollView(
             child: Column(
@@ -80,8 +81,8 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                         width: 100.w,
                         height: 23.h,
                         kakaoMapKey: dotenv.get("KAKAO_JAVASCRIPT_KEY"),
-                        lat: 37.5804159,
-                        lng: 127.00468989999999,
+                        lat: matchModel.matchInfoModel?.latitude ?? 0.0,
+                        lng: matchModel.matchInfoModel?.longitude ?? 0.0,
                         zoomLevel: 1,
                         draggableMarker: false,
                         showMapTypeControl: false,
@@ -157,21 +158,34 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                                 Row(
                                   children: [
                                     for (int i = 0; i < matchModel.matchMemberModel.length; i++)...[
-                                      if(matchModel.matchMemberModel[i].profileImage != null)
-                                        GestureDetector(
-                                          onTap: (){
-                                            Get.toNamed(
-                                                '/memberPageScreen',
-                                                arguments: {'tab' : 0, 'memberId' : matchModel.matchMemberModel[i].userId }
-                                            );
-                                          },
-                                          child: ClipOval(
-                                            child: CustomCachedNetworkImage(
-                                                imagePath: matchModel.matchMemberModel[i].profileImage.toString(),
-                                                imageWidth: 10.w,
-                                                imageHeight: null
+                                        Column(
+                                          children: [
+                                            GestureDetector(
+                                              onTap: (){
+                                                Get.toNamed(
+                                                    '/memberPageScreen',
+                                                    arguments: {'tab' : 0, 'memberId' : matchModel.matchMemberModel[i].userId }
+                                                );
+                                              },
+                                              child: ClipOval(
+                                                child: CustomCachedNetworkImage(
+                                                    imagePath: matchModel.matchMemberModel[i].profileImage.toString(),
+                                                    imageWidth: 10.w,
+                                                    imageHeight: null
+                                                ),
+                                              ),
                                             ),
-                                          ),
+                                            SizedBox(height: 3,),
+                                            Text(
+                                                matchModel.matchMemberModel[i].role.toString() == "OWNER" ? '방장' :'',
+                                              style: TextStyle(
+                                                  fontSize: 12,
+                                                  fontWeight: FontWeight.w700,
+                                                  color: Colors.white,
+                                                  fontFamily: 'EHSMB'
+                                              ),
+                                            ),
+                                          ],
                                         ),
 
                                     ]

@@ -18,6 +18,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo()
   ..regionId = (json['regionId'] as num?)?.toInt()
   ..regionNm = json['regionNm'] as String?
   ..introduction = json['introduction'] as String?
+  ..role = json['role'] as String?
   ..lastReadMessageId = json['lastReadMessageId'] as String?
   ..matchCnt = (json['matchCnt'] as num?)?.toInt();
 
@@ -33,6 +34,7 @@ Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>
       'regionId': instance.regionId,
       'regionNm': instance.regionNm,
       'introduction': instance.introduction,
+      'role': instance.role,
       'lastReadMessageId': instance.lastReadMessageId,
       'matchCnt': instance.matchCnt,
     };

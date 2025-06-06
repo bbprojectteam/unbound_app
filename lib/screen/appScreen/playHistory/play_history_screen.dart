@@ -8,10 +8,12 @@ import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_n
 import 'package:badboys/screen/subScreen/playHistory/play_history_comment_item.dart';
 import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:intl/intl.dart';
+import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
 
 class PlayInfoScreen extends StatefulWidget {
@@ -84,78 +86,19 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                 ),
                   
                 ///지도
-                Container(
+                KakaoMapView(
                   width: 100.w,
                   height: 23.h,
-                  child: PageView(
-                    controller: PageController(),
-                    scrollDirection: Axis.horizontal,
-                    children: [
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.asset(
-                              'assets/images/123.PNG',
-                              width: 100.w,
-                              height: 23.h, // 명시적으로 크기 설정
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  
-                          Positioned(
-                            right: 10,
-                            bottom: 10,
-                            child: Container(
-                              width: 50,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.4),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: Center(
-                                child: Text('2 / 3',style: TextStyle(fontFamily: 'EHSMB'),),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                  
-                  
-                      Stack(
-                        children: [
-                          ClipRRect(
-                            borderRadius: BorderRadius.circular(5),
-                            child: Image.asset(
-                              'assets/images/123.PNG',
-                              width: 100.w,
-                              height: 23.h, // 명시적으로 크기 설정
-                              fit: BoxFit.cover,
-                            ),
-                          ),
-                  
-                          Positioned(
-                            right: 10,
-                            bottom: 10,
-                            child: Container(
-                              width: 50,
-                              height: 30,
-                              decoration: BoxDecoration(
-                                color: Colors.grey.withOpacity(0.4),
-                                borderRadius: BorderRadius.circular(100),
-                              ),
-                              child: Center(
-                                child: Text('1 / 3',style: TextStyle(fontFamily: 'EHSMB'),),
-                              ),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
+                  kakaoMapKey: dotenv.get("KAKAO_JAVASCRIPT_KEY"),
+                  lat: matchHistoryInfoModel.latitude ?? 0.0,
+                  lng: matchHistoryInfoModel.longitude ?? 0.0,
+                  zoomLevel: 1,
+                  draggableMarker: false,
+                  showMapTypeControl: false,
+                  showZoomControl: true,
+                  markerImageURL: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
                 ),
-                  
-                  
+
                 //정보
                 Container(
                   padding: EdgeInsets.all(7),
@@ -163,7 +106,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                     mainAxisAlignment: MainAxisAlignment.spaceAround,
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text('대전 서구 아크 실내 농구장',style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
+                      Text(matchHistoryInfoModel.matchName ?? "",style: TextStyle(fontSize: 20,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.white,fontFamily: 'EHSMB'),),
                   
                       Row(
                         children: [

@@ -23,6 +23,7 @@ class ChatController extends GetxController{
   List<UserInfo> matchMemberModel = [];
   ScrollController scrollController = ScrollController();
   double previousPosition = 0.0;
+  var chatMessageLength = 0.obs;
   var isApiCalled = false.obs;
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
 
@@ -101,7 +102,10 @@ class ChatController extends GetxController{
           chatModelList.add(ChatModel.fromJson(jsonItem));
         }
 
+        chatMessageLength.value = jsonResponse['messageCnt'];
+
         scrollToBottom();
+
       } else {
         throw Exception('fnChatList Failed');
       }
@@ -126,9 +130,11 @@ class ChatController extends GetxController{
 
       previousPosition = scrollController.position.pixels;
 
-      if (scrollController.position.atEdge && scrollController.position.pixels == 0) {
-      // 최상단에 도달했을 때 데이터를 로드
-        await loadMoreData(chatRoomId);
+      if (chatModelList.length < chatMessageLength.value) {
+        if (scrollController.position.atEdge && scrollController.position.pixels == 0) {
+          // 최상단에 도달했을 때 데이터를 로드
+          await loadMoreData(chatRoomId);
+        }
       }
     });
   }
@@ -144,7 +150,6 @@ class ChatController extends GetxController{
       });
     }
   }
-
 
   void scrollToJump() {
     WidgetsBinding.instance.addPostFrameCallback((_) {
@@ -274,9 +279,9 @@ class ChatController extends GetxController{
     chatModel.isMyChat = true;
 
     chatModelList.add(chatModel);
-    if (chatModelList.length >= 10) {
+    // if (chatModelList.length >= 10) {
       scrollToBottom();
-    }
+    // }
   }
 
   Future<String?> sendImageMessage(String chatRoomId, Uint8List? imageBytes) async {

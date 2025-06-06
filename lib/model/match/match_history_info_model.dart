@@ -14,6 +14,8 @@ class MatchHistoryInfoModel {
    String? endAt;
    int? regionId;
    List<Team> teamList = [];
+   double? latitude;
+   double? longitude;
 
   MatchHistoryInfoModel();
 

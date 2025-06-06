@@ -21,7 +21,7 @@ class FcmNotifications{
   static void fcmBackgroundDeepLink(BuildContext context) async {
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
-    String chatRoomId = await prefs.getString('matchingRoomId') ?? "";
+    String chatRoomId = prefs.getString('matchingRoomId') ?? "";
 
     if (chatRoomId != "") {
 
@@ -74,7 +74,7 @@ class FcmNotifications{
         print("🔔 알림 클릭됨! Payload: $payload");
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
-        String chatRoomId = await prefs.getString('matchingRoomId') ?? "";
+        String chatRoomId = prefs.getString('matchingRoomId') ?? "";
 
         if (chatRoomId != "") {
           Future.delayed(Duration(milliseconds: 700), () async {
@@ -159,6 +159,9 @@ class FcmNotifications{
 
       /** 알림이 존재하면 */
       if (notification != null) {
+
+        print("Foreground 메시지 수신: ${{message.notification!.body!}}");
+
         /**
          * 로컬 알림을 표시하기 위한 객체를 생성
          * fcm에서 수신한 푸시 메시지를 화면에 표시하는 데 사용됨
@@ -190,7 +193,6 @@ class FcmNotifications{
         await prefs.setBool('isMatching', true);
         await prefs.setString('matchingRoomId', message.data['chatRoomId'].toString());
 
-        print("Foreground 메시지 수신: ${{message.notification!.body!}}");
       }
     });
 

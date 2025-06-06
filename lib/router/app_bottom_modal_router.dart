@@ -12,7 +12,6 @@ import 'package:daum_postcode_search/data_model.dart';
 import 'package:daum_postcode_search/widget.dart';
 import 'package:flutter/material.dart';
 
-
 // AppBottomRouter 클래스 정의
 class AppBottomModalRouter {
 
@@ -20,6 +19,7 @@ class AppBottomModalRouter {
       BuildContext context,
       int modalIndex,
       {
+        bool? isOwnerAuth,
         String? chatRoomId,
         UserInfo? userInfo,
         Function? callBack,
@@ -28,7 +28,7 @@ class AppBottomModalRouter {
 
     final Map<int, Future<dynamic> Function()> modalWidgets = {
       0: () async {
-        return TeamPlayerListModal(chatRoomId: chatRoomId,);
+        return TeamPlayerListModal(chatRoomId: chatRoomId,isOwnerAuth: isOwnerAuth);
       },
       1: () async {
         return const TeamChngModal();

@@ -36,9 +36,9 @@ class MatchInfoModel {
 
   String? threePointLimitYn;
 
+  double? latitude;
 
-
-
+  double? longitude;
 
   MatchInfoModel();
 
