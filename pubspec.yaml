@@ -9,6 +9,7 @@ environment:
 
 dev_dependencies:
   json_serializable: ^6.5.0
+  flutter_native_splash: ^2.2.0+1
   build_runner: ^2.3.0
 
 dependencies:
@@ -38,12 +39,25 @@ dependencies:
   daum_postcode_search: ^0.0.2
   geocoding: ^2.1.0
   fluttertoast: ^8.0.9
-
+  flutter_launcher_icons: 0.11.0
 
   flutter:
     sdk: flutter
   firebase_messaging: ^15.1.5
 
+flutter_icons:
+  android: true
+  ios: true
+  image_path: assets/images/appIcon.png
+  adaptive_icon_foreground: assets/images/appIcon_foreground.png
+  adaptive_icon_background: "#FA9C04"
+  remove_alpha_ios: true
+
+flutter_native_splash:
+  color: "#FA9C04"
+  image: assets/images/appIcon.png
+  android_12:
+    image: assets/images/appIcon.png
 
 flutter:
   uses-material-design: true
