@@ -1,3 +1,4 @@
+import 'package:badboys/controller/global_controller.dart';
 import 'package:badboys/screen/appScreen/setting/setting_screen.dart';
 import 'package:badboys/screen/appScreen/splash/splash_screen.dart';
 import 'package:badboys/screen/appScreen/game/count_down_screen.dart';
@@ -23,14 +24,14 @@ class AppScreen extends StatefulWidget {
 }
 
 class _AppScreenState extends State<AppScreen> {
-  var _currentIndex = 0.obs;  // 바텀 네비게이션의 인덱스
-
   Rx<Widget> _childNotifier = Rx<Widget>(Container());  // child 화면을 Rx로 관리
+  late GlobalController globalController;
 
   @override
   void initState() {
     super.initState();
     _childNotifier.value = widget.child;
+    globalController = Get.find<GlobalController>();
   }
 
 
@@ -55,19 +56,21 @@ class _AppScreenState extends State<AppScreen> {
       ),
       bottomNavigationBar: showBottomNav
           ? Obx(() => CustomBottomNavigationBar(
-        currentIndex: _currentIndex.value,
+        currentIndex: globalController.bottomNavigatorIndex.value,
         onTap: (index) {
           // 상태 변경 (Rx)
-          _currentIndex.value = index;
+          globalController.bottomNavigatorIndex.value = index;
 
           // 페이지 전환
           if (index == 0) {
-            _childNotifier.value = HomeScreen(); // HomeScreen
+            Get.toNamed('/');
           } else if (index == 1) {
-            _childNotifier.value = MatchScreen();
+            Get.toNamed('/match');
           } else if (index == 2) {
-            _childNotifier.value = SettingScreen();
+            Get.toNamed('/setting');
           }
+
+          globalController.update();
 
         },
       ))

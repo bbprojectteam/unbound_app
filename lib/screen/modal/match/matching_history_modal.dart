@@ -79,14 +79,14 @@ class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
                         : SingleChildScrollView(
                           child: Column(
                             children: [
-                              for(int i = 0; i < joinMatchModelList.length; i++)
+                              for (int i = 0; i < joinMatchModelList.length; i++)
                                 LockerRoomListItem(
                                   matchItem: joinMatchModelList[i],
                                   matchingRoomId: joinMatchModelList[i].chatRoomId!,
                                   isExitButton: true,
                                   isModalScreen: true,
                                   callBack: () {
-                                    Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : joinMatchModelList[i].chatRoomId.toString()});
+                                    Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : joinMatchModelList[i].chatRoomId.toString(),});
                                   },
                                 )
                             ],

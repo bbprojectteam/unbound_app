@@ -75,9 +75,8 @@ class _ProfileSettingModalState extends State<ProfileSettingModal> {
               croppedImage.lengthInBytes,
             );
 
-            setState(() {
-              _imageBytes = croppedImage;
-            });
+            _imageBytes = croppedImage;
+            setState(() {});
           } else {
             print("이미지를 자르는 중 문제가 발생했습니다.");
           }
@@ -134,23 +133,28 @@ class _ProfileSettingModalState extends State<ProfileSettingModal> {
                       crossAxisAlignment: CrossAxisAlignment.center,
                       children: [
 
-                        if (widget.userInfo != null)
-                          ClipOval(
-                            child: CustomCachedNetworkImage(
-                                imagePath: widget.userInfo?.profileImage,
-                                imageWidth: 30.w,
-                                imageHeight: 15.h
+                        if (widget.userInfo != null && _imageBytes == null)
+                          GestureDetector(
+                            onTap: (){
+                              _pickImage();
+
+                            },
+                            child: ClipOval(
+                              child: CustomCachedNetworkImage(
+                                  imagePath: widget.userInfo?.profileImage,
+                                  imageWidth: 30.w,
+                                  imageHeight: 15.h
+                              ),
                             ),
                           ),
 
-                        if (widget.userInfo == null)
+                        if (widget.userInfo == null || _imageBytes != null)
                           Container(
                           width: 25.w,
                           height: 20.h,
                           child: GestureDetector(
                             onTap: (){
                               _pickImage();
-
                             },
                             child: _imageBytes != null // 선택된 이미지가 있을 경우
                                 ? ClipOval(
@@ -298,11 +302,12 @@ class _ProfileSettingModalState extends State<ProfileSettingModal> {
                             };
 
                             bool isUpdate = await memberController.fnSetMemberInfo(requestMap);
-                            if (_imageBytes != null ){
+                            if (_imageBytes != null && isUpdate){
                               isUpdate = await memberController.fnSetMemberProfileImg(filePickerResult,_imageBytes!);
                             }
 
                             if(isUpdate) {
+                              await memberController.fnGetProfileInfo();
                               Get.back();
                             } else {
                               print('경고 토스트 생성할 곳');

@@ -5,7 +5,9 @@ import 'package:badboys/model/match/match_model.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/game/member_icon_item.dart';
 import 'package:badboys/screen/subScreen/match/matching_button.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -384,8 +386,10 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
               await matchController.fnGameEnd();
               matchController.clear();
               Get.delete<MatchController>();
+              Helpers.customFlutterToast("저장되었습니다.");
               Navigator.pop(context);
-              Get.toNamed("/");
+              Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : matchModel.matchInfoModel?.chatRoomId.toString()});
+
             },
             child: Container(
               width: 80.w,

@@ -105,16 +105,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
               if (!matchController.matchModel.isJoinLockerRoom!) {
                 _tabController.index = 0;
-
-                Fluttertoast.showToast(
-                  msg: "라커룸 참여를 해주세요.", // 메시지 내용
-                  toastLength: Toast.LENGTH_SHORT, // 토스트의 길이 (짧거나 길게 설정)
-                  gravity: ToastGravity.BOTTOM,  // 토스트 위치 (BOTTOM, CENTER, TOP)
-                  timeInSecForIosWeb: 1,         // iOS/Web에서의 지속 시간 설정
-                  backgroundColor: Colors.black, // 배경색
-                  textColor: Colors.white,       // 텍스트 색
-                  fontSize: 16.0,                // 폰트 크기
-                );
+                Helpers.customFlutterToast("라커룸 참여를 해주세요.");
               }
 
 

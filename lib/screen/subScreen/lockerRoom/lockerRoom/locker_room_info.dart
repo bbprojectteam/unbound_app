@@ -292,7 +292,7 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                             children: [
                               MatchPointItem(
                                   matchPointText: '3 vs 3',
-                                  matchPointEditStatusYn: matchModel.matchInfoModel?.threeOnThreeYn == null ? 'N' : matchModel.matchInfoModel!.threeOnThreeYn!,
+                                  matchPointEditStatusYn: matchModel.matchInfoModel?.threeOnThreeYn == null ? 'Y' : matchModel.matchInfoModel!.threeOnThreeYn!,
                                   containerWidth: 43.w
 
                               ),
@@ -335,7 +335,7 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
 
                               MatchPointItem(
                                   matchPointText: '하프코트',
-                                  matchPointEditStatusYn: matchModel.matchInfoModel?.halfCourtYn == null ? 'N' : matchModel.matchInfoModel!.halfCourtYn!,
+                                  matchPointEditStatusYn: matchModel.matchInfoModel?.halfCourtYn == null ? 'Y' : matchModel.matchInfoModel!.halfCourtYn!,
                                   containerWidth: 43.w),
 
                               MatchPointItem(

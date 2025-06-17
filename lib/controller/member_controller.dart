@@ -31,7 +31,6 @@ class MemberController extends GetxController {
   TextEditingController birthTextEdController = TextEditingController();
   TextEditingController introductionTextEdController = TextEditingController();
 
-
   void clear() {
     isLoading = false.obs;  // 로딩 상태를 추적하는 변수
     reginonNm = "지역 선택".obs;
@@ -43,7 +42,6 @@ class MemberController extends GetxController {
     birthTextEdController = TextEditingController();
     introductionTextEdController = TextEditingController();
   }
-
 
   String categorizeAgeGroup(String? birth) {
 
@@ -71,8 +69,6 @@ class MemberController extends GetxController {
       return "50대";
     }
   }
-
-
 
   Future<void> fnGetMemberInfo(int? memberId) async {
 
@@ -110,7 +106,6 @@ class MemberController extends GetxController {
 
   }
 
-
   Future<bool> fnGetProfileInfo() async {
 
     try {
@@ -120,7 +115,6 @@ class MemberController extends GetxController {
           headers: {
             'Content-Type': 'application/json', // JSON 형식
           },
-
       );
 
       if (response.statusCode == 200) {
@@ -186,7 +180,6 @@ class MemberController extends GetxController {
 
   Future<bool> fnSetMemberInfo(Map<String, String> requestMap) async {
 
-
     try {
 
       // POST 요청 보내기
@@ -206,25 +199,15 @@ class MemberController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-
         return true;
       } else {
-        // 오류 처리
         throw Exception('fnSetMemberInfo Failed');
       }
-
     } catch (error) {
-      // 오류 처리
       print('fnSetMemberInfo Error: $error');
       return false;
     } finally {
       isLoading.value = false;
     }
-
   }
-
-
-
-
-
 }

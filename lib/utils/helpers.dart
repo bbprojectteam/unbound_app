@@ -7,8 +7,10 @@ import 'package:badboys/auth/auth_service.dart';
 import 'package:badboys/model/member/user_info.dart';
 import 'package:file_picker/file_picker.dart';
 import 'package:flutter/foundation.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
+import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:http/http.dart' as http;
@@ -40,7 +42,6 @@ class Helpers {
     }
   }
 
-
   static Future<void> setMemberId(String userId) async {
     // SharedPreferences에 저장
     SharedPreferences prefs = await SharedPreferences.getInstance();
@@ -66,6 +67,18 @@ class Helpers {
     return int.parse(prefs.getString("regionId").toString());
   }
 
+  static void customFlutterToast(String message)  {
+
+     Fluttertoast.showToast(
+      msg: message,
+      toastLength: Toast.LENGTH_SHORT, // 토스트의 길이 (짧거나 길게 설정)
+      gravity: ToastGravity.BOTTOM,  // 토스트 위치 (BOTTOM, CENTER, TOP)
+      timeInSecForIosWeb: 1,         // iOS/Web에서의 지속 시간 설정
+      backgroundColor: Colors.black, // 배경색
+      textColor: Colors.white,       // 텍스트 색
+      fontSize: 16.0,                // 폰트 크기
+    );
+  }
 
   static Future<FilePickerResult> convertUint8ListToFilePickerResult(Uint8List imageBytes, int size) async {
     final tempFile = await _writeToTempFile(imageBytes);

@@ -100,6 +100,16 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                     markerImageURL: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
                   ),
 
+                if (matchHistoryInfoModel.latitude == null && matchHistoryInfoModel.longitude == null)
+                  Container(
+                    width: 100.w,
+                    height: 23.h,
+                    color: Colors.black54,
+                    child: Center(
+                      child: Text("지정된 주소가 없습니다.",style: TextStyle(fontSize: 13,fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.grey,fontFamily: 'EHSMB'),),
+                    ),
+                  ),
+
                 //정보
                 Container(
                   padding: EdgeInsets.all(7),

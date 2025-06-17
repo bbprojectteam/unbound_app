@@ -248,7 +248,6 @@ class _TeamChngModalState extends State<TeamChngModal> {
                             ),
                           ),
                         ),
-
                         Container(
                           width: 10.w,
                           height: 5.h,
@@ -306,7 +305,6 @@ class _TeamChngModalState extends State<TeamChngModal> {
                             ),
                           ),
                         ),
-
                         Container(
                           width: 10.w,
                           height: 5.h,
@@ -352,28 +350,23 @@ class _TeamChngModalState extends State<TeamChngModal> {
                         },
                         child: Column(
                           children: [
-
-                            if ((i + 1) == selectedItemIndex)
-                              Text(
-                                "선택",
-                                style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 13.5,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'EHSMB',
-                                ),
-                              ),
-
-                            Container(
+                            AnimatedContainer(
+                              duration: Duration(milliseconds: 300),
+                              curve: Curves.easeInOut,
+                              width: (i + 1) == selectedItemIndex ? 17.w : 15.w,
                               decoration: BoxDecoration(
                                 borderRadius: BorderRadius.circular(100),
-                                border: Border.all(color: (i + 1) == selectedItemIndex ? Colors.orange : Colors.transparent, width: 4),
+                                border: Border.all(
+                                  color: (i + 1) == selectedItemIndex ? Colors.orange : Colors.transparent,
+                                  width: 5,
+                                ),
                               ),
                               child: ClipOval(
                                 child: CustomCachedNetworkImage(
-                                    imagePath: matchModel.matchMemberModel[i].profileImage,
-                                    imageWidth: 13.w,
-                                    imageHeight: null
+                                  imagePath: matchModel.matchMemberModel[i].profileImage,
+                                  imageWidth:(i + 1) == selectedItemIndex ? 17.w : 15.w,
+                                  imageHeight: null,
+
                                 ),
                               ),
                             ),

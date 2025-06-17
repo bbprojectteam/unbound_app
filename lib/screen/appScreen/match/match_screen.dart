@@ -18,13 +18,8 @@ class MatchScreen extends StatefulWidget {
 class _MatchScreenState extends State<MatchScreen> {
 
   @override
-  void initState() {
-    // TODO: implement initState
-    super.initState();
-  }
-
-  @override
   Widget build(BuildContext context) {
+
     return Container(
       width: 100.w,
       height: 100.h,
@@ -68,19 +63,6 @@ class _MatchScreenState extends State<MatchScreen> {
                   child: Center(
                     child: Column(
                       children: [
-                        GestureDetector(
-                          onTap: () async {
-                            SharedPreferences prefs = await SharedPreferences.getInstance();
-                            await prefs.setBool("isMatching", false);
-
-                          },
-                          child: Container(
-                            height: 10.h,
-                            child: Text('테스트 임시저장소비우기',
-                              style: TextStyle(color: Colors.white),
-                            ),
-                          ),
-                        ),
                         Container(
                           width: 100.w,
                           height: 7.5.h,

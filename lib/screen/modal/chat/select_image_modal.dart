@@ -82,8 +82,8 @@ class _SelectImageModalState extends State<SelectImageModal> {
 
     return Container(
       width: 100.w,
-      height: 20.h,
-      color: Colors.black87,
+      height: 13.h,
+      color: Colors.black.withOpacity(0.925),
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceAround,
         crossAxisAlignment: CrossAxisAlignment.center,
@@ -98,14 +98,14 @@ class _SelectImageModalState extends State<SelectImageModal> {
                  Navigator.pop(context);
                 },
                   child: Icon(
-                    Icons.camera_alt_outlined,
-                    size: 23.w,
+                    Icons.camera_alt,
+                    size: 12.w,
                     color: Colors.white,)
               ),
               Text('카메라',
                 style: TextStyle(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w800,
                     fontFamily: 'EHSMB',
                 ),
               ),
@@ -121,11 +121,16 @@ class _SelectImageModalState extends State<SelectImageModal> {
                     await widget.callBack(_imageBytes);
                     Navigator.pop(context);
                   },
-                  child: Icon(Icons.image,size: 23.w,color: Colors.white,)),
+                  child: Icon(
+                    Icons.image,
+                    size: 12.w,
+                    color: Colors.white,
+                  )
+              ),
               Text('이미지',
                 style: TextStyle(
                     color: Colors.white,
-                    fontWeight: FontWeight.w700,
+                    fontWeight: FontWeight.w800,
                     fontFamily: 'EHSMB'
                 ),
               ),
