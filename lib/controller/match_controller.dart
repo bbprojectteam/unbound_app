@@ -158,11 +158,11 @@ class MatchController extends GetxController {
     List<int> aTeamList = [];
     List<int> bTeamList = [];
 
-    for(var item in matchModel.matchMemberModel.sublist(0,3)){
+    for (var item in matchModel.matchMemberModel.sublist(0,3)) {
       aTeamList.add(item.userId!);
     }
 
-    for(var item in matchModel.matchMemberModel.sublist(3,6)){
+    for (var item in matchModel.matchMemberModel.sublist(3,6)) {
       bTeamList.add(item.userId!);
     }
 
@@ -175,12 +175,11 @@ class MatchController extends GetxController {
           'Content-Type': 'application/json', // JSON 형식
         },
         body: {
+          "chatRoomId" : matchModel.matchInfoModel?.chatRoomId,
           "regionId": matchModel.matchInfoModel!.regionId,
           "matchName" : matchModel.matchInfoModel?.name,
           "ateamIdList": aTeamList,
           "bteamIdList": bTeamList,
-          "latitude": matchModel.matchInfoModel?.latitude ?? 0,
-          "longitude": matchModel.matchInfoModel?.longitude ?? 0,
         }
       );
 
@@ -410,7 +409,7 @@ class MatchController extends GetxController {
 
   }
 
-  Future<void> fnMatchRoomInfoUpdate(Map<String, String> requestMap) async {
+  Future<void> fnMatchRoomInfoUpdate(Map<String, dynamic> requestMap) async {
     try {
 
       // POST 요청 보내기
@@ -515,6 +514,8 @@ class MatchController extends GetxController {
             matchModel.isJoinLockerRoom = true;
           }
         }
+
+        matchModel.matchInfoModel?.chatRoomId = int.parse(matchInfoId);
 
         update();
 

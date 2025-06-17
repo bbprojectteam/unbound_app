@@ -16,6 +16,7 @@ class MatchHistoryInfoModel {
    List<Team> teamList = [];
    double? latitude;
    double? longitude;
+   String? location;
 
   MatchHistoryInfoModel();
 

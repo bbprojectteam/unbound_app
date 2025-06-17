@@ -86,18 +86,19 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                 ),
                   
                 ///지도
-                KakaoMapView(
-                  width: 100.w,
-                  height: 23.h,
-                  kakaoMapKey: dotenv.get("KAKAO_JAVASCRIPT_KEY"),
-                  lat: matchHistoryInfoModel.latitude ?? 0.0,
-                  lng: matchHistoryInfoModel.longitude ?? 0.0,
-                  zoomLevel: 1,
-                  draggableMarker: false,
-                  showMapTypeControl: false,
-                  showZoomControl: true,
-                  markerImageURL: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
-                ),
+                if (matchHistoryInfoModel.latitude != null && matchHistoryInfoModel.longitude != null)
+                  KakaoMapView(
+                    width: 100.w,
+                    height: 23.h,
+                    kakaoMapKey: dotenv.get("KAKAO_JAVASCRIPT_KEY"),
+                    lat: matchHistoryInfoModel.latitude ?? 0.0,
+                    lng: matchHistoryInfoModel.longitude ?? 0.0,
+                    zoomLevel: 1,
+                    draggableMarker: false,
+                    showMapTypeControl: false,
+                    showZoomControl: true,
+                    markerImageURL: 'https://t1.daumcdn.net/localimg/localimages/07/mapapidoc/marker_red.png',
+                  ),
 
                 //정보
                 Container(
@@ -110,7 +111,8 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                   
                       Row(
                         children: [
-                          Text('서울 특별시 도봉구 도봉로 100라길 69-6 4층',style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.grey),),
+                          // Text('서울 특별시 도봉구 도봉로 100라길 69-6 4층',style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.grey),),
+                          Text(matchHistoryInfoModel.location ?? "지정된 주소가 없습니다.",style: TextStyle(fontWeight: FontWeight.w600,letterSpacing: -0.3,color: Colors.grey),),
 
 
                           SizedBox(width: 3,),

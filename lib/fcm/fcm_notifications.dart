@@ -170,7 +170,12 @@ class FcmNotifications{
         final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
         String rawBody = notification.body.toString(); // JSON 형식의 body 데이터
-        Map<String, dynamic> bodyMap = jsonDecode(rawBody); // JSON을 Map으로 변환
+        // Map<String, dynamic> bodyMap = jsonDecode(rawBody); // JSON을 Map으로 변환
+
+
+        print('fcm테스트');
+        print(rawBody);
+
 
         /** 푸시 알림을 화면에 표시*/
         flutterLocalNotificationsPlugin.show(

@@ -7,6 +7,7 @@ import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/fcm/fcm_notifications.dart';
 import 'package:badboys/fcm/firebase_options.dart';
 import 'package:badboys/router/app_router.dart';
+import 'package:badboys/screen/appScreen/setting/setting_screen.dart';
 import 'package:badboys/screen/appScreen/splash/splash_screen.dart';
 import 'package:badboys/screen/appScreen/game/count_down_screen.dart';
 import 'package:badboys/screen/appScreen/game/playing_screen.dart';
@@ -68,6 +69,9 @@ class MyApp extends StatelessWidget {
               GetPage(name: '/login',
                   transition: Transition.fadeIn,
                   page: () => AppScreen(child: LoginScreen())),
+              GetPage(name: '/setting',
+                  transition: Transition.fadeIn,
+                  page: () => AppScreen(child: SettingScreen())),
               GetPage(name: '/profileSettingScreen',
                   transition: Transition.fadeIn,
                   page: () => AppScreen(child: ProfileSettingModal(userInfo: null,))),

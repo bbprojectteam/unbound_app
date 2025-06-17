@@ -1,3 +1,4 @@
+import 'package:badboys/screen/appScreen/setting/setting_screen.dart';
 import 'package:badboys/screen/appScreen/splash/splash_screen.dart';
 import 'package:badboys/screen/appScreen/game/count_down_screen.dart';
 import 'package:badboys/screen/appScreen/game/playing_screen.dart';
@@ -65,7 +66,7 @@ class _AppScreenState extends State<AppScreen> {
           } else if (index == 1) {
             _childNotifier.value = MatchScreen();
           } else if (index == 2) {
-            _childNotifier.value = RankScreen();
+            _childNotifier.value = SettingScreen();
           }
 
         },

@@ -45,8 +45,8 @@ class _LockerRoomSettingModalState extends State<LockerRoomSettingModal> {
 
   String? location;
 
-  double latitude = 0.0;  // 위도
-  double longitude = 0.0;  // 경도
+  double? latitude;  // 위도
+  double? longitude;  // 경도
 
   TextEditingController lockerRoomTitleEditController = TextEditingController();
   TextEditingController lockerRoomDescriptionEditController = TextEditingController();
@@ -71,7 +71,7 @@ class _LockerRoomSettingModalState extends State<LockerRoomSettingModal> {
     matchController = Get.put(MatchController());
     lockerRoomTitleEditController.text = matchController.matchModel.matchInfoModel!.name!;
     lockerRoomDescriptionEditController.text = matchController.matchModel.matchInfoModel!.description ?? "";
-    location = matchController.matchModel.matchInfoModel!.location;
+    location = matchController.matchModel.matchInfoModel?.location;
 
     if (matchController.matchModel.matchInfoModel!.matchDt != null) {
       List<String> matchDt = matchController.matchModel.matchInfoModel!.matchDt!.toString().split(' ');
@@ -84,13 +84,15 @@ class _LockerRoomSettingModalState extends State<LockerRoomSettingModal> {
       selectedMinute = matchDt[1].split(':')[1];
     }
 
+    latitude = matchController.matchModel.matchInfoModel?.latitude;
+    longitude = matchController.matchModel.matchInfoModel?.longitude;
 
-    threeOnThreeYn = matchController.matchModel.matchInfoModel!.threeOnThreeYn!;
-    ballYn = matchController.matchModel.matchInfoModel!.ballYn!;
-    backBoardYn = matchController.matchModel.matchInfoModel!.backBoardYn!;
-    threePointLimitYn = matchController.matchModel.matchInfoModel!.threePointLimitYn!;
-    refereeYn = matchController.matchModel.matchInfoModel!.refereeYn!;
-    halfCourtYn = matchController.matchModel.matchInfoModel!.halfCourtYn!;
+    threeOnThreeYn = matchController.matchModel.matchInfoModel?.threeOnThreeYn ?? "N";
+    ballYn = matchController.matchModel.matchInfoModel?.ballYn ?? "N";
+    backBoardYn = matchController.matchModel.matchInfoModel?.backBoardYn ?? "N";
+    threePointLimitYn = matchController.matchModel.matchInfoModel?.threePointLimitYn ?? "N";
+    refereeYn = matchController.matchModel.matchInfoModel?.refereeYn ?? "N";
+    halfCourtYn = matchController.matchModel.matchInfoModel?.halfCourtYn ?? "N";
     fullCourtYn = halfCourtYn == 'Y' ? 'N' : 'Y';
 
   }
@@ -123,7 +125,7 @@ class _LockerRoomSettingModalState extends State<LockerRoomSettingModal> {
                 color: Colors.white,
                 fontSize : 16,
                 fontFamily : 'EHSMB'
-                
+
               ),
             ),
             SizedBox(height: 10,),
@@ -402,20 +404,20 @@ class _LockerRoomSettingModalState extends State<LockerRoomSettingModal> {
                   String matchDescription = lockerRoomDescriptionEditController.text;
                   String matchDt = "$selectedYear-$selectedMonth-$selectedDay $selectedHour:$selectedMinute";
 
-                  Map<String, String> requestMap = {
+                  Map<String, dynamic> requestMap = {
                     'chatRoomId' : widget.chatRoomId!,
                     'matchName': matchName,
                     'matchDescription': matchDescription,
                     'matchDt': matchDt,
-                    'location': location ?? "",
+                    'location': location,
                     'threeOnThreeYn' : threeOnThreeYn,
                     'ballYn' : ballYn,
                     'backBoardYn' : backBoardYn,
                     'threePointLimitYn' : threePointLimitYn,
                     'refereeYn' :refereeYn,
                     'halfCourtYn' : halfCourtYn,
-                    'latitude' : latitude.toString(),
-                    'longitude' : longitude.toString(),
+                    'latitude' : latitude,
+                    'longitude' : longitude,
                   };
 
                   await matchController.fnMatchRoomInfoUpdate(requestMap);

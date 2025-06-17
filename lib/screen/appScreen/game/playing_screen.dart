@@ -133,7 +133,7 @@ class _PlayingScreenState extends State<PlayingScreen> {
               child: Text(
                 _formatTime(_minutes, _seconds, _milliseconds),
                 style: TextStyle(
-                  color: Colors.black,
+                  color: Colors.black87,
                   fontSize: 80,
                   fontWeight: FontWeight.w600,
                   fontFamily: 'Digital7',
