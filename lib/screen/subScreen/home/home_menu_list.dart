@@ -79,7 +79,6 @@ class _HomeMenuListState extends State<HomeMenuList> {
                 iconHSize: 4.h,
                 uri: '/inquiry',
                 arguments: {}),
-
           ],
         ),
       ],

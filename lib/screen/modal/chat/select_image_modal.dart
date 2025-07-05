@@ -79,7 +79,6 @@ class _SelectImageModalState extends State<SelectImageModal> {
   @override
   Widget build(BuildContext context) {
 
-
     return Container(
       width: 100.w,
       height: 13.h,

@@ -18,6 +18,7 @@ class MemberController extends GetxController {
 
   UserInfo memberModel = UserInfo();
   UserInfo memberInfoModel = UserInfo();
+  List<UserInfo> inviteMemberListModel = [];
   MemberMatchHistoryModel memberMatchHistoryModel = MemberMatchHistoryModel();
 
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
@@ -89,6 +90,7 @@ class MemberController extends GetxController {
 
         memberMatchHistoryModel = MemberMatchHistoryModel();
         memberMatchHistoryModel = MemberMatchHistoryModel.fromJson(jsonResponse);
+        print(memberMatchHistoryModel.userMatchInfoList[0].toJson());
 
         update();
 
@@ -147,6 +149,76 @@ class MemberController extends GetxController {
     }
     return false;
   }
+  
+  
+  Future<bool> fnGetInviteMemberList(String chatRoomId) async {
+
+    try {
+      http.Response response = await Helpers.apiCall(
+        '/service/chatRoom/${chatRoomId}/invitation/list',
+        headers: {
+          'Content-Type': 'application/json', // JSON 형식
+        },
+      );
+
+      if (response.statusCode == 200) {
+
+        final decodedBody = utf8.decode(response.bodyBytes);
+        var jsonResponse = jsonDecode(decodedBody);
+
+        inviteMemberListModel = [];
+        // memberModel = UserInfo.fromJson(jsonResponse['userInfo']);
+
+        print(jsonResponse);
+
+        update();
+
+        return true;
+      } else {
+        // 오류 처리
+        throw Exception('Failed to fnGetInviteMemberList');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('Error: $error');
+    } finally {
+      isLoading.value = false;
+    }
+    return false;
+  }
+
+  Future<bool> fnSendInviteMember(String chatRoomId, String targetMemberId) async {
+
+    try {
+      http.Response response = await Helpers.apiCall(
+          '/service/chatRoom/${chatRoomId}/invitation/${targetMemberId}',
+          method: 'POST',
+          headers: {
+            'Content-Type': 'application/json', // JSON 형식
+          },
+
+      );
+
+      if (response.statusCode == 200) {
+
+        update();
+
+        return true;
+      } else {
+        // 오류 처리
+        throw Exception('Failed to fnGetInviteMemberList');
+      }
+
+    } catch (error) {
+      // 오류 처리
+      print('Error: $error');
+    } finally {
+      isLoading.value = false;
+    }
+    return false;
+  }
+
 
   Future<bool> fnSetMemberProfileImg(FilePickerResult profileImageFile, Uint8List _imageBytes) async {
 

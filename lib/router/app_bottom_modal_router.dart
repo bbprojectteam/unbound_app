@@ -8,6 +8,7 @@ import 'package:badboys/screen/modal/lockerRoom/select_locale_bottom_modal.dart'
 import 'package:badboys/screen/modal/lockerRoom/team_chng_modal.dart';
 import 'package:badboys/screen/modal/lockerRoom/team_player_list_modal.dart';
 import 'package:badboys/screen/modal/match/matching_history_modal.dart';
+import 'package:badboys/screen/modal/sendInvite/send_invite_modal.dart';
 import 'package:daum_postcode_search/data_model.dart';
 import 'package:daum_postcode_search/widget.dart';
 import 'package:flutter/material.dart';
@@ -39,26 +40,30 @@ class AppBottomModalRouter {
       3: () async {
         return const DaumPostCodeSearchModal();
       },
-      4: () async{
+      4: () async {
         return const ProfileSettingModal(userInfo : null);
       },
-      5: () async{
+      5: () async {
         return const MatchingHistoryModal();
       },
-      6: () async{
+      6: () async {
         return const PlayingResultModal();
       },
-      7: () async{
+      7: () async {
         return ProfileSettingModal(userInfo : userInfo);
       },
-      8: () async{
+      8: () async {
         return SelectImageModal(callBack : (imageFile) {
           callBack!(imageFile);
         });
       },
+      9: () async {
+        return SendInviteModal(chatRoomId : chatRoomId!, callBack : () {
+
+        });
+      },
     };
 
-    // Modal 위젯이 존재하면 showModalBottomSheet 호출
     if (modalWidgets.containsKey(modalIndex)) {
       dynamic modalFunction = modalWidgets[modalIndex];
 

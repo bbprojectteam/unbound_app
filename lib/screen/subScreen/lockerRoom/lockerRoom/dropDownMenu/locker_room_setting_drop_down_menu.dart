@@ -20,7 +20,10 @@ class LockerRoomSettingDropDownMenu {
           value: 100,
           text: '참여자 확인',
         ),
-
+        showDropdownMenuItem(
+          value: 200,
+          text: '초대하기',
+        ),
         if (isJoinLockerRoom)...[
           if (isOwnerAuth)
             showDropdownMenuItem(
@@ -71,7 +74,8 @@ class LockerRoomSettingDropDownMenu {
       await AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId,isOwnerAuth: isOwnerAuth);
 
     } else if (value == 200) {
-      // await AppBottomModalRouter.fnModalRouter(context, 1);
+      await AppBottomModalRouter.fnModalRouter(context, 9, chatRoomId: chatRoomId);
+
     } else if (value == 300) {
 
       // 멤버정보

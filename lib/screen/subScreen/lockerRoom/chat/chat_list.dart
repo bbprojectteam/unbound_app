@@ -47,7 +47,7 @@ class _ChatListState extends State<ChatList> {
       chatController.matchMemberModel = matchController.matchModel.matchMemberModel;
     }
 
-    chatController.fnConnectToStompServer();
+    chatController.fnConnectToStompServer(widget.chatRoomId);
     chatController.setScrollControllerListener(widget.chatRoomId);
 
     // 컨트롤러에 마지막 postion저장하고 거기로 이동

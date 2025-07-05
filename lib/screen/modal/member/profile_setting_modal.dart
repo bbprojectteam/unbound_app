@@ -102,13 +102,6 @@ class _ProfileSettingModalState extends State<ProfileSettingModal> {
               child: Stack(
                 children: [
 
-                  Image.asset(
-                    'assets/images/rank_bg.jpg',
-                    width: 100.w,
-                    height: 35.h,
-                    fit: BoxFit.cover,
-                  ),
-
                   Positioned(
                       top: 5.h,
                       left: 10,
@@ -134,45 +127,57 @@ class _ProfileSettingModalState extends State<ProfileSettingModal> {
                       children: [
 
                         if (widget.userInfo != null && _imageBytes == null)
-                          GestureDetector(
-                            onTap: (){
-                              _pickImage();
-
-                            },
-                            child: ClipOval(
-                              child: CustomCachedNetworkImage(
-                                  imagePath: widget.userInfo?.profileImage,
-                                  imageWidth: 30.w,
-                                  imageHeight: 15.h
+                          Container(
+                            width: 100.w,
+                            height: 26.h,
+                            child: GestureDetector(
+                              onTap: () {
+                                _pickImage();
+                              },
+                              child: ClipRRect(
+                                borderRadius: BorderRadius.circular(10),
+                                child: SizedBox.expand(
+                                  child: CustomCachedNetworkImage(
+                                    imagePath: widget.userInfo?.profileImage,
+                                    imageHeight: 100.w,
+                                    imageWidth: 26.h
+                                  ),
+                                ),
                               ),
                             ),
                           ),
 
                         if (widget.userInfo == null || _imageBytes != null)
-                          Container(
-                          width: 25.w,
-                          height: 20.h,
+                          SizedBox(
+                            height: 26.h,
                           child: GestureDetector(
                             onTap: (){
                               _pickImage();
                             },
                             child: _imageBytes != null // 선택된 이미지가 있을 경우
-                                ? ClipOval(
+                                ? ClipRRect(
+                                 borderRadius: BorderRadius.circular(10),
                                   child: Image.memory(
                                     _imageBytes!, // 선택된 이미지 표시
-                                    width: 30.w,
-                                    height: 15.h,
+                                    width: 100.w,
+                                    height: 26.h
                                   ),
                                 )
-                                : Icon(
-                                  Icons.account_circle_sharp,
-                                  color: Colors.grey,
-                                  size: 30.w,
+                                : const Center(
+                                  child: Text(
+                                    '프로필 이미지 선택',
+                                    style: TextStyle(
+                                        color: Colors.white,
+                                        fontSize: 14,
+                                        fontWeight: FontWeight.w600,
+                                        fontFamily: 'EHSMB'
+                                    ),
+                                  ),
                                 ),
                               ),
                             ),
 
-                        SizedBox(height: 70,),
+                        SizedBox(height: 20,),
 
                         Container(
                           width: 100.w,

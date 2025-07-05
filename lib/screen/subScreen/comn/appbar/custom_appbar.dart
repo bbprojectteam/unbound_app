@@ -25,8 +25,6 @@ class _CustomAppbarState extends State<CustomAppbar> {
   @override
   Widget build(BuildContext context) {
 
-    AuthService _authService = AuthService();
-
     return Container(
       padding: EdgeInsets.only(left: 10, right: 10),
       color: Colors.transparent,
@@ -53,20 +51,14 @@ class _CustomAppbarState extends State<CustomAppbar> {
 
               SizedBox(width: 10,),
 
-              GestureDetector(
-                onTap: () async{
-                  await _authService.signOut();
-                  Get.toNamed('/splash');
-                },
-                child: Text(
-                  'Unbound',
-                  style: TextStyle(
-                      color: Colors.white,
-                      fontWeight: FontWeight.w900,
-                      fontSize: 20,
-                      fontStyle: FontStyle.italic,
-                      fontFamily: 'EHSMB'
-                  ),
+              Text(
+                'Unbound',
+                style: TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.w900,
+                    fontSize: 20,
+                    fontStyle: FontStyle.italic,
+                    fontFamily: 'EHSMB'
                 ),
               ),
             ],

@@ -18,7 +18,9 @@ import 'package:http_parser/http_parser.dart';
 
 
 class ChatController extends GetxController{
-  late StompClient stompClient;
+  late StompClient chatSendStompClient;
+  late StompClient chatReadStompClient;
+
   var chatModelList = <ChatModel>[].obs;
   List<UserInfo> matchMemberModel = [];
   ScrollController scrollController = ScrollController();
@@ -178,16 +180,37 @@ class ChatController extends GetxController{
     return scrollController.position.maxScrollExtent - scrollController.position.pixels <= threshold;
   }
 
-  void fnConnectToStompServer() {
+  void fnConnectToStompServer(chatroomId) {
     // 로그: 연결 시도 전
     print("Attempting to connect to WebSocket server...");
 
-    stompClient = StompClient(
+    chatSendStompClient = StompClient(
       config: StompConfig(
         url: 'wss://moneygang.store/ws-chat/websocket', // WebSocket URL
         onConnect: (StompFrame frame) {
           print("Connected to WebSocket server! Frame: $frame");
-          onConnect(frame);  // 기존 onConnect 함수 호출
+          onChatSendConnect(frame, chatroomId);  // 기존 onConnect 함수 호출
+        },
+        onWebSocketError: (dynamic error) {
+          print("WebSocket error: $error");
+          onError(error);  // 기존 onError 함수 호출
+        },
+        onDisconnect: (StompFrame frame) {
+          print("Disconnected from WebSocket server! Frame: $frame");
+          onDisconnect(frame);  // 기존 onDisconnect 함수 호출
+        },
+        onStompError: (error) {
+          print("STOMP error: $error");
+        },
+      ),
+    );
+
+    chatReadStompClient = StompClient(
+      config: StompConfig(
+        url: 'wss://moneygang.store/ws-chat/websocket', // WebSocket URL
+        onConnect: (StompFrame frame) {
+          print("Connected to WebSocket server! Frame: $frame");
+          onChatReadConnect(frame, chatroomId);  // 기존 onConnect 함수 호출
         },
         onWebSocketError: (dynamic error) {
           print("WebSocket error: $error");
@@ -205,14 +228,14 @@ class ChatController extends GetxController{
 
     // 로그: 연결 활성화 직후
     print("Activating StompClient...");
-    stompClient.activate();  // WebSocket 연결 활성화.
+    chatSendStompClient.activate();
+    chatReadStompClient.activate();
   }
 
-  void onReceive (StompFrame frame) {
-// 바이너리 데이터를 utf8로 디코딩하여 문자열로 변환
+  void onChatSendReceive (StompFrame frame) {
+    print('메세지가옴');
     String decodedMessage = utf8.decode(frame.binaryBody!);
 
-    // 디코딩된 문자열을 JSON 객체로 변환
     try {
       Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
 
@@ -245,22 +268,62 @@ class ChatController extends GetxController{
     }
 
   }
+
+  void onChatReadReceive (StompFrame frame) {
+    print('메세지가옴');
+    String decodedMessage = utf8.decode(frame.binaryBody!);
+
+    try {
+      Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
+
+
+      print(jsonMessage);
+
+
+
+      print('Decoded JSON: $jsonMessage');
+    } catch (e) {
+      print('Error decoding JSON: $e');
+    }
+
+  }
+
+
   // stomp 구독
-  void onConnect(StompFrame frame) {
-    print('STOMP connected!');
+  void onChatSendConnect(StompFrame frame, chatRoomId) {
+    print('CHAT STOMP connected!');
 
     // 메시지를 받을 Topic 구독
-    stompClient.subscribe(
-      destination: '/topic',  // 메시지를 받을 경로
+    chatSendStompClient.subscribe(
+      destination: '/topic/chat/${chatRoomId}',  // 메시지를 받을 경로
       callback: (frame) {
         if (frame.binaryBody != null) {
-          onReceive(frame);
+          onChatSendReceive(frame);
         } else {
           print('No binary body received');
         }
       },
     );
   }
+
+  void onChatReadConnect(StompFrame frame, chatRoomId) {
+    print('CHAT READ STOMP connected!');
+
+    // 메시지를 받을 Topic 구독
+    chatReadStompClient.subscribe(
+      destination: 'topic/chat/read/${chatRoomId}',  // 메시지를 받을 경로
+      callback: (frame) {
+        if (frame.binaryBody != null) {
+          onChatReadReceive(frame);
+        } else {
+          print('No binary body received');
+        }
+      },
+    );
+  }
+
+
+
 
   String _formatMessageTime(DateTime dateTime) {
     return "${dateTime.hour.toString().padLeft(2, '0')}:${dateTime.minute.toString().padLeft(2, '0')}";
@@ -329,7 +392,7 @@ class ChatController extends GetxController{
     });
 
     try {
-      stompClient.send(
+      chatSendStompClient.send(
         destination: '/app/chat.send',
         body: body,
       );
@@ -354,7 +417,8 @@ class ChatController extends GetxController{
 
   // 연결 종료
   void disconnect() {
-    stompClient.deactivate();
+    chatSendStompClient.deactivate();
+    chatReadStompClient.deactivate();
     print('Disconnected');
   }
 
