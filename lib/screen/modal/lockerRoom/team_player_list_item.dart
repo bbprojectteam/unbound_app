@@ -12,10 +12,12 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class TeamPlayerListItem extends StatefulWidget {
   const TeamPlayerListItem({
     super.key,
+    required this.chatRoomId,
     required this.matchMemberModel,
     required this.isOwnerAuth,
   });
 
+  final String? chatRoomId;
   final UserInfo matchMemberModel;
   final bool? isOwnerAuth;
 
@@ -102,7 +104,8 @@ class _TeamPlayerListItemState extends State<TeamPlayerListItem> {
                 SizedBox(height: 7,),
                 GestureDetector(
                   onTap: () async {
-                    await matchController.fnMatchOwnerChange(widget.matchMemberModel.userId);
+                    await matchController.fnMatchOwnerChange(widget.chatRoomId,widget.matchMemberModel.userId);
+                    Get.back();
                   },
                   child: Center(
                     child: Text(

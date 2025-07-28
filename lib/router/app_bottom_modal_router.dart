@@ -20,7 +20,6 @@ class AppBottomModalRouter {
       BuildContext context,
       int modalIndex,
       {
-        bool? isOwnerAuth,
         String? chatRoomId,
         UserInfo? userInfo,
         Function? callBack,
@@ -29,7 +28,7 @@ class AppBottomModalRouter {
 
     final Map<int, Future<dynamic> Function()> modalWidgets = {
       0: () async {
-        return TeamPlayerListModal(chatRoomId: chatRoomId,isOwnerAuth: isOwnerAuth);
+        return TeamPlayerListModal(chatRoomId: chatRoomId);
       },
       1: () async {
         return const TeamChngModal();

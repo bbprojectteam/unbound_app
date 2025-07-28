@@ -17,6 +17,7 @@ class MatchHistoryInfoModel {
    double? latitude;
    double? longitude;
    String? location;
+   double? mmrChange;
 
   MatchHistoryInfoModel();
 

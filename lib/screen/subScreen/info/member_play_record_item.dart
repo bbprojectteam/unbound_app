@@ -2,6 +2,7 @@ import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_history_info_model.dart';
 import 'package:badboys/model/match/member_match_history_model.dart';
 import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -11,37 +12,44 @@ import 'package:responsive_sizer/responsive_sizer.dart';
 class MemberPlayRecordItem extends StatefulWidget {
   const MemberPlayRecordItem({
     super.key,
-    required this.isWin,
     required this.matchHistoryInfoModel,
+    required this.memberId,
   });
 
-  final bool isWin;
   final MatchHistoryInfoModel matchHistoryInfoModel;
+  final String memberId;
 
   @override
   State<MemberPlayRecordItem> createState() => _MemberPlayRecordItemState();
 }
 
 class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
+  late String isWin;
   late MatchController matchController;
 
   @override
   void initState() {
-    // TODO: implement initState
     super.initState();
+    initMatchData();
     matchController = Get.find<MatchController>();
   }
 
-  @override
-  void dispose() {
-    // TODO: implement dispose
-    super.dispose();
-  }
+  void initMatchData() async {
+    isWin = "";
 
+    for (var matchItem in widget.matchHistoryInfoModel.teamList) {
+      for (var userItem in matchItem.userList) {
+        if (userItem.userId.toString() == widget.memberId.toString()) {
+          isWin = matchItem.result.toString();
+          setState(() {});
+          return;
+        }
+      }
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-
 
     return Column(
       children: [
@@ -61,9 +69,9 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
                   Text(
-                    widget.isWin ? "+26" : "-13",
+                    isWin == "WIN" ? "+${widget.matchHistoryInfoModel.mmrChange!.toInt()}" : widget.matchHistoryInfoModel.mmrChange!.toInt().toString(),
                     style: TextStyle(
-                      color: widget.isWin ? Colors.red : Colors.blueAccent,
+                      color: matchController.selectMatchResultColor(isWin),
                       fontSize: 25,
                       fontFamily: 'EHSMB',
                     ),
@@ -195,7 +203,7 @@ class _MemberPlayRecordItemState extends State<MemberPlayRecordItem> {
 
               GestureDetector(
                 onTap: () {
-                Get.toNamed('/playInfo', arguments: widget.matchHistoryInfoModel);
+                  Get.toNamed('/playInfo', arguments: widget.matchHistoryInfoModel);
 
                 },
                 child: Container(

@@ -66,24 +66,24 @@ class _CustomAppbarState extends State<CustomAppbar> {
 
           Row(
             children: [
-              if(widget.isNotification)
-                GestureDetector(
-                  onTap: (){
-                    Get.toNamed("/notification");
-                  },
-                  child: Container(
-                    padding: EdgeInsets.all(3),
-                    decoration: BoxDecoration(
-                      color: Colors.black,
-                      borderRadius: BorderRadius.circular(100),
-                    ),
-                    child: Icon(
-                      Icons.notifications_none,
-                      color: Colors.white,
-                      size: 25,
-                    ),
-                  ),
-                ),
+              // if(widget.isNotification)
+              //   GestureDetector(
+              //     onTap: (){
+              //       Get.toNamed("/notification");
+              //     },
+              //     child: Container(
+              //       padding: EdgeInsets.all(3),
+              //       decoration: BoxDecoration(
+              //         color: Colors.black,
+              //         borderRadius: BorderRadius.circular(100),
+              //       ),
+              //       child: Icon(
+              //         Icons.notifications_none,
+              //         color: Colors.white,
+              //         size: 25,
+              //       ),
+              //     ),
+              //   ),
 
             ],
           ),

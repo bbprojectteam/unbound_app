@@ -16,7 +16,7 @@ class MatchController extends GetxController {
   MatchModel matchModel = MatchModel();
   List<MatchInfoModel> standByMatchModelList = <MatchInfoModel>[];
   List<MatchInfoModel> joinMatchModelList = <MatchInfoModel>[];
-
+  var isOwnerAuth = false.obs;
   var isLoading = false.obs;  // 로딩 상태를 추적하는 변수
   var isApiCalled = false.obs;
 
@@ -271,12 +271,13 @@ class MatchController extends GetxController {
       );
 
       if (response.statusCode == 200) {
-        matchModel.isJoinLockerRoom = false;
         int loginMemberId = await Helpers.getMemberId();
         int index = matchModel.matchMemberModel.indexWhere((item) => item.userId == loginMemberId);
-        matchModel.matchMemberModel.removeAt(index);
-
-        update();
+        if (index != -1) {
+          matchModel.isJoinLockerRoom = false;
+          matchModel.matchMemberModel.removeAt(index);
+          update();
+        }
       } else {
         // 오류 처리
         throw Exception('fnMatchExit Failed');
@@ -325,13 +326,7 @@ class MatchController extends GetxController {
           }
 
           standByMatchModelList.add(MatchInfoModel.fromJson(item));
-
-
-
-
-
         }
-
 
         update();
 
@@ -445,27 +440,35 @@ class MatchController extends GetxController {
 
   }
 
-  Future<void> fnMatchOwnerChange(int? userId) async {
+  Future<void> fnMatchOwnerChange(String? chatRoomId,int? userId) async {
+
     try {
+      http.Response response = await Helpers.apiCall(
+          '/service/chatRoom/${chatRoomId}/changeOwner/${userId}',
+          method: "POST",
+          headers: {
+            'Content-Type': 'application/json', // JSON 형식
+          },
+      );
 
-      // POST 요청 보내기
-      // http.Response response = await Helpers.apiCall(
-      //     '/service/chatRoom/${requestMap['chatRoomId']}/update',
-      //     method: "POST",
-      //     headers: {
-      //       'Content-Type': 'application/json', // JSON 형식
-      //     },
-      //     body: {
-      //       'userId' : userId,
-      //     }
-      // );
+      if (response.statusCode == 200) {
 
-      // if (response.statusCode == 200) {
-      //
-      // } else {
-      //   // 오류 처리
-      //   throw Exception('fnMatchOwnerChange Failed');
-      // }
+        isOwnerAuth.value = false;
+
+        for (int i = 0; i < matchModel.matchMemberModel.length; i++ ) {
+          if (matchModel.matchMemberModel[i].role == "OWNER") {
+            matchModel.matchMemberModel[i].role = "MEMBER";
+          } else if (matchModel.matchMemberModel[i].userId == userId) {
+            matchModel.matchMemberModel[i].role = "OWNER";
+          }
+        }
+
+        update();
+
+      } else {
+        // 오류 처리
+        throw Exception('fnMatchOwnerChange Failed');
+      }
 
     } catch (error) {
       // 오류 처리

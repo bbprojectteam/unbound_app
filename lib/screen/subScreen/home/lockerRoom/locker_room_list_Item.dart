@@ -14,6 +14,7 @@ class LockerRoomListItem extends StatefulWidget {
     required this.isExitButton,
     required this.isModalScreen,
     required this.callBack,
+    required this.deleteChatRoomItem,
   });
 
   final MatchInfoModel matchItem;
@@ -21,6 +22,7 @@ class LockerRoomListItem extends StatefulWidget {
   final bool isExitButton;
   final bool isModalScreen;
   final Function callBack;
+  final Function deleteChatRoomItem;
 
   @override
   State<LockerRoomListItem> createState() => _LockerRoomListItemState();
@@ -93,7 +95,7 @@ class _LockerRoomListItemState extends State<LockerRoomListItem> {
                       border: Border.all(width: 1,color: Colors.orange),
                       color: Colors.orange
                   ),
-                  child: Text('아동',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,fontFamily: 'EHSMB'),),
+                  child: Text('이동',style: TextStyle(color: Colors.white,fontWeight: FontWeight.w900,fontSize: 15,fontFamily: 'EHSMB'),),
                 ),
               ),
 
@@ -102,9 +104,8 @@ class _LockerRoomListItemState extends State<LockerRoomListItem> {
 
                 GestureDetector(
                   onTap: () async {
-                    print('나가기 클릭');
-                    print(widget.matchingRoomId);
                     await matchController.fnMatchExit(widget.matchingRoomId.toString());
+                    widget.deleteChatRoomItem(widget.matchingRoomId);
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),

@@ -87,6 +87,7 @@ class MemberController extends GetxController {
 
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
+        print(jsonResponse);
 
         memberMatchHistoryModel = MemberMatchHistoryModel();
         memberMatchHistoryModel = MemberMatchHistoryModel.fromJson(jsonResponse);
@@ -149,8 +150,7 @@ class MemberController extends GetxController {
     }
     return false;
   }
-  
-  
+
   Future<bool> fnGetInviteMemberList(String chatRoomId) async {
 
     try {
@@ -167,9 +167,11 @@ class MemberController extends GetxController {
         var jsonResponse = jsonDecode(decodedBody);
 
         inviteMemberListModel = [];
-        // memberModel = UserInfo.fromJson(jsonResponse['userInfo']);
+        for (var item in jsonResponse['invitableList']) {
+          inviteMemberListModel.add(UserInfo.fromJson(item));
+        }
 
-        print(jsonResponse);
+        print(inviteMemberListModel[0].toJson());
 
         update();
 
@@ -188,9 +190,11 @@ class MemberController extends GetxController {
     return false;
   }
 
-  Future<bool> fnSendInviteMember(String chatRoomId, String targetMemberId) async {
+
+  Future<bool> fnSendInviteMember(String chatRoomId, int? targetMemberId) async {
 
     try {
+
       http.Response response = await Helpers.apiCall(
           '/service/chatRoom/${chatRoomId}/invitation/${targetMemberId}',
           method: 'POST',
@@ -202,7 +206,7 @@ class MemberController extends GetxController {
 
       if (response.statusCode == 200) {
 
-        update();
+        print("초대 완료");
 
         return true;
       } else {

@@ -26,6 +26,7 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
   late MemberController memberController;
   late MemberMatchHistoryModel memberMatchHistoryModel;
   late MatchController matchController;
+  late int memberId;
 
   @override
   void initState() {
@@ -44,7 +45,8 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
     }
 
     _tabController.index = args['tab'];
-    _isAuth(args['memberId']);
+    memberId = args['memberId'];
+    _isAuth(memberId);
 
   }
 
@@ -224,8 +226,8 @@ class _MemberPageScreenState extends State<MemberPageScreen>  with SingleTickerP
                                   padding: const EdgeInsets.all(15.0),
                                   child: Column(
                                     children: [
-                                      for(int i = 0; i < memberMatchHistoryModel.userMatchInfoList.length; i++)
-                                        MemberPlayRecordItem(isWin: true, matchHistoryInfoModel : memberMatchHistoryModel.userMatchInfoList[i] ),
+                                      for (int i = 0; i < memberMatchHistoryModel.userMatchInfoList.length; i++)
+                                        MemberPlayRecordItem(matchHistoryInfoModel : memberMatchHistoryModel.userMatchInfoList[i],memberId: memberId.toString(), ),
                                         SizedBox(height: 15,),
                                     ],
                                   ),

@@ -11,11 +11,9 @@ class TeamPlayerListModal extends StatefulWidget {
   const TeamPlayerListModal({
     super.key,
     required this.chatRoomId,
-    required this.isOwnerAuth,
   });
 
   final String? chatRoomId;
-  final bool? isOwnerAuth;
 
   @override
   State<TeamPlayerListModal> createState() => _TeamPlayerListModalState();
@@ -65,7 +63,7 @@ class _TeamPlayerListModalState extends State<TeamPlayerListModal> {
                     child: Column(
                       children: [
                         for (int i = 0; i< matchModel.matchMemberModel.length; i++)
-                          TeamPlayerListItem(matchMemberModel : matchModel.matchMemberModel[i], isOwnerAuth: widget.isOwnerAuth),
+                          TeamPlayerListItem(chatRoomId : widget.chatRoomId, matchMemberModel : matchModel.matchMemberModel[i], isOwnerAuth: matchController.isOwnerAuth.value),
                       ],
                     ),
                   ),

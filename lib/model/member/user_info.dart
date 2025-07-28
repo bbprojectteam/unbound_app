@@ -16,7 +16,7 @@ class UserInfo {
   int? regionId;
   String? regionNm;
   String? introduction;
-  String? lastReadMessageId;
+  int? lastReadMessageId;
   int? matchCnt;
   String? role;
 

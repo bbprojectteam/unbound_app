@@ -56,6 +56,7 @@ class _StandByLockerRoomListState extends State<StandByLockerRoomList> {
                 callBack: () {
                   Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : standByMatchModelList[i].chatRoomId.toString()});
                 },
+                deleteChatRoomItem: () {},
               )
 
           ],

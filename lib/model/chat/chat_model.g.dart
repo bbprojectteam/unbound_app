@@ -8,6 +8,7 @@ part of 'chat_model.dart';
 
 ChatModel _$ChatModelFromJson(Map<String, dynamic> json) => ChatModel()
   ..messageId = json['messageId'] as String?
+  ..chatMessageId = (json['chatMessageId'] as num?)?.toInt()
   ..senderId = (json['senderId'] as num?)?.toInt()
   ..username = json['username'] as String?
   ..profileImage = json['profileImage'] as String?
@@ -18,6 +19,7 @@ ChatModel _$ChatModelFromJson(Map<String, dynamic> json) => ChatModel()
 
 Map<String, dynamic> _$ChatModelToJson(ChatModel instance) => <String, dynamic>{
       'messageId': instance.messageId,
+      'chatMessageId': instance.chatMessageId,
       'senderId': instance.senderId,
       'username': instance.username,
       'profileImage': instance.profileImage,

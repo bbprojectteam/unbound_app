@@ -370,7 +370,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
               ),
 
 
-              for(int i= 0; i < 6; i++)
+              for (int i = 0; i < 6; i++)
                 MemberIconItem(
                     memberNickName: matchModel.matchMemberModel[i].username.toString(),
                     memberProfileImage: matchModel.matchMemberModel[i].profileImage.toString(),
@@ -386,7 +386,7 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
               await matchController.fnGameEnd();
               matchController.clear();
               Get.delete<MatchController>();
-              Helpers.customFlutterToast("저장되었습니다.");
+              Helpers.customFlutterToast("경기가 종료 되었습니다.");
               Navigator.pop(context);
               Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : matchModel.matchInfoModel?.chatRoomId.toString()});
 

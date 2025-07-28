@@ -88,6 +88,11 @@ class _MatchingHistoryModalState extends State<MatchingHistoryModal> {
                                   callBack: () {
                                     Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : joinMatchModelList[i].chatRoomId.toString(),});
                                   },
+                                  deleteChatRoomItem: (int? chatRoomId) {
+                                    int index = joinMatchModelList.indexWhere((item) => item.chatRoomId == chatRoomId);
+                                    joinMatchModelList.removeAt(index);
+                                    matchController.update();
+                                  },
                                 )
                             ],
                           ),

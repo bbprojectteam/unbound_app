@@ -27,7 +27,6 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
 
   late MatchController matchController;
   late MatchModel matchModel;
-  bool isOwnerAuth = false;
 
   @override
   void initState() {
@@ -50,7 +49,9 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
           for (int i = 0; i < matchModel.matchMemberModel.length; i++ ) {
             if (matchModel.matchMemberModel[i].role == "OWNER") {
               if (matchModel.matchMemberModel[i].userId! == widget.loginMemberId) {
-                isOwnerAuth = true;
+                matchController.isOwnerAuth.value = true;
+              } else {
+                matchController.isOwnerAuth.value = false;
               }
             }
           }
@@ -102,13 +103,13 @@ class _CustomMatchAppbarState extends State<CustomMatchAppbar> {
               Row(
                 children: [
                     GestureDetector(
-                      onTap: ()=>{
-                        LockerRoomSettingDropDownMenu.showDropdownMenu(
+                      onTap: () async {
+                        await LockerRoomSettingDropDownMenu.showDropdownMenu(
                             context,
                             widget.chatRoomId,
                             matchModel.isJoinLockerRoom!,
-                            isOwnerAuth
-                        ),
+                            matchController.isOwnerAuth.value
+                        );
                       },
                       child: Container(
                         padding: EdgeInsets.all(3),

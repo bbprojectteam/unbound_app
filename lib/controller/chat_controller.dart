@@ -51,6 +51,7 @@ class ChatController extends GetxController{
       if (response.statusCode == 200) {
         final decodedBody = utf8.decode(response.bodyBytes);
         var jsonResponse = jsonDecode(decodedBody);
+
         int loginMemberId = await Helpers.getMemberId();
         int loadChatListCnt = jsonResponse['messageList'].length - 1;
 
@@ -107,6 +108,7 @@ class ChatController extends GetxController{
         chatMessageLength.value = jsonResponse['messageCnt'];
 
         scrollToBottom();
+        fnConnectToStompServer(chatRoomId);
 
       } else {
         throw Exception('fnChatList Failed');
@@ -180,7 +182,29 @@ class ChatController extends GetxController{
     return scrollController.position.maxScrollExtent - scrollController.position.pixels <= threshold;
   }
 
-  void fnConnectToStompServer(chatroomId) {
+  void test(chatRoomId, lastMessageId) async {
+
+    ///계속 연결된 상태로 백에서 받는 데이터 처리
+
+    int loginMemberId = await Helpers.getMemberId();
+
+    var body = jsonEncode({
+      'chatRoomId': chatRoomId,
+      'userId' : loginMemberId,
+      'chatMessageId': lastMessageId,
+    });
+
+    try {
+      chatReadStompClient.send(
+        destination: '/app/chat.read',
+        body: body,
+      );
+    } catch (e) {
+      print('채팅 전송 오류 : ${e}');
+    }
+  }
+
+  void fnConnectToStompServer(chatRoomId) {
     // 로그: 연결 시도 전
     print("Attempting to connect to WebSocket server...");
 
@@ -189,7 +213,7 @@ class ChatController extends GetxController{
         url: 'wss://moneygang.store/ws-chat/websocket', // WebSocket URL
         onConnect: (StompFrame frame) {
           print("Connected to WebSocket server! Frame: $frame");
-          onChatSendConnect(frame, chatroomId);  // 기존 onConnect 함수 호출
+          onChatSendConnect(frame, chatRoomId);  // 기존 onConnect 함수 호출
         },
         onWebSocketError: (dynamic error) {
           print("WebSocket error: $error");
@@ -208,9 +232,10 @@ class ChatController extends GetxController{
     chatReadStompClient = StompClient(
       config: StompConfig(
         url: 'wss://moneygang.store/ws-chat/websocket', // WebSocket URL
-        onConnect: (StompFrame frame) {
+        onConnect: (StompFrame frame) async {
           print("Connected to WebSocket server! Frame: $frame");
-          onChatReadConnect(frame, chatroomId);  // 기존 onConnect 함수 호출
+          onChatReadConnect(frame, chatRoomId);  // 기존 onConnect 함수 호출
+
         },
         onWebSocketError: (dynamic error) {
           print("WebSocket error: $error");
@@ -230,11 +255,12 @@ class ChatController extends GetxController{
     print("Activating StompClient...");
     chatSendStompClient.activate();
     chatReadStompClient.activate();
+
   }
 
   void onChatSendReceive (StompFrame frame) {
-    print('메세지가옴');
-    String decodedMessage = utf8.decode(frame.binaryBody!);
+
+    String decodedMessage = frame.body!;
 
     try {
       Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
@@ -270,16 +296,20 @@ class ChatController extends GetxController{
   }
 
   void onChatReadReceive (StompFrame frame) {
-    print('메세지가옴');
-    String decodedMessage = utf8.decode(frame.binaryBody!);
+    String decodedMessage = frame.body.toString();
 
     try {
       Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
 
+      Map<String, dynamic> readCounts = Map<String, dynamic>.from(jsonMessage['readCounts']);
 
-      print(jsonMessage);
+      List<int> readCountList = readCounts.values.map((v) => v as int).toList();
 
+      for (int i = 0; i < readCountList.length; i++) {
+        chatModelList[i].unreadMemberCnt = matchMemberModel.length - readCountList[0];
+      }
 
+      chatModelList.refresh();
 
       print('Decoded JSON: $jsonMessage');
     } catch (e) {
@@ -297,7 +327,7 @@ class ChatController extends GetxController{
     chatSendStompClient.subscribe(
       destination: '/topic/chat/${chatRoomId}',  // 메시지를 받을 경로
       callback: (frame) {
-        if (frame.binaryBody != null) {
+        if (frame.body != null) {
           onChatSendReceive(frame);
         } else {
           print('No binary body received');
@@ -309,17 +339,25 @@ class ChatController extends GetxController{
   void onChatReadConnect(StompFrame frame, chatRoomId) {
     print('CHAT READ STOMP connected!');
 
+    print(chatRoomId);
+
     // 메시지를 받을 Topic 구독
     chatReadStompClient.subscribe(
-      destination: 'topic/chat/read/${chatRoomId}',  // 메시지를 받을 경로
+      destination: '/topic/chat/read/${chatRoomId}',  // 메시지를 받을 경로
       callback: (frame) {
-        if (frame.binaryBody != null) {
+        if (frame.body != null) {
           onChatReadReceive(frame);
         } else {
           print('No binary body received');
         }
       },
     );
+
+
+    final lastMessage = chatModelList.last;
+    print(lastMessage.toJson());
+    test(chatRoomId,lastMessage.chatMessageId);
+
   }
 
 

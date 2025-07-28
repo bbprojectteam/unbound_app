@@ -20,11 +20,11 @@ class LockerRoomSettingDropDownMenu {
           value: 100,
           text: '참여자 확인',
         ),
-        showDropdownMenuItem(
-          value: 200,
-          text: '초대하기',
-        ),
         if (isJoinLockerRoom)...[
+          showDropdownMenuItem(
+            value: 200,
+            text: '초대하기',
+          ),
           if (isOwnerAuth)
             showDropdownMenuItem(
               value: 300,
@@ -71,7 +71,7 @@ class LockerRoomSettingDropDownMenu {
 
   static void _handleMenuSelection(int value, BuildContext context, String chatRoomId, bool isOwnerAuth) async {
     if (value == 100) {
-      await AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId,isOwnerAuth: isOwnerAuth);
+      await AppBottomModalRouter.fnModalRouter(context, 0, chatRoomId: chatRoomId,);
 
     } else if (value == 200) {
       await AppBottomModalRouter.fnModalRouter(context, 9, chatRoomId: chatRoomId);

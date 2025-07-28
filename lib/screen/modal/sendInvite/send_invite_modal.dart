@@ -1,5 +1,7 @@
 import 'package:badboys/controller/member_controller.dart';
+import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
+import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -22,7 +24,7 @@ class SendInviteModal extends StatefulWidget {
 class _SendInviteModalState extends State<SendInviteModal> {
 
   late MemberController memberController;
-
+  late List<UserInfo> inviteMemberList;
 
   @override
   void initState() {
@@ -39,8 +41,7 @@ class _SendInviteModalState extends State<SendInviteModal> {
         init: memberController,
         builder: (matchControllerContext) {
 
-
-
+          inviteMemberList = memberController.inviteMemberListModel;
 
         return Container(
             width: 100.w,
@@ -56,66 +57,74 @@ class _SendInviteModalState extends State<SendInviteModal> {
                   isBackButton : false
               ),
 
-              Container(
-                padding: EdgeInsets.all(10),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: [
-                    Row(
-                      children: [
-                        ClipOval(
-                          child: Icon(Icons.account_circle)
-                        ),
 
-                        SizedBox(width: 10,),
-                        Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
-                          children: [
-                            Text("test123",
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontWeight: FontWeight.w700
-                                  ,fontFamily: 'EHSMB'
-                              ),
+              for (int i = 0 ; i < inviteMemberList.length; i++)
+                Container(
+                  padding: EdgeInsets.all(10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: [
+                      Row(
+                        children: [
+                          ClipOval(
+                            child: CustomCachedNetworkImage(
+                                imagePath: inviteMemberList[i].profileImage,
+                                imageWidth: 10.w,
+                                imageHeight: null
                             ),
-                            Text('1000 pts',
-                              style: TextStyle(
-                                  color: Colors.grey,
-                                  fontWeight: FontWeight.w600,
-                                  fontFamily: 'EHSMB'
+                          ),
+
+                          SizedBox(width: 10,),
+                          Column(
+                            crossAxisAlignment: CrossAxisAlignment.start,
+                            children: [
+                              Text(inviteMemberList[i].username!,
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontWeight: FontWeight.w700
+                                    ,fontFamily: 'EHSMB'
+                                ),
                               ),
-                            ),
-                          ],
-                        ),
-                      ],
-                    ),
+                              Text('${inviteMemberList[i].mmr ?? 0} pts',
+                                style: TextStyle(
+                                    color: Colors.grey,
+                                    fontWeight: FontWeight.w600,
+                                    fontFamily: 'EHSMB'
+                                ),
+                              ),
+                            ],
+                          ),
+                        ],
+                      ),
 
-                    Column(
-                      mainAxisAlignment: MainAxisAlignment.spaceAround,
-                      children: [
-                        GestureDetector(
-                          onTap: () {
-
-                          },
-                          child: Center(
-                            child: Text(
-                              '초대하기',
-                              style: TextStyle(
-                                  color: Colors.white,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.w700,
-                                  fontFamily: 'EHSMB'
+                      Column(
+                        mainAxisAlignment: MainAxisAlignment.spaceAround,
+                        children: [
+                          GestureDetector(
+                            onTap: () async {
+                              await memberController.fnSendInviteMember(widget.chatRoomId,inviteMemberList[i].userId);
+                            },
+                            child: Center(
+                              child: Text(
+                                '초대하기',
+                                style: TextStyle(
+                                    color: Colors.white,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.w700,
+                                    fontFamily: 'EHSMB'
+                                ),
                               ),
                             ),
                           ),
-                        ),
 
 
-                      ],
-                    )
-                  ],
+                        ],
+                      )
+                    ],
+                  ),
                 ),
-              )
+
+
 
             ],
           ),

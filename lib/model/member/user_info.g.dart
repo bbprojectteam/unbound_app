@@ -19,7 +19,7 @@ UserInfo _$UserInfoFromJson(Map<String, dynamic> json) => UserInfo()
   ..regionNm = json['regionNm'] as String?
   ..introduction = json['introduction'] as String?
   ..role = json['role'] as String?
-  ..lastReadMessageId = json['lastReadMessageId'] as String?
+  ..lastReadMessageId = (json['lastReadMessageId'] as num?)?.toInt()
   ..matchCnt = (json['matchCnt'] as num?)?.toInt();
 
 Map<String, dynamic> _$UserInfoToJson(UserInfo instance) =>

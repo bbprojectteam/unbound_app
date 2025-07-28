@@ -8,6 +8,8 @@ class ChatModel {
 
   String? messageId;
 
+  int? chatMessageId;
+
   int? senderId;
 
   String? username;
