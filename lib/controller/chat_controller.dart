@@ -229,6 +229,13 @@ class ChatController extends GetxController{
       ),
     );
 
+
+
+    /// 전역으로 설정한다면 문제가 되는 점
+    /// 채팅방에 connect를 연결할 때 chatRoomId가 필요함
+    ///
+
+
     chatReadStompClient = StompClient(
       config: StompConfig(
         url: 'wss://moneygang.store/ws-chat/websocket', // WebSocket URL
@@ -258,37 +265,42 @@ class ChatController extends GetxController{
 
   }
 
-  void onChatSendReceive (StompFrame frame) {
+  void onChatSendReceive (StompFrame frame) async {
 
     String decodedMessage = frame.body!;
 
     try {
       Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
 
-      var matchedMember = matchMemberModel.firstWhere(
-            (member) => member.userId == jsonMessage['senderId'],
-      );
+      if (jsonMessage['senderId'] != await Helpers.getMemberId()) {
 
-      DateTime dateTime = DateTime.now();
-      ChatModel chatModel = ChatModel();
-      chatModel.senderId = jsonMessage['senderId'];
-      chatModel.message = jsonMessage['message'];
-      chatModel.username = matchedMember.username;
-      chatModel.profileImage = matchedMember.profileImage;
-      chatModel.createdAt = _formatMessageTime(dateTime);
-      chatModel.unreadMemberCnt = 5; //???
-      chatModel.isMyChat = false;
+        var matchedMember = matchMemberModel.firstWhere(
+              (member) => member.userId == jsonMessage['senderId'],
+        );
 
-      chatModelList.add(chatModel);
+        DateTime dateTime = DateTime.now();
+        ChatModel chatModel = ChatModel();
+        chatModel.senderId = jsonMessage['senderId'];
+        chatModel.message = jsonMessage['message'];
+        chatModel.username = matchedMember.username;
+        chatModel.profileImage = matchedMember.profileImage;
+        chatModel.createdAt = _formatMessageTime(dateTime);
+        chatModel.unreadMemberCnt = 5;
+        chatModel.isMyChat = false;
 
-      ///현재 스크롤 위치 검사
-      if (scrollController.hasClients) {
-        if (isAtBottom()) {
-          scrollToBottom();
+        chatModelList.add(chatModel);
+
+        ///현재 스크롤 위치 검사
+        if (scrollController.hasClients) {
+          if (isAtBottom()) {
+            scrollToBottom();
+          }
         }
+
+        print('Decoded JSON: $jsonMessage');
       }
 
-      print('Decoded JSON: $jsonMessage');
+
     } catch (e) {
       print('Error decoding JSON: $e');
     }

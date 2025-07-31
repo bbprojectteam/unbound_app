@@ -29,7 +29,7 @@ class _HomeUserProfileState extends State<HomeUserProfile> {
   void getProfileInfo() async {
     bool isLogin = await memberController.fnGetProfileInfo();
 
-    if(isLogin) {
+    if (isLogin) {
       FcmNotifications.fcmBackgroundDeepLink(context);
     }
   }

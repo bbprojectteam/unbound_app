@@ -50,7 +50,7 @@ class _StandByLockerRoomListState extends State<StandByLockerRoomList> {
             for (int i = 0; i < standByMatchModelList.length; i++)
               LockerRoomListItem(
                 matchItem : standByMatchModelList[i],
-                matchingRoomId: 70,
+                matchingRoomId: standByMatchModelList[i].chatRoomId!,
                 isExitButton: false,
                 isModalScreen: false,
                 callBack: () {

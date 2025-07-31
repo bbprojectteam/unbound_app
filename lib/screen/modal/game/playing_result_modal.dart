@@ -388,8 +388,9 @@ class _PlayingResultModalState extends State<PlayingResultModal> {
               Get.delete<MatchController>();
               Helpers.customFlutterToast("경기가 종료 되었습니다.");
               Navigator.pop(context);
+              Get.back();
+              Get.back();
               Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : matchModel.matchInfoModel?.chatRoomId.toString()});
-
             },
             child: Container(
               width: 80.w,

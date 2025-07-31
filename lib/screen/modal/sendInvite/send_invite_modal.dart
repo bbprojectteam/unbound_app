@@ -2,6 +2,7 @@ import 'package:badboys/controller/member_controller.dart';
 import 'package:badboys/model/member/user_info.dart';
 import 'package:badboys/screen/subScreen/comn/appbar/custom_appbar.dart';
 import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
@@ -103,6 +104,9 @@ class _SendInviteModalState extends State<SendInviteModal> {
                           GestureDetector(
                             onTap: () async {
                               await memberController.fnSendInviteMember(widget.chatRoomId,inviteMemberList[i].userId);
+
+                              Helpers.customFlutterToast("초대 완료 되었습니다.");
+
                             },
                             child: Center(
                               child: Text(

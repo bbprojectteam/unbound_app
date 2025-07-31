@@ -72,49 +72,33 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
                 SizedBox(height: 10,),
 
                 Container(
-                  // height: 100.h,
-                  child: Column(
-                    children: [
-                      Container(
-                        width: 100.w, // 화면 너비에 맞게
-                        decoration: BoxDecoration(
-                          color: Colors.black,
-                        ),
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.spaceAround,
-                          children: [
-
-                            SizedBox(height: 20,),
-
-                            /**
-                             * 홈 메뉴
-                             */
-                            HomeMenuList(),
-
-
-                          ],
-                        ),
-                      ),
-                      SizedBox(height: 10,),
-
-                      Container(
-                        decoration: BoxDecoration(
-                          borderRadius: BorderRadius.only(
-                            topLeft: Radius.circular(15),
-                            topRight: Radius.circular(15),
+                  height: 100.h,
+                  child: SingleChildScrollView(
+                    child: Column(
+                      children: [
+                        Container(
+                          width: 100.w, // 화면 너비에 맞게
+                          decoration: BoxDecoration(
+                            color: Colors.black,
                           ),
-                          color: Colors.black,
-                          boxShadow: [
-                            BoxShadow(
-                              color: Colors.black.withOpacity(0.3),
-                              spreadRadius: 5,
-                              blurRadius: 9,
-                              offset: Offset(0, -4),
-                            ),
-                          ],
+                          child: Column(
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                    
+                              SizedBox(height: 20,),
+                    
+                              /**
+                               * 홈 메뉴
+                               */
+                              HomeMenuList(),
+                    
+                    
+                            ],
+                          ),
                         ),
+                        SizedBox(height: 10,),
 
-                        child: Column(
+                        Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
                           children: [
                             // TabBar 생성
@@ -140,7 +124,7 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
 
                             Container(
-                              height: 75.h,
+                              height: 100.h,
                               child: TabBarView(
                                 controller: _tabController,
                                 children: [
@@ -154,10 +138,10 @@ class _HomeScreenState extends State<HomeScreen> with TickerProviderStateMixin {
 
                           ],
                         ),
-                      )
-
-
-                    ],
+                    
+                    
+                      ],
+                    ),
                   ),
                 ),
 

@@ -11,6 +11,7 @@ import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LockerRoomScreen extends StatefulWidget {
   const LockerRoomScreen({
@@ -33,7 +34,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
   @override
   void initState() {
     super.initState();
-    // TabController 초기화 (탭의 개수는 2로 설정)
+
     matchingRoomId = Get.arguments['matchingRoomId'];
 
     chatController = Get.put(ChatController());
@@ -43,6 +44,22 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
     _pageController = PageController();
 
     loadLoginMemberId();
+
+    WidgetsBinding.instance.addPostFrameCallback((_) async {
+      final prefs = await SharedPreferences.getInstance();
+
+      bool? isChatFcmMessage = prefs.getBool("isChatFcmMessage");
+
+      if (isChatFcmMessage != null) {
+        if (isChatFcmMessage == true) {
+          _tabController.animateTo(1);
+          prefs.setBool("isChatFcmMessage", false);
+          setState(() {});
+        }
+      }
+    });
+
+
   }
 
   void loadLoginMemberId() async {

@@ -341,7 +341,7 @@ class _PlayInfoScreenState extends State<PlayInfoScreen> {
                             child: Text('작성된 댓글이 없습니다.',style: TextStyle(fontSize: 13,fontWeight: FontWeight.w600, letterSpacing: -0.3,color: Colors.white30,fontFamily: 'EHSMB'),),
                           ),
 
-                        for(int i = 0 ; i < commentController.matchHistoryCommentModel.length; i++)...[
+                       for (int i = commentController.matchHistoryCommentModel.length - 1; i >= 0; i--)...[
                           Column(
                             crossAxisAlignment: CrossAxisAlignment.start,
                             children: [

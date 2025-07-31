@@ -18,7 +18,7 @@ class GlobalController extends GetxController {
     SharedPreferences prefs = await SharedPreferences.getInstance();
 
     if (matchingStateCd.value == 0) {
-
+      prefs.setBool("isMatching", false);
       await matchController.fnMatchStart();
 
 

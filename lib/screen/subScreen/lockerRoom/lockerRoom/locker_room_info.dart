@@ -40,7 +40,6 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
       _prevLat = lat;
       _prevLng = lng;
 
-
       WidgetsBinding.instance.addPostFrameCallback((_) {
 
         _showMap = false;

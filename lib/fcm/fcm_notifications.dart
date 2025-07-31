@@ -23,7 +23,10 @@ class FcmNotifications{
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String chatRoomId = prefs.getString('matchingRoomId') ?? "";
 
+    print('백그라운드 실행 테스트');
+
     if (chatRoomId != "") {
+
 
       Future.delayed(Duration(milliseconds: 700), () async {
         Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : chatRoomId});
@@ -71,15 +74,21 @@ class FcmNotifications{
         const InitializationSettings(android: AndroidInitializationSettings("@mipmap/ic_launcher"), /** 알림에 표시 될 아이콘 */
       ),
       onSelectNotification: (String? payload) async {
-        print("🔔 알림 클릭됨! Payload: $payload");
+          print("🔔 알림 클릭됨! Payload: $payload");
 
         SharedPreferences prefs = await SharedPreferences.getInstance();
         String chatRoomId = prefs.getString('matchingRoomId') ?? "";
 
         if (chatRoomId != "") {
+
+          if (payload == "채팅이 왔습니다.") {
+            prefs.setBool('isChatFcmMessage', true);
+          }
+
           Future.delayed(Duration(milliseconds: 700), () async {
             Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : chatRoomId});
           });
+
         }
 
       },
@@ -141,6 +150,17 @@ class FcmNotifications{
       );
 
 
+      final prefs = await SharedPreferences.getInstance();
+
+      if (message.notification!.title! == "매칭 성공!") {
+        await prefs.setBool('isMatching', true);
+      } else if (message.notification!.title! == "채팅이 왔습니다.") {
+        prefs.setBool('isChatFcmMessage', true);
+      }
+
+      await prefs.setString('matchingRoomId', message.data['chatRoomId'].toString());
+
+
     } catch (e) {
       print("백그라운드 메시지 처리 중 오류 발생: $e");
     }
@@ -160,7 +180,7 @@ class FcmNotifications{
       /** 알림이 존재하면 */
       if (notification != null) {
 
-        print("Foreground 메시지 수신: ${{message.notification!.body!}}");
+        print("Foreground 메시지 수신: ${{message.notification}}");
 
         /**
          * 로컬 알림을 표시하기 위한 객체를 생성
@@ -171,11 +191,6 @@ class FcmNotifications{
 
         String rawBody = notification.body.toString(); // JSON 형식의 body 데이터
         // Map<String, dynamic> bodyMap = jsonDecode(rawBody); // JSON을 Map으로 변환
-
-
-        print('fcm테스트');
-        print(rawBody);
-
 
         /** 푸시 알림을 화면에 표시*/
         flutterLocalNotificationsPlugin.show(
@@ -189,14 +204,19 @@ class FcmNotifications{
               importance: Importance.max, /** 채널의 중요도 */
             ),
           ),
-            payload: rawBody
+            payload: message.notification!.title!
         );
 
-
         final prefs = await SharedPreferences.getInstance();
-        // 예시: 문자열 저장
-        await prefs.setBool('isMatching', true);
+
+        if (message.notification!.title! == "매칭 성공!") {
+          await prefs.setBool('isMatching', true);
+        } else if (message.notification!.title! == "채팅이 왔습니다.") {
+          prefs.setBool('isChatFcmMessage', true);
+        }
+
         await prefs.setString('matchingRoomId', message.data['chatRoomId'].toString());
+
 
       }
     });
