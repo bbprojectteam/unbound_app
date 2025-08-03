@@ -45,16 +45,22 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
     loadLoginMemberId();
 
+
     WidgetsBinding.instance.addPostFrameCallback((_) async {
       final prefs = await SharedPreferences.getInstance();
 
       bool? isChatFcmMessage = prefs.getBool("isChatFcmMessage");
+      bool? isNotificationClicked = prefs.getBool("isNotificationClicked");
 
       if (isChatFcmMessage != null) {
-        if (isChatFcmMessage == true) {
-          _tabController.animateTo(1);
-          prefs.setBool("isChatFcmMessage", false);
-          setState(() {});
+        if (isNotificationClicked == true && isChatFcmMessage == true) {
+          Future.delayed(Duration(milliseconds: 700), () async {
+            _tabController.animateTo(1);
+            prefs.setBool("isChatFcmMessage", false);
+            prefs.setBool("isNotificationClicked", false);
+            setState(() {});
+          });
+
         }
       }
     });
@@ -69,6 +75,7 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
 
   @override
   void dispose() {
+
     if (chatController.isApiCalled.value) {
       chatController.disconnect();
     }
@@ -81,7 +88,6 @@ class _LockerRoomScreenState extends State<LockerRoomScreen> with TickerProvider
     Get.delete<ChatController>();
     super.dispose();
   }
-
 
   @override
   Widget build(BuildContext context) {

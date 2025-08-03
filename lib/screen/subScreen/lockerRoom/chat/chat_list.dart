@@ -13,6 +13,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class ChatList extends StatefulWidget {
   const ChatList({
@@ -47,13 +48,12 @@ class _ChatListState extends State<ChatList> {
       chatController.matchMemberModel = matchController.matchModel.matchMemberModel;
     }
 
-    // chatController.fnConnectToStompServer(widget.chatRoomId);
     chatController.setScrollControllerListener(widget.chatRoomId);
 
     // 컨트롤러에 마지막 postion저장하고 거기로 이동
     chatController.scrollToJump();
-  }
 
+  }
 
   @override
   Widget build(BuildContext context) {

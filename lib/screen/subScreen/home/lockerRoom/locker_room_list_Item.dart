@@ -1,5 +1,6 @@
 import 'package:badboys/controller/match_controller.dart';
 import 'package:badboys/model/match/match_info_model.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
@@ -106,6 +107,7 @@ class _LockerRoomListItemState extends State<LockerRoomListItem> {
                   onTap: () async {
                     await matchController.fnMatchExit(widget.matchingRoomId.toString());
                     widget.deleteChatRoomItem(widget.matchingRoomId);
+                    Helpers.customFlutterToast("방 나가기 완료 되었습니다.");
                   },
                   child: Container(
                     padding: EdgeInsets.all(10),

@@ -38,6 +38,9 @@ void main() async {
     options: DefaultFirebaseOptions,  // FirebaseOptions 설정
   );
   FcmNotifications.initializeNotification();
+
+  await FcmNotifications.handleTerminatedLocalNotificationLaunch(); // 로컬 알림 클릭 여부 확인
+
   await Helpers.fnSetRegionList();
   Permissions.requestNotificationPermission();  // 알림 권한 요청
   Get.put(GlobalController(), permanent: true);

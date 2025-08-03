@@ -63,11 +63,11 @@ class _AppScreenState extends State<AppScreen> {
 
           // 페이지 전환
           if (index == 0) {
-            Get.toNamed('/');
+            Get.offNamed('/');
           } else if (index == 1) {
-            Get.toNamed('/match');
+            Get.offNamed('/match');
           } else if (index == 2) {
-            Get.toNamed('/setting');
+            Get.offNamed('/setting');
           }
 
           globalController.update();

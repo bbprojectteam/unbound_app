@@ -94,6 +94,7 @@ class LockerRoomSettingDropDownMenu {
       /// 매칭 나가기 api 후 데이터 지우고 홈으로 이동
       MatchController matchController = Get.find<MatchController>();
       await matchController.fnMatchExit(chatRoomId);
+      Helpers.customFlutterToast("방 나가기 완료 되었습니다.");
       Get.toNamed('/');
 
     } else if (value == 500) {

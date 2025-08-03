@@ -6,6 +6,7 @@ import 'package:badboys/screen/appScreen/info/member_page_screen.dart';
 import 'package:badboys/screen/subScreen/comn/cachedNetworkImage/custom_cached_network_image.dart';
 import 'package:badboys/screen/subScreen/comn/loadingBar/custom_progress_Indicator_item.dart';
 import 'package:badboys/screen/subScreen/lockerRoom/lockerRoom/match_point_item.dart';
+import 'package:badboys/utils/helpers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart';
@@ -13,6 +14,7 @@ import 'package:get/get.dart';
 import 'package:get/get_core/src/get_main.dart';
 import 'package:kakaomap_webview/kakaomap_webview.dart';
 import 'package:responsive_sizer/responsive_sizer.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 
 class LockerRoomInfo extends StatefulWidget {
   const LockerRoomInfo({
@@ -58,6 +60,9 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
   void initState() {
     // TODO: implement initState
     super.initState();
+
+    saveCurrentChatRoomId();
+
     Get.lazyPut<MatchController>(() => MatchController());
     matchController = Get.find<MatchController>();
 
@@ -65,6 +70,11 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
       matchController.isApiCalled.value = true;
       matchController.fnMatchInfo(widget.chatRoomId);
     }
+  }
+  void saveCurrentChatRoomId() async {
+    final prefs = await SharedPreferences.getInstance();
+    prefs.setBool('isEnterChatRoom', false);
+    prefs.setString('currentChatRoomId', "0");
   }
 
   @override
@@ -252,6 +262,7 @@ class _LockerRoomInfoState extends State<LockerRoomInfo> {
                                 GestureDetector(
                                   onTap: () async {
                                     await matchController.fnMatchExit(widget.chatRoomId);
+                                    Helpers.customFlutterToast("방 나가기 완료 되었습니다.");
                                     Get.toNamed('/');
                                   },
                                   child: Container(

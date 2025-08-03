@@ -37,11 +37,10 @@ class ChatController extends GetxController{
 
   Future<void> fnChatListMore(String? chatRoomId) async {
 
-
     try {
       // POST 요청 보내기
       http.Response response = await Helpers.apiCall(
-        '/service/chatRoom/${chatRoomId}/messages?lastMessageId=${chatModelList[0].messageId}',
+        '/service/chatRoom/${chatRoomId}/messages?lastMessageId=${chatModelList[0].chatMessageId}',
         headers: {
           'Content-Type': 'application/json', // JSON 형식
         },
@@ -104,6 +103,9 @@ class ChatController extends GetxController{
 
           chatModelList.add(ChatModel.fromJson(jsonItem));
         }
+
+        print('채팅 가져오기');
+        print(chatModelList.length);
 
         chatMessageLength.value = jsonResponse['messageCnt'];
 
@@ -182,9 +184,7 @@ class ChatController extends GetxController{
     return scrollController.position.maxScrollExtent - scrollController.position.pixels <= threshold;
   }
 
-  void test(chatRoomId, lastMessageId) async {
-
-    ///계속 연결된 상태로 백에서 받는 데이터 처리
+  void enterChatRoomEvent(chatRoomId, lastMessageId) async {
 
     int loginMemberId = await Helpers.getMemberId();
 
@@ -204,7 +204,7 @@ class ChatController extends GetxController{
     }
   }
 
-  void fnConnectToStompServer(chatRoomId) {
+  void fnConnectToStompServer(chatRoomId) async {
     // 로그: 연결 시도 전
     print("Attempting to connect to WebSocket server...");
 
@@ -229,12 +229,7 @@ class ChatController extends GetxController{
       ),
     );
 
-
-
-    /// 전역으로 설정한다면 문제가 되는 점
-    /// 채팅방에 connect를 연결할 때 chatRoomId가 필요함
-    ///
-
+    final prefs = await SharedPreferences.getInstance();
 
     chatReadStompClient = StompClient(
       config: StompConfig(
@@ -242,15 +237,20 @@ class ChatController extends GetxController{
         onConnect: (StompFrame frame) async {
           print("Connected to WebSocket server! Frame: $frame");
           onChatReadConnect(frame, chatRoomId);  // 기존 onConnect 함수 호출
+          prefs.setBool('isEnterChatRoom', true);
+          prefs.setString('currentChatRoomId', chatRoomId);
 
         },
         onWebSocketError: (dynamic error) {
           print("WebSocket error: $error");
           onError(error);  // 기존 onError 함수 호출
         },
-        onDisconnect: (StompFrame frame) {
+        onDisconnect: (StompFrame frame) async {
           print("Disconnected from WebSocket server! Frame: $frame");
-          onDisconnect(frame);  // 기존 onDisconnect 함수 호출
+          onDisconnect(frame);
+          prefs.setBool('isEnterChatRoom', false);
+          prefs.setString('currentChatRoomId', "0");
+
         },
         onStompError: (error) {
           print("STOMP error: $error");
@@ -273,6 +273,9 @@ class ChatController extends GetxController{
       Map<String, dynamic> jsonMessage = jsonDecode(decodedMessage);
 
       if (jsonMessage['senderId'] != await Helpers.getMemberId()) {
+
+        print('test123123');
+        print(matchMemberModel.length);
 
         var matchedMember = matchMemberModel.firstWhere(
               (member) => member.userId == jsonMessage['senderId'],
@@ -302,7 +305,7 @@ class ChatController extends GetxController{
 
 
     } catch (e) {
-      print('Error decoding JSON: $e');
+      print('Error onChatSendReceive decoding JSON: $e');
     }
 
   }
@@ -325,7 +328,7 @@ class ChatController extends GetxController{
 
       print('Decoded JSON: $jsonMessage');
     } catch (e) {
-      print('Error decoding JSON: $e');
+      print('Error onChatReadReceive decoding JSON: $e');
     }
 
   }
@@ -351,8 +354,6 @@ class ChatController extends GetxController{
   void onChatReadConnect(StompFrame frame, chatRoomId) {
     print('CHAT READ STOMP connected!');
 
-    print(chatRoomId);
-
     // 메시지를 받을 Topic 구독
     chatReadStompClient.subscribe(
       destination: '/topic/chat/read/${chatRoomId}',  // 메시지를 받을 경로
@@ -367,8 +368,7 @@ class ChatController extends GetxController{
 
 
     final lastMessage = chatModelList.last;
-    print(lastMessage.toJson());
-    test(chatRoomId,lastMessage.chatMessageId);
+    enterChatRoomEvent(chatRoomId,lastMessage.chatMessageId);
 
   }
 

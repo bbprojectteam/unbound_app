@@ -1,6 +1,7 @@
 
 import 'dart:convert';
 
+import 'package:badboys/controller/global_controller.dart';
 import 'package:firebase_messaging/firebase_messaging.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
@@ -22,19 +23,52 @@ class FcmNotifications{
 
     SharedPreferences prefs = await SharedPreferences.getInstance();
     String chatRoomId = prefs.getString('matchingRoomId') ?? "";
+    bool isNotificationClicked = prefs.getBool('isNotificationClicked') ?? false;
 
     print('백그라운드 실행 테스트');
 
-    if (chatRoomId != "") {
-
+    if (chatRoomId != "" && isNotificationClicked) {
 
       Future.delayed(Duration(milliseconds: 700), () async {
         Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : chatRoomId});
       });
 
-      await prefs.remove('matchingRoomId');
+      await prefs.setString('matchingRoomId',"0");
+      await prefs.setBool('isNotificationClicked',false);
     }
   }
+
+  static Future<void> handleTerminatedLocalNotificationLaunch() async {
+    final FlutterLocalNotificationsPlugin flutterLocalNotificationsPlugin =
+    FlutterLocalNotificationsPlugin();
+
+    final NotificationAppLaunchDetails? notificationAppLaunchDetails =
+    await flutterLocalNotificationsPlugin.getNotificationAppLaunchDetails();
+
+    if (notificationAppLaunchDetails?.didNotificationLaunchApp ?? false) {
+      final payload = notificationAppLaunchDetails!.payload;
+
+      print("📲 로컬 알림 클릭으로 앱 실행됨! Payload: $payload");
+
+      final prefs = await SharedPreferences.getInstance();
+      String chatRoomId = prefs.getString('matchingRoomId') ?? "";
+
+      if (chatRoomId.isNotEmpty) {
+
+        if (payload == "채팅이 왔습니다.") {
+          prefs.setBool('isChatFcmMessage', true);
+        }
+
+        await prefs.setBool('isNotificationClicked', true);
+
+        Future.delayed(const Duration(milliseconds: 700), () {
+          Get.toNamed('/lockerRoomScreen', arguments: {'matchingRoomId': chatRoomId});
+        });
+      }
+
+    }
+  }
+
 
   /**
    * Firebase Cloud Messaging(FCM)을 사용하여 푸시 알림을 처리
@@ -85,6 +119,8 @@ class FcmNotifications{
             prefs.setBool('isChatFcmMessage', true);
           }
 
+          await prefs.setBool('isNotificationClicked', true);
+
           Future.delayed(Duration(milliseconds: 700), () async {
             Get.toNamed('/lockerRoomScreen',arguments: {'matchingRoomId' : chatRoomId});
           });
@@ -99,12 +135,13 @@ class FcmNotifications{
 
       print("🔔 백그라운드/종료 후 ${message.notification!.body}");
 
+
       SharedPreferences prefs = await SharedPreferences.getInstance();
       String chatRoomId = jsonDecode(message.notification!.body.toString())['chatRoomId'];
 
       await prefs.setBool('isMatching', true);
       await prefs.setString('matchingRoomId', chatRoomId);
-
+      await prefs.setBool('isNotificationClicked', true);
     });
 
     /** 포그라운드 살태일 때 푸시 알림을 어떻게 표시할지 설정*/
@@ -116,6 +153,7 @@ class FcmNotifications{
 
 
     firebaseMessagingForegroundHandler();
+
   }
 
   /** 백그라운드 이벤트 리스너*/
@@ -138,6 +176,7 @@ class FcmNotifications{
         notification.hashCode, // 알림의 고유 id
         notification?.title,
         notification?.body,
+        payload: message.notification!.title!,
         NotificationDetails(
           android: AndroidNotificationDetails(
             'high_importance_channel',
@@ -189,25 +228,46 @@ class FcmNotifications{
          * */
         final flutterLocalNotificationsPlugin = FlutterLocalNotificationsPlugin();
 
-        String rawBody = notification.body.toString(); // JSON 형식의 body 데이터
-        // Map<String, dynamic> bodyMap = jsonDecode(rawBody); // JSON을 Map으로 변환
-
-        /** 푸시 알림을 화면에 표시*/
-        flutterLocalNotificationsPlugin.show(
-          notification.hashCode, /** 알림의 고유 id , 알림을 식별하기 위한 값 */
-          notification.title, /** 알림의 제목 */
-          notification.body,  /** 알림의 내용 */
-          const NotificationDetails(  /** 알림의 세부 설정, 알램 채널과 알림의 중요도 등*/
-            android: AndroidNotificationDetails(
-              'high_importance_channel',  /** 채널의 고유 id*/
-              'high_importance_notification',   /**채널의 이름 */
-              importance: Importance.max, /** 채널의 중요도 */
-            ),
-          ),
-            payload: message.notification!.title!
-        );
+        ///현재 채팅중인 채팅방의 chatRoomId == fcm 알림이 가진 chatRoomId가 동일할 때 무시
 
         final prefs = await SharedPreferences.getInstance();
+
+        bool isEnterChatRoom = prefs.getBool("isEnterChatRoom") ?? false;
+        if (isEnterChatRoom) {
+
+          if (prefs.getString("currentChatRoomId") != message.data['chatRoomId'].toString()) {
+
+            /** 푸시 알림을 화면에 표시*/
+            flutterLocalNotificationsPlugin.show(
+                notification.hashCode, /** 알림의 고유 id , 알림을 식별하기 위한 값 */
+                notification.title, /** 알림의 제목 */
+                notification.body,  /** 알림의 내용 */
+                const NotificationDetails(  /** 알림의 세부 설정, 알램 채널과 알림의 중요도 등*/
+                  android: AndroidNotificationDetails(
+                    'high_importance_channel',  /** 채널의 고유 id*/
+                    'high_importance_notification',   /**채널의 이름 */
+                    importance: Importance.max, /** 채널의 중요도 */
+                  ),
+                ),
+                payload: message.notification!.title!
+            );
+
+          }
+        } else {
+          flutterLocalNotificationsPlugin.show(
+              notification.hashCode, /** 알림의 고유 id , 알림을 식별하기 위한 값 */
+              notification.title, /** 알림의 제목 */
+              notification.body,  /** 알림의 내용 */
+              const NotificationDetails(  /** 알림의 세부 설정, 알램 채널과 알림의 중요도 등*/
+                android: AndroidNotificationDetails(
+                  'high_importance_channel',  /** 채널의 고유 id*/
+                  'high_importance_notification',   /**채널의 이름 */
+                  importance: Importance.max, /** 채널의 중요도 */
+                ),
+              ),
+              payload: message.notification!.title!
+          );
+        }
 
         if (message.notification!.title! == "매칭 성공!") {
           await prefs.setBool('isMatching', true);
@@ -216,7 +276,6 @@ class FcmNotifications{
         }
 
         await prefs.setString('matchingRoomId', message.data['chatRoomId'].toString());
-
 
       }
     });
